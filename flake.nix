@@ -25,13 +25,5 @@
         chaotic.nixosModules.nyx-registry
       ];
     };
-
-    # Add Home Manager configuration for the 'lysec' user
-    homeConfigurations.lysec = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";  # Use legacyPackages for Home Manager compatibility
-      modules = [ ./hosts/default/home.nix ];  # Path to the home.nix configuration for `lysec`
-
-      extraSpecialArgs = { inherit inputs; };  # Pass the inputs to Home Manager
-    };
   };
 }

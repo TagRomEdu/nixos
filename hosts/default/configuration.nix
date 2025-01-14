@@ -103,11 +103,12 @@
   };
 
   home-manager = {
-   extraSpecialArgs = { inherit inputs; };
-   backupFileExtension = "backup";
-   users = {
-    "lysec" = import ./home.nix;
-   };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "lysec" = import ./home.nix;
+    };
   };
 
   # Install firefox.
@@ -142,5 +143,5 @@
   };
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "24.11";
 }
