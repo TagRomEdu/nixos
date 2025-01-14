@@ -27,6 +27,10 @@
     pkgs.protonplus
     pkgs.imagemagick
     pkgs.nwg-look
+
+    pkgs.gh
+    pkgs.rustup
+    pkgs.gcc
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
