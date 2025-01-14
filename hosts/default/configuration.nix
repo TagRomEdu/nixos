@@ -98,8 +98,6 @@
     description = "lysec";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      #hyprlock
-    #  thunderbird
     ];
   };
 
