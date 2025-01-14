@@ -8,6 +8,7 @@
     inputs.hyprland.homeManagerModules.default
     ../../modules/desktop/swaync.nix
     ../../modules/desktop/hyprland.nix
+    ../../modules/desktop/hyprlock.nix
     ../../modules/programs/ghostty.nix
   ];
   home.stateVersion = "24.11"; # Please read the comment before changing.
@@ -18,8 +19,8 @@
     pkgs.swaynotificationcenter
 
     pkgs.waybar
-    #pkgs.ghostty
     pkgs.hyprshot
+    pkgs.hyprlock
     pkgs.microfetch
     pkgs.vesktop
     pkgs.walker

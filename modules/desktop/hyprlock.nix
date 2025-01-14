@@ -1,10 +1,8 @@
 { config, ... }:
 
 {
-
   home.file.".config/hypr/hyprlock.conf".text = ''
-    {
-        # BACKGROUND
+# BACKGROUND
 background {
     monitor =
     #path = screenshot
@@ -72,32 +70,5 @@ label {
   valign = center
 }
 
-
-
-# Profile Picture
-image {
-    monitor =
-    path = /home/lysec/Pictures/profile_pictures/lysec_square.png
-    size = 100
-    border_size = 2
-    border_color = $foreground
-    position = 0, -100
-    halign = center
-    valign = center
-}
-
-# Desktop Environment
-image {
-    monitor =
-    path = /home/lysec/Pictures/profile_pictures/hypr.png
-    size = 75
-    border_size = 2
-    border_color = $foreground
-    position = -50, 50
-    halign = right
-    valign = bottom
-}
-
-    }
   '';
 }

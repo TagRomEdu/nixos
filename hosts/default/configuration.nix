@@ -7,7 +7,6 @@
       ./main-user.nix
       
       ../../modules/greeter/greetd.nix
-      ../../modules/desktop/hyprlock.nix
       
       ../../modules/shell/bash.nix
       ../../modules/shell/fish.nix
@@ -99,6 +98,7 @@
     description = "lysec";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      #hyprlock
     #  thunderbird
     ];
   };
@@ -114,9 +114,6 @@
 
   # Install firefox.
   programs.firefox.enable = true;
-
-  # Install Hyprlock.
-  programs.hyprlock.enable = true;
   
   # Install Thunar.
   programs.thunar.enable = true;
