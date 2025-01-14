@@ -89,17 +89,17 @@
         {
             "label": "",
             "type": "button",
-            "command": "hyprctl dispatch exit'"
+            "command": "sh -c 'hyprctl dispatch exit'"
         },
         {
             "label": "",
             "type": "button",
-            "command": "systemctl reboot'"
+            "command": "sh -c 'systemctl reboot'"
         },
         {
             "label": "⏻",
             "type": "button",
-            "command": "systemctl poweroff'"
+            "command": "sh -c 'systemctl poweroff'"
         }
         ],
         "container": {
