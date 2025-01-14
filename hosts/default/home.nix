@@ -15,9 +15,10 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    pkgs.swaynotificationcenter
+
     pkgs.waybar
     #pkgs.ghostty
-    pkgs.swaynotificationcenter
     pkgs.hyprshot
     pkgs.microfetch
     pkgs.vesktop
