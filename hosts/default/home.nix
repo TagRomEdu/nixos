@@ -7,7 +7,8 @@
   imports = [
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/hyprlock.nix
-   ../../modules/desktop/swaync.nix
+    ../../modules/desktop/waybar.nix
+    ../../modules/desktop/swaync.nix
 
     ../../modules/programs/spicetify.nix
     ../../modules/programs/vscode.nix
