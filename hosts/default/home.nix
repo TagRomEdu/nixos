@@ -5,13 +5,16 @@
   home.homeDirectory = "/home/lysec";
 
   imports = [
-    inputs.hyprland.homeManagerModules.default
-    inputs.spicetify-nix.homeManagerModules.default
-    ../../modules/programs/spicetify.nix
-    ../../modules/desktop/swaync.nix
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/hyprlock.nix
+   ../../modules/desktop/swaync.nix
+
+    ../../modules/programs/spicetify.nix
+    ../../modules/programs/vscodium.nix
     ../../modules/programs/ghostty.nix
+
+    inputs.hyprland.homeManagerModules.default
+    inputs.spicetify-nix.homeManagerModules.default
   ];
   home.stateVersion = "24.11"; # Please read the comment before changing.
  
@@ -26,7 +29,7 @@
     pkgs.microfetch
     pkgs.vesktop
     pkgs.walker
-    pkgs.vscodium
+ #   pkgs.vscodium
     pkgs.protonplus
     pkgs.imagemagick
     pkgs.nwg-look
