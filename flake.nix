@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-        spicetify-nix = {
+    spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -25,6 +25,7 @@
       modules = [
         ./hosts/default/configuration.nix
         inputs.home-manager.nixosModules.default
+        inputs.spicetify-nix.nixosModules.default
         chaotic.nixosModules.nyx-cache
         chaotic.nixosModules.nyx-overlay
         chaotic.nixosModules.nyx-registry
