@@ -6,7 +6,7 @@
     background {
         monitor =
         #path = screenshot
-        path = /home/lysec/Pictures/DSOGBqd.png
+        path = ~/nixos/assets/wallpapers/DSOGBqd.png
         #color = $background
         blur_passes = 2
         contrast = 1
