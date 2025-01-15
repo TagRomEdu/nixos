@@ -9,7 +9,7 @@
     interactiveShellInit = "
       cat ~/.cache/wal/sequences
       set -g fish_greeting ''
-      microfetch
+      fastfetch
     ";
 
     # Optional: add more customization like shell aliases
