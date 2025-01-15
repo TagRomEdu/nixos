@@ -6,6 +6,8 @@
 
   imports = [
     inputs.hyprland.homeManagerModules.default
+    inputs.spicetify-nix.homeManagerModules.default
+    ../../modules/programs/spicetify.nix
     ../../modules/desktop/swaync.nix
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/hyprlock.nix
@@ -25,15 +27,18 @@
     pkgs.vesktop
     pkgs.walker
     pkgs.vscodium
-    pkgs.tree
     pkgs.protonplus
     pkgs.imagemagick
     pkgs.nwg-look
+    pkgs.spotify
 
+    pkgs.tree
     pkgs.gh
     pkgs.rustup
     pkgs.gcc
   ];
+
+  #programs.spotify.enable = true;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
