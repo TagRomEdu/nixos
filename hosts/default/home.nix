@@ -10,7 +10,7 @@
    ../../modules/desktop/swaync.nix
 
     ../../modules/programs/spicetify.nix
-    ../../modules/programs/vscodium.nix
+    ../../modules/programs/vscode.nix
     ../../modules/programs/ghostty.nix
 
     inputs.hyprland.homeManagerModules.default
@@ -29,7 +29,7 @@
     pkgs.microfetch
     pkgs.vesktop
     pkgs.walker
- #   pkgs.vscodium
+    
     pkgs.protonplus
     pkgs.imagemagick
     pkgs.nwg-look
