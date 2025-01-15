@@ -13,6 +13,7 @@
     ../../modules/programs/spicetify.nix
     ../../modules/programs/vscode.nix
     ../../modules/programs/ghostty.nix
+    ../../modules/programs/fastfetch.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
