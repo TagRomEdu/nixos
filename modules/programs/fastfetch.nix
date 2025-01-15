@@ -20,92 +20,92 @@
         "break"
         {
           type = "custom";
-          format = "┌──────────────────────Hardware──────────────────────";
+          format = "──────────────────────Hardware──────────────────────";
         }
 
         {
           type = "cpu";
-          key = "│ ";
+          key = " ";
           showPeCoreCount = true;
           keyColor = "33";
         }
         {
           type = "gpu";
-          key = "│ 󰍛";
+          key = " 󰍛";
           keyColor = "33";
         }
         {
           type = "memory";
-          key = "│ ";
+          key = " ";
           keyColor = "33";
         }
         {
           type = "custom";
-          format = "└────────────────────────────────────────────────────";
+          format = "────────────────────────────────────────────────────";
         }
         "break"
         {
           type = "custom";
-          format = "┌──────────────────────Software──────────────────────";
+          format = "──────────────────────Software──────────────────────";
         }
         {
           type = "os";
-          key = "│ 󱄅";
+          key = " 󱄅";
           keyColor = "yellow";
         }
         {
           type = "kernel";
-          key = "│ ";
+          key = " ";
           keyColor = "yellow";
         }
         {
           type = "packages";
-          key = "│ ";
+          key = " ";
           keyColor = "yellow";
         }
         {
           type = "wm";
-          key = "│ 󰇄";
+          key = " 󰇄";
           keyColor = "33";
         }
         {
           type = "lm";
-          key = "│ 󰍂";
+          key = " 󰍂";
           keyColor = "33";
         }
         {
           type = "terminal";
-          key = "│ ";
+          key = " ";
           keyColor = "33";
         }
         {
           type = "shell";
-          key = "│ ";
+          key = " ";
           keyColor = "33";
         }
         {
           type = "custom";
-          format = "└────────────────────────────────────────────────────";
+          format = "────────────────────────────────────────────────────";
         }
         "break"
         {
           type = "custom";
-          format = "┌────────────────────Uptime / Age────────────────────";
+          format = "────────────────────Uptime / Age────────────────────";
         }
         {
           type = "command";
-          key = "│  OS Age ";
+          key = "  OS Age ";
           keyColor = "33";
           text = "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days";
         }
         {
           type = "uptime";
-          key = "│  Uptime ";
+          key = "  Uptime ";
           keyColor = "33";
         }
         {
           type = "custom";
-          format = "└────────────────────────────────────────────────────";
+          format = "────────────────────────────────────────────────────";
         }
         "break"
       ];
