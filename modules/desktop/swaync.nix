@@ -58,7 +58,6 @@
     "widgets": [
         "inhibitors",
         "title",
-        "dnd",
         "notifications",
         "buttons-grid"
     ],
@@ -100,6 +99,11 @@
             "label": "⏻",
             "type": "button",
             "command": "sh -c 'systemctl poweroff'"
+        },
+        {
+            "label": "",
+            "type": "button",
+            "command": "sh -c 'hyprlock'"
         }
         ],
         "container": {

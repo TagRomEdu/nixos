@@ -131,6 +131,7 @@
     pulseaudio
     waypaper
     pywal16
+    pywalfox-native
     arrpc
     swww
   ];
