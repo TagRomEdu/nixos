@@ -19,7 +19,7 @@
     inputs.spicetify-nix.homeManagerModules.default
   ];
   home.stateVersion = "24.11"; # Please read the comment before changing.
- 
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
@@ -31,7 +31,7 @@
     pkgs.microfetch
     pkgs.vesktop
     pkgs.walker
-    
+
     pkgs.protonplus
     pkgs.imagemagick
     pkgs.nwg-look
@@ -40,6 +40,7 @@
     pkgs.gh
     pkgs.rustup
     pkgs.gcc
+    pkgs.nixpkgs-fmt
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -62,5 +63,5 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  
+
 }

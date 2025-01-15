@@ -5,9 +5,9 @@
     [
       ./hardware-configuration.nix
       ./main-user.nix
-      
+
       ../../modules/greeter/greetd.nix
-      
+
       ../../modules/shell/bash.nix
       ../../modules/shell/fish.nix
 
@@ -21,7 +21,7 @@
 
   # Fonts
   #fonts.packages = with pkgs; [ nerdfonts ];
-  fonts.packages = [          
+  fonts.packages = [
     pkgs.fira-sans
     pkgs.roboto
     pkgs.nerd-fonts._0xproto
@@ -112,7 +112,7 @@
 
   # Install firefox.
   programs.firefox.enable = true;
-  
+
   # Install Thunar.
   programs.thunar.enable = true;
   services.gvfs.enable = true; # Mount, trash, and other functionalities
@@ -124,7 +124,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    
+
     wget
     git
     pavucontrol

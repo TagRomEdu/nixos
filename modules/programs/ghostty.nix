@@ -9,7 +9,7 @@
       window-decoration = false;
 
       # Disables ligatures
-      font-feature = ["-liga" "-dlig" "-calt"];
+      font-feature = [ "-liga" "-dlig" "-calt" ];
     };
   };
 }

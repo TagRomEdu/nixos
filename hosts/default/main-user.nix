@@ -18,7 +18,7 @@ in
       isNormalUser = true;
       initialPassword = "12345";
       description = "lysec";
-      shell = pkgs.fish;  # Set fish as the shell
+      shell = pkgs.fish; # Set fish as the shell
     };
   };
 }
