@@ -27,7 +27,7 @@
         "modules-right": [
             "tray",
             "pulseaudio",
-            "custom/updates",
+            /*"custom/updates",*/
             "custom/notification",
             /*"custom/exit",*/
             "clock"
@@ -219,20 +219,6 @@
     "custom/tools": {
         "format": "",
         "tooltip-format": "Tools"
-    },
-
-    // Updates Count
-    "custom/updates": {
-    "exec": "$HOME/nixos/assets/scripts/nix-update.sh", // <--- path to script
-    "on-click": "$HOME/bin/update-checker && notify-send 'The system has been updated'", // refresh on click
-    "interval": 1800, // refresh every 30 minutes
-    "tooltip": true,
-    "return-type": "json",
-    "format": "{icon}",
-    "format-icons": {
-        "has-updates": "", // icon when updates needed
-        "updated": "" // icon when all packages updated
-    },
     },
 
     // Rofi Application Launcher
