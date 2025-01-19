@@ -113,7 +113,7 @@
 
       # Startup starts
       exec-once = [
-        "hyprctl setcursor theme_NotwaitaBlack 24"
+        "hyprctl setcursor theme_NotwaitaBlack 22"
         "systemctl --user start hyprpolkitagent"
         "[workspace 2] vesktop"
         "arrpc"

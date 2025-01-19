@@ -134,13 +134,10 @@
     pywalfox-native
     arrpc
     swww
+    adwaita-icon-theme
   ];
 
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 7d";
-  };
+  environment.variables.XCURSOR_SIZE = "24";
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   system.stateVersion = "25.05";

@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   home.username = "lysec";
@@ -43,6 +48,8 @@
     pkgs.rustup
     pkgs.gcc
     pkgs.nixpkgs-fmt
+    pkgs.libnotify
+    pkgs.nixfmt-rfc-style
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

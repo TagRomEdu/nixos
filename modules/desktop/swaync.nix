@@ -14,8 +14,8 @@
     "control-center-margin-bottom": 0,
     "control-center-margin-right": 14,
     "control-center-margin-left": 0,
-    "notification-margin-top": 0,
-    "notification-margin-right": 0,
+    "notification-margin-top": 14,
+    "notification-margin-right": 14,
     "notification-margin-bottom": 0,
     "notification-margin-left": 0,
     "notification-2fa-action": true,
@@ -217,7 +217,7 @@
 
     .notification-row .notification-background {
     padding: 0px 0px;
-    margin: 0px;
+    margin: 10px;
     }
 
     .notification-row .notification-background .close-button {
