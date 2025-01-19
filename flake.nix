@@ -19,7 +19,7 @@
 
   };
 
-  outputs = { self, nixpkgs, chaotic, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };

@@ -36,6 +36,8 @@
     pkgs.imagemagick
     pkgs.nwg-look
 
+    pkgs.pywalfox-native
+
     pkgs.tree
     pkgs.gh
     pkgs.rustup

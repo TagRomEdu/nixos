@@ -8,24 +8,29 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/70b0db37-a500-4161-b2b1-ce3585f058a1";
+    { device = "/dev/disk/by-uuid/8a6488ff-45dd-46ec-94b4-d98022863688";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/EBF4-AD93";
+    { device = "/dev/disk/by-uuid/6582-E520";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/home/lysec/storage" =
+    { device = "/dev/disk/by-uuid/74697b82-1266-4372-96cc-aac599abfb72";
+      fsType = "ext4";
+    };
+
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/c87924f2-a3cb-4b5c-9c97-d9a6dfd3213f"; }
+    [ { device = "/dev/disk/by-uuid/fffc8817-8c85-41aa-9198-bbcd37f81885"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
