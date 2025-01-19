@@ -27,9 +27,7 @@
         "modules-right": [
             "tray",
             "pulseaudio",
-            /*"custom/updates",*/
             "custom/notification",
-            /*"custom/exit",*/
             "clock"
         ]
     }
@@ -133,13 +131,23 @@
         color: #E09A25;
     }
 
+    #pulseaudio {
+        background-color: #332e4d;
+        font-size: 14px;
+        font-weight: 800;
+        color: #ebdbb2;
+        border-radius: 0px;
+        padding: 4px 0px;
+        margin: 4px 0px;
+    }
+
     #backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
         background-color: #332e4d;
         font-size: 14px;
         font-weight: 800;
         color: #ebdbb2;
         border-radius: 0px;
-        padding: 4px 6px;
+        padding: 4px 12px;
         margin: 4px 0px;
     }
 

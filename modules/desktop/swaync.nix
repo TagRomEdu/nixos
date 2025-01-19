@@ -199,6 +199,7 @@
     }
 
     .widget-buttons-grid > flowbox > flowboxchild > button {
+    color: @foreground;
     background: @cc-light-bg;
     border: 3px solid @noti-border-color;
     border-radius: 0px;
