@@ -139,7 +139,7 @@
         font-weight: 800;
         color: #ebdbb2;
         border-radius: 0px;
-        padding: 4px 10px;
+        padding: 4px 6px;
         margin: 4px 0px;
     }
 
@@ -223,14 +223,16 @@
 
     // Updates Count
     "custom/updates": {
-        "format": "{} {icon}",
-        "return-type": "json",
-        "format-icons": {
-            "has-updates": "󱍷",
-            "updated": "󰂪"
-        },
-        "exec-if": "which waybar-module-pacman-updates",
-        "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300"
+    "exec": "$HOME/nixos/assets/scripts/nix-update.sh", // <--- path to script
+    "on-click": "$HOME/bin/update-checker && notify-send 'The system has been updated'", // refresh on click
+    "interval": 1800, // refresh every 30 minutes
+    "tooltip": true,
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+        "has-updates": "", // icon when updates needed
+        "updated": "" // icon when all packages updated
+    },
     },
 
     // Rofi Application Launcher

@@ -50,6 +50,7 @@
     pkgs.nixpkgs-fmt
     pkgs.libnotify
     pkgs.nixfmt-rfc-style
+    pkgs.nvd
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
