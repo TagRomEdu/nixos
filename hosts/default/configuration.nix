@@ -16,8 +16,11 @@
     ../../modules/shell/bash.nix
     ../../modules/shell/fish.nix
 
-    ../../modules/programs/xdg.nix
     ../../modules/programs/steam.nix
+
+    ../../modules/system/xdg.nix
+    ../../modules/system/environment.nix
+
     inputs.home-manager.nixosModules.default
   ];
 
@@ -68,9 +71,6 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.sddm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -131,24 +131,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-
-    wget
-    git
-    pavucontrol
-    pulseaudio
-    waypaper
-    pywal16
-    pywalfox-native
-    arrpc
-    swww
-    adwaita-icon-theme
-  ];
-
-  environment.variables.XCURSOR_SIZE = "24";
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   system.stateVersion = "25.05";
