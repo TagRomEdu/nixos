@@ -17,7 +17,6 @@
 
     ../../modules/programs/spicetify.nix
     ../../modules/programs/vscode.nix
-    ../../modules/programs/neovim.nix
     ../../modules/programs/ghostty.nix
     ../../modules/programs/fastfetch.nix
 
