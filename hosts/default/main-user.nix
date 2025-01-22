@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.main-user;
@@ -18,7 +23,7 @@ in
       isNormalUser = true;
       initialPassword = "12345";
       description = "lysec";
-      shell = pkgs.fish; # Set fish as the shell
+      shell = pkgs.fish;
     };
   };
 }

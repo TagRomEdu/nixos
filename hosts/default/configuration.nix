@@ -1,20 +1,25 @@
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./main-user.nix
+  imports = [
+    ./hardware-configuration.nix
+    ./main-user.nix
 
-      ../../modules/greeter/greetd.nix
+    ../../modules/greeter/greetd.nix
 
-      ../../modules/shell/bash.nix
-      ../../modules/shell/fish.nix
+    ../../modules/shell/bash.nix
+    ../../modules/shell/fish.nix
 
-      ../../modules/programs/xdg.nix
-      ../../modules/programs/steam.nix
-      inputs.home-manager.nixosModules.default
-    ];
+    ../../modules/programs/xdg.nix
+    ../../modules/programs/steam.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
   main-user.enable = true;
   main-user.userName = "lysec";
@@ -33,7 +38,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   networking.hostName = "nixos"; # Define your hostname.
 
@@ -96,7 +104,10 @@
   users.users.lysec = {
     isNormalUser = true;
     description = "lysec";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
     ];
   };
