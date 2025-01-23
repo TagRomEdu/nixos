@@ -15,6 +15,7 @@
     ../../modules/desktop/waybar.nix
     ../../modules/desktop/swaync.nix
 
+    ../../modules/programs/nvim/neovim.nix
     ../../modules/programs/spicetify.nix
     ../../modules/programs/vscode.nix
     ../../modules/programs/ghostty.nix
@@ -31,11 +32,13 @@
     pkgs.swaynotificationcenter
 
     pkgs.waybar
+    pkgs.eww
     pkgs.hyprshot
     pkgs.hyprlock
     pkgs.microfetch
     pkgs.vesktop
     pkgs.walker
+    pkgs.wl-clipboard
 
     pkgs.protonplus
     pkgs.imagemagick
