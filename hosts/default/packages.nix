@@ -1,6 +1,14 @@
 { pkgs }:
 with pkgs;
 [
+
+  # Applications
+  firefox
+  vesktop
+  protonplus
+  lutris
+  furmark
+
   # Desktop
   swaynotificationcenter
   waybar
@@ -24,10 +32,4 @@ with pkgs;
   wl-clipboard
   pywalfox-native
   imagemagick
-
-  # Applications
-  vesktop
-  protonplus
-  lutris
-  furmark
 ]
