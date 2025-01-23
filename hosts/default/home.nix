@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  allPackages = import ./packages.nix { inherit pkgs; };
+in
 {
   home.username = "lysec";
   home.homeDirectory = "/home/lysec";
@@ -24,60 +27,14 @@
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
   ];
-  home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    pkgs.swaynotificationcenter
+  home.stateVersion = "24.11";
 
-    pkgs.waybar
-    pkgs.eww
-    pkgs.hyprshot
-    pkgs.hyprlock
-    pkgs.microfetch
-    pkgs.vesktop
-    pkgs.walker
-    pkgs.wl-clipboard
+  home.packages = allPackages;
 
-    pkgs.protonplus
-    pkgs.imagemagick
-    pkgs.nwg-look
-
-    pkgs.pywalfox-native
-    pkgs.lutris
-
-    pkgs.furmark
-
-    pkgs.tree
-    pkgs.gh
-    pkgs.rustup
-    pkgs.gcc
-    pkgs.nixpkgs-fmt
-    pkgs.libnotify
-    pkgs.nixfmt-rfc-style
-    pkgs.nvd
-  ];
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
 }

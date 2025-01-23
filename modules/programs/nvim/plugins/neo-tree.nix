@@ -16,15 +16,15 @@
         git_status = {
           symbols = {
             -- Change type to the icons you prefer
-            added     = "✚", -- or "A"
-            modified  = "", -- or "M"
-            deleted   = "✖", -- or "D"
-            renamed   = "", -- or "R"
-            untracked = "", -- or "U"
-            ignored   = "", -- or "I"
-            unstaged  = "", -- or "U"
-            staged    = "", -- or "S"
-            conflict  = "", -- or "C"
+            added     = " ✚",
+            modified  = " ",
+            deleted   = " ✖",
+            renamed   = " R",
+            untracked = " ",
+            ignored   = " ",
+            unstaged  = " U",
+            staged    = " ",
+            conflict  = " ",
           }
         },
       },
