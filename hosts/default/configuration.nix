@@ -17,6 +17,7 @@
     ../../modules/shell/fish.nix
 
     ../../modules/programs/steam.nix
+    ../../modules/programs/lact.nix
 
     ../../modules/system/xdg.nix
     ../../modules/system/environment.nix
@@ -133,5 +134,6 @@
   nixpkgs.config.allowUnfree = true;
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
+
   system.stateVersion = "25.05";
 }

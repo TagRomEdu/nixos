@@ -19,18 +19,24 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, ... }@inputs: {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/default/configuration.nix
-        inputs.home-manager.nixosModules.default
-        inputs.spicetify-nix.nixosModules.default
-        chaotic.nixosModules.nyx-cache
-        chaotic.nixosModules.nyx-overlay
-        chaotic.nixosModules.nyx-registry
-      ];
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      chaotic,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/default/configuration.nix
+          inputs.home-manager.nixosModules.default
+          inputs.spicetify-nix.nixosModules.default
+          chaotic.nixosModules.default
+        ];
+      };
     };
-  };
 }
