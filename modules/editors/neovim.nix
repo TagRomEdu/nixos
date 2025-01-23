@@ -1,12 +1,12 @@
 { pkgs, config, ... }:
 let
   plugins = {
-    neo-tree = import ./plugins/neo-tree.nix { inherit pkgs; };
-    alpha-nvim = import ./plugins/alpha-nvim.nix { inherit pkgs; };
-    plenary-nvim = import ./plugins/plenary-nvim.nix { inherit pkgs; };
-    telescope-nvim = import ./plugins/telescope-nvim.nix { inherit pkgs; };
-    vim-fugitive = import ./plugins/vim-fugitive.nix { inherit pkgs; };
-    null-ls = import ./plugins/null-ls.nix { inherit pkgs; };
+    neo-tree = import ./nvim-plugins/neo-tree.nix { inherit pkgs; };
+    alpha-nvim = import ./nvim-plugins/alpha-nvim.nix { inherit pkgs; };
+    plenary-nvim = import ./nvim-plugins/plenary-nvim.nix { inherit pkgs; };
+    telescope-nvim = import ./nvim-plugins/telescope-nvim.nix { inherit pkgs; };
+    vim-fugitive = import ./nvim-plugins/vim-fugitive.nix { inherit pkgs; };
+    null-ls = import ./nvim-plugins/null-ls.nix { inherit pkgs; };
   };
 in
 {

@@ -18,11 +18,12 @@ in
     ../../modules/desktop/waybar.nix
     ../../modules/desktop/swaync.nix
 
-    ../../modules/programs/nvim/neovim.nix
     ../../modules/programs/spicetify.nix
-    ../../modules/programs/vscode.nix
+    ../../modules/editors/vscode.nix
     ../../modules/programs/ghostty.nix
     ../../modules/programs/fastfetch.nix
+
+    ../../modules/editors/neovim.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default

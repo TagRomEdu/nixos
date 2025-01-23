@@ -3,33 +3,47 @@
   pkgs,
   inputs,
   lib,
+  self,
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ./main-user.nix
 
-    ../../modules/greeter/greetd.nix
-
-    ../../modules/shell/bash.nix
-    ../../modules/shell/fish.nix
-
-    ../../modules/programs/steam.nix
-    ../../modules/programs/lact.nix
-
-    ../../modules/system/xdg.nix
-    ../../modules/system/environment.nix
+    "${self}/system/greeter/greetd.nix"
+    "${self}/system/shell/bash.nix"
+    "${self}/system/shell/fish.nix"
+    "${self}/system/programs/steam.nix"
+    "${self}/system/programs/lact.nix"
+    "${self}/system/xdg.nix"
+    "${self}/system/environment.nix"
 
     inputs.home-manager.nixosModules.default
   ];
 
-  main-user.enable = true;
-  main-user.userName = "lysec";
+  # Define the lysec user
+  users.users.lysec = {
+    isNormalUser = true;
+    description = "lysec";
+    shell = pkgs.fish;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+  };
+
+  # Home Manager configuration
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "lysec" = import ./home.nix;
+    };
+  };
 
   # Fonts
-  #fonts.packages = with pkgs; [ nerdfonts ];
   fonts.packages = [
     pkgs.fira-sans
     pkgs.roboto
@@ -86,40 +100,12 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  #hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.lysec = {
-    isNormalUser = true;
-    description = "lysec";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-    ];
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "lysec" = import ./home.nix;
-    };
   };
 
   programs.thunar.enable = true;
