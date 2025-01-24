@@ -30,6 +30,9 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "video"
+      "input"
+      "plugdev"
     ];
   };
 

@@ -19,5 +19,6 @@
     adwaita-icon-theme
     gnome-themes-extra
     nodePackages.prettier
+    xwayland
   ];
 }
