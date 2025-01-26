@@ -232,7 +232,7 @@
     // Rofi Application Launcher
     "custom/appmenu": {
         // START APPS LABEL
-        "format": " 󰣇  ",
+        "format": "   ",
         // END APPS LABEL
         "on-click": "sleep 0.2;rofi -show drun -replace",
         "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
