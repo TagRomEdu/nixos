@@ -2,7 +2,7 @@
 
 {
   home.file.".config/walker/config.css".text = ''
-      app_launch_prefix = ""
+    app_launch_prefix = ""
     terminal_title_flag = ""
     locale = ""
     close_when_open = false
@@ -53,7 +53,8 @@
     [search]
     argument_delimiter = "#"
     placeholder = "Search..."
-    delay = 0                                                                 resume_last_query = false
+    delay = 0
+    resume_last_query = false
 
     [activation_mode]
     labels = "jkl;asdf"

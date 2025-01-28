@@ -10,33 +10,37 @@
     -- Custom header (ASCII art)
     dashboard.section.header.val = {
       "                                                                   ",
-      " ███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄   ",
-      " ███▀▀▀██▄   ███    ███ ███    ███ ███    ███ ███  ▄██▀▀▀███▀▀▀██▄ ",
-      " ███   ███   ███    █▀  ███    ███ ███    ███ ███▌ ███   ███   ███ ",
-      " ███   ███  ▄███▄▄▄     ███    ███ ███    ███ ███▌ ███   ███   ███ ",
-      " ███   ███ ▀▀███▀▀▀     ███    ███ ███    ███ ███▌ ███   ███   ███ ",
-      " ███   ███   ███    █▄  ███    ███ ███    ███ ███  ███   ███   ███ ",
-      " ███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███ ",
-      "  ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  ",
+      "                                                                     ",
+      "       ████ ██████           █████      ██                     ",
+      "      ███████████             █████                             ",
+      "      █████████ ███████████████████ ███   ███████████   ",
+      "     █████████  ███    █████████████ █████ ██████████████   ",
+      "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
+      "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
+      " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
       "                                                                   ",
     }
 
-    -- Custom buttons
     dashboard.section.buttons.val = {
-      dashboard.button("n", "  New File", ":enew<CR>"),
-      dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
-      dashboard.button("s", "  Restore Session", ":SessionRestore<CR>"),
-      dashboard.button("q", "  Quit", ":qall<CR>"),
+      dashboard.button("n", "  New File", ":enew<CR>"),
+      dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
+      dashboard.button("s", "  Restore Session", ":SessionRestore<CR>"),
+      dashboard.button("q", "  Quit", ":qall<CR>"),
     }
 
-    -- Footer (optional)
-    dashboard.section.footer.val = "Neovim x NixOS"
+    local function get_time_date()
+      return os.date("%H:%M:%S %d.%m.%Y")
+    end
 
-    -- Set up alpha
+    dashboard.section.footer.val = get_time_date()
+
     alpha.setup(dashboard.config)
 
-    -- Apply green color to the header
-    vim.cmd("highlight DashboardHeader guifg=#00ff00")
+    local timer = vim.loop.new_timer()
+    timer:start(0, 1000, vim.schedule_wrap(function()
+      dashboard.section.footer.val = get_time_date()
+      pcall(vim.cmd, "AlphaRedraw")  -- Ensure that Alpha updates
+    end))
     EOF
   '';
 }
