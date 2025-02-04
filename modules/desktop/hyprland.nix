@@ -8,7 +8,6 @@
 {
   home.packages = with pkgs; [
     inputs.hyprpolkitagent.packages."${pkgs.system}".hyprpolkitagent
-    xdg-desktop-portal-hyprland
   ];
 
   wayland.windowManager.hyprland = {

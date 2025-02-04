@@ -8,6 +8,7 @@
 
   environment.systemPackages = with pkgs; [
     wget
+    unzip
     git
     pavucontrol
     pulseaudio
@@ -20,5 +21,7 @@
     gnome-themes-extra
     nodePackages.prettier
     xwayland
+    spicetify-cli
+    alvr
   ];
 }

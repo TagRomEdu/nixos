@@ -29,7 +29,7 @@
     }
 
     local function get_time_date()
-      return os.date("%H:%M:%S %d.%m.%Y")
+      return os.date("󰥔 %H:%M:%S  %d.%m.%Y")
     end
 
     dashboard.section.footer.val = get_time_date()
