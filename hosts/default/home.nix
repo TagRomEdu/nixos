@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  self,
   ...
 }:
 
@@ -13,17 +14,17 @@ in
   home.homeDirectory = "/home/lysec";
 
   imports = [
-    ../../modules/desktop/hyprland.nix
-    ../../modules/desktop/hyprlock.nix
-    ../../modules/desktop/waybar.nix
-    ../../modules/desktop/swaync.nix
+    "${self}/modules/desktop/hyprland.nix"
+    "${self}/modules/desktop/hyprlock.nix"
+    "${self}/modules/desktop/waybar.nix"
+    "${self}/modules/desktop/swaync.nix"
 
-    ../../modules/programs/spicetify.nix
-    ../../modules/editors/vscode.nix
-    ../../modules/programs/ghostty.nix
-    ../../modules/programs/fastfetch.nix
+    "${self}/modules/programs/spicetify.nix"
+    "${self}/modules/editors/vscode.nix"
+    "${self}/modules/programs/ghostty.nix"
+    "${self}/modules/programs/fastfetch.nix"
 
-    ../../modules/editors/neovim.nix
+    "${self}/modules/editors/neovim.nix"
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
