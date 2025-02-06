@@ -1,8 +1,8 @@
-{ config
-, pkgs
-, inputs
-, self
-, ...
+{
+  config,
+  pkgs,
+  inputs,
+  ...
 }:
 
 let
@@ -13,18 +13,18 @@ in
   home.homeDirectory = "/home/lysec";
 
   imports = [
-    "${self}/modules/desktop/hyprland.nix"
-    "${self}/modules/desktop/hyprlock.nix"
-    "${self}/modules/desktop/waybar.nix"
-    "${self}/modules/desktop/swaync.nix"
+    ../../modules/desktop/hyprland.nix
+    ../../modules/desktop/hyprlock.nix
+    ../../modules/desktop/waybar.nix
+    ../../modules/desktop/swaync.nix
 
-    "${self}/modules/editors/vscode.nix"
-    "${self}/modules/editors/neovim.nix"
+    ../../modules/editors/vscode.nix
+    ../../modules/editors/neovim.nix
 
-    "${self}/modules/programs/ghostty.nix"
-    "${self}/modules/programs/fastfetch.nix"
-    "${self}/modules/programs/spicetify.nix"
-    "${self}/modules/programs/obs.nix"
+    ../../modules/programs/ghostty.nix
+    ../../modules/programs/fastfetch.nix
+    ../../modules/programs/spicetify.nix
+    ../../modules/programs/obs.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default

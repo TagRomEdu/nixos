@@ -40,7 +40,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit self inputs; };
+    extraSpecialArgs = { inherit inputs; };
     users = {
       "lysec" = import ./home.nix;
     };
