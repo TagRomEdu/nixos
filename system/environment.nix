@@ -23,6 +23,5 @@
     xwayland
     spicetify-cli
     alvr
-    eww
   ];
 }
