@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  inputs,
-  self,
-  ...
+{ config
+, pkgs
+, inputs
+, self
+, ...
 }:
 
 let
@@ -19,12 +18,13 @@ in
     "${self}/modules/desktop/waybar.nix"
     "${self}/modules/desktop/swaync.nix"
 
-    "${self}/modules/programs/spicetify.nix"
     "${self}/modules/editors/vscode.nix"
+    "${self}/modules/editors/neovim.nix"
+
     "${self}/modules/programs/ghostty.nix"
     "${self}/modules/programs/fastfetch.nix"
-
-    "${self}/modules/editors/neovim.nix"
+    "${self}/modules/programs/spicetify.nix"
+    "${self}/modules/programs/obs.nix"
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
