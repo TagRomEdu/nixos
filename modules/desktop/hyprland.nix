@@ -133,7 +133,7 @@
       exec-once = [
         "hyprctl setcursor theme_NotwaitaBlack 22"
         "systemctl --user start hyprpolkitagent"
-        "[workspace 2] vesktop"
+        "[workspace 2] discordcanary"
         "arrpc"
         "waypaper --restore"
         "swaync"
