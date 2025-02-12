@@ -4,7 +4,7 @@ with pkgs;
 
   # Applications
   firefox
-  #vesktop
+  # vesktop
   (discord-canary.override { withVencord = true; })
   protonplus
   lutris
