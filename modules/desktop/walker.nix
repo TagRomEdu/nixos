@@ -1,12 +1,12 @@
 { config, ... }:
 
 {
-  home.file.".config/walker/config.css".text = ''
+  home.file.".config/walker/config.toml".text = ''
     app_launch_prefix = ""
     terminal_title_flag = ""
     locale = ""
     close_when_open = false
-    theme = "yellow"
+    theme = "pink"
     monitor = ""
     hotreload_theme = true
     as_window = false
@@ -236,7 +236,7 @@
     placeholder = "Dmenu"
     switcher_only = true
   '';
-  home.file.".config/walker/themes/yellow.css".text = ''
+  home.file.".config/walker/themes/pink.css".text = ''
     @define-color foreground #242036;
     @define-color foreground-light #ebdbb2;
     @define-color background #11101c;
@@ -421,7 +421,7 @@
     }
 
   '';
-  home.file.".config/walker/themes/yellow.toml".text = ''
+  home.file.".config/walker/themes/pink.toml".text = ''
 
     [ui.anchors]
     bottom = true
