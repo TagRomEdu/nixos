@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       logo = {
-        source = "~/nixos/assets/icons/nix-yellow.png";
+        source = "~/nixos/assets/icons/nix-pink.png";
         padding = {
           top = 2;
           left = 3;

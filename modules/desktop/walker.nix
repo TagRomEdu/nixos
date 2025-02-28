@@ -243,17 +243,17 @@
     @define-color cursor #c3c3c6;
 
     @define-color color0 #11101c;
-    @define-color color1 #E09A25;
-    @define-color color2 #D69D41;
-    @define-color color3 #D9A551;
+    @define-color color1 #b385b2;
+    @define-color color2 #b385b2;
+    @define-color color3 #b385b2;
     @define-color color4 #4653BE;
     @define-color color5 #6BB5C7;
     @define-color color6 #AEA296;
     @define-color color7 #c3c3c6;
     @define-color color8 #5f5c71;
-    @define-color color9 #A7926D;
-    @define-color color10 #D69D41;
-    @define-color color11 #D9A551;
+    @define-color color9 #b385b2;
+    @define-color color10 #b385b2;
+    @define-color color11 #b385b2;
     @define-color color12 #4653BE;
     @define-color color13 #6BB5C7;
     @define-color color14 #AEA296;

@@ -41,7 +41,7 @@
 
     window#waybar {
         background-color: #242036;
-        border: 3px solid #E09A25;
+        border: 3px solid #b385b2;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         padding: 0;
         margin: 0;
@@ -51,7 +51,7 @@
     #window {
         font-size: 16px;
         font-weight: 800;
-        color: #F1E7D3;
+        color: #65688B;
         border-radius: 0px;
         padding: 4px 8px;
         margin: 2px;
@@ -65,7 +65,7 @@
         border-radius: 0px;
         font-weight: bold;
         font-size: 14px;
-        color: #F1E7D3;
+        color: #65688B;
     }
 
     #workspaces button {
@@ -79,8 +79,8 @@
     }
 
     #workspaces button.active {
-        color: #242036;
-        background: #E09A25;
+        color: #884D73;
+        background: #b385b2;
     }
 
     #workspaces button:hover {
@@ -97,7 +97,7 @@
     }
 
     #clock, #custom-appmenu {
-        background-color: #E09A25;
+        background-color: #b385b2;
         font-size: 16px;
         font-weight: 800;
         color: #242036;
@@ -128,7 +128,7 @@
     }
 
     #idle_inhibitor.activated {
-        color: #E09A25;
+        color: #b385b2;
     }
 
     #pulseaudio {
@@ -152,7 +152,7 @@
     }
 
     #battery.critical:not(.charging) {
-        background-color: #E09A25;
+        background-color: #b385b2;
         color: #ebdbb2;
         animation: blink 0.5s linear infinite alternate;
     }
