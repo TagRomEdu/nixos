@@ -33,4 +33,5 @@ with pkgs;
   wl-clipboard
   pywalfox-native
   imagemagick
+  amdvlk
 ]

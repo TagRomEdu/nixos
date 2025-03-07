@@ -23,5 +23,9 @@
     xwayland
     spicetify-cli
     alvr
+    ffmpeg
+    libva
+    libva-utils
+    mesa
   ];
 }
