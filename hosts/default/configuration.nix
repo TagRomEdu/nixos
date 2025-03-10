@@ -18,7 +18,6 @@
     "${self}/system/programs/lact.nix"
     "${self}/system/xdg.nix"
     "${self}/system/environment.nix"
-
     inputs.home-manager.nixosModules.default
   ];
 
@@ -89,6 +88,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Configure keymap in X11
   services.xserver.xkb = {

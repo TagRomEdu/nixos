@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   environment.variables = {
@@ -26,6 +31,6 @@
     ffmpeg
     libva
     libva-utils
-    mesa
+    playerctl
   ];
 }

@@ -7,6 +7,7 @@
         obs-vkcapture
         obs-webkitgtk
         obs-vaapi
+        obs-composite-blur
       ];
     })
     pkgs.libva

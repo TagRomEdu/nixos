@@ -40,7 +40,7 @@
     }
 
     window#waybar {
-        background-color: #242036;
+        background-color: #252C42;
         border: 3px solid #b385b2;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         padding: 0;
@@ -59,7 +59,7 @@
     }
 
     #hyprland-workspaces {
-        background: #332e4d;
+        background: #393C60;
         margin: 1px 0;
         padding: 4px 8px;
         border-radius: 0px;
@@ -73,7 +73,7 @@
         margin: 3px 0px;
         border-radius: 0px;
         color: #ebdbb2;
-        background-color: #332e4d;
+        background-color: #393C60;
         transition: all 0.3s ease-in-out;
         font-size: 14px;
     }
@@ -89,7 +89,7 @@
 
     #custom-exit {
         font-size: 16px;
-        background-color: #332e4d;
+        background-color: #393C60;
         color: #ebdbb2;
         border-radius: 0px;
         padding: 4px 4px;
@@ -100,7 +100,7 @@
         background-color: #b385b2;
         font-size: 16px;
         font-weight: 800;
-        color: #242036;
+        color: #252C42;
         border-radius: 0px;
         padding: 4px 8px;
         margin: 2px;
@@ -108,13 +108,13 @@
 
     tooltip {
         border-radius: 0px;
-        background-color: #242036;
+        background-color: #252C42;
         color: #ebdbb2;
         padding: 4px 8px;
     }
 
     #taskbar {
-        background-color: #332e4d;
+        background-color: #393C60;
         padding: 4px 4px;
         margin: 3px 0px;
         border-radius: 0px;
@@ -132,7 +132,7 @@
     }
 
     #pulseaudio {
-        background-color: #332e4d;
+        background-color: #393C60;
         font-size: 14px;
         font-weight: 800;
         color: #ebdbb2;
@@ -142,7 +142,7 @@
     }
 
     #backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
-        background-color: #332e4d;
+        background-color: #393C60;
         font-size: 14px;
         font-weight: 800;
         color: #ebdbb2;
@@ -159,7 +159,7 @@
 
     @keyframes blink {
         to {
-            background-color: #242036;
+            background-color: #252C42;
             color: #ebdbb2;
         }
     }

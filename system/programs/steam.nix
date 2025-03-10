@@ -22,6 +22,7 @@
     usbutils
     pkgs.libsndfile
     pkgs.xwayland
+    gamescope
   ];
 
   # Udev rules for VR devices
