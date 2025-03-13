@@ -10,6 +10,7 @@ with pkgs;
   protonplus
   lutris
   furmark
+  dolphin-emu
 
   # Desktop
   swaynotificationcenter

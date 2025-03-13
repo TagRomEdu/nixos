@@ -18,6 +18,7 @@
     "${self}/system/programs/lact.nix"
     "${self}/system/xdg.nix"
     "${self}/system/environment.nix"
+    "${self}/system/8bitdo.nix"
     inputs.home-manager.nixosModules.default
   ];
 
