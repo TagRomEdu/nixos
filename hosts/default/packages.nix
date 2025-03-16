@@ -4,8 +4,8 @@ with pkgs;
 
   # Applications
   firefox
-  #(vesktop.override { electron = pkgs.electron_33; })
-  vesktop
+  (vesktop.override { electron = pkgs.electron_33; })
+  # vesktop
   #(discord-canary.override { withVencord = true; })
   protonplus
   lutris

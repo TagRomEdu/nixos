@@ -29,6 +29,7 @@
     spicetify-cli
     alvr
     ffmpeg
+    mesa
     libva
     libva-utils
     playerctl
