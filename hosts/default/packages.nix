@@ -11,6 +11,7 @@ with pkgs;
   lutris
   furmark
   dolphin-emu
+  prismlauncher
 
   # Desktop
   swaynotificationcenter
