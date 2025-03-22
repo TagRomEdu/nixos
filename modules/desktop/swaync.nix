@@ -115,12 +115,12 @@
     }
   '';
   home.file.".config/swaync/style.css".text = ''
-    @define-color cc-bg #242036; /* Background color */
+    @define-color cc-bg #091223; /* Background color */
     @define-color cc-light-bg #332e4d;
-    @define-color noti-border-color #884D73; /* Gruvbox green from Waybar */
-    @define-color noti-bg #242036; /* Same background color as #282828 */
+    @define-color noti-border-color #57A7DE; /* Gruvbox green from Waybar */
+    @define-color noti-bg #091223; /* Same background color as #282828 */
     @define-color noti-bg-focus #2c3e50; /* Focused background color */
-    @define-color noti-close-bg #884D73; /* Close button background color same as border */
+    @define-color noti-close-bg #57A7DE; /* Close button background color same as border */
     @define-color noti-bg-hover #333333; /* Hover color for background */
     @define-color text-color #c3c6cd;
     @define-color bg-selected #c3c6cd;

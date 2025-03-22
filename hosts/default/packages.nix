@@ -10,6 +10,7 @@ with pkgs;
   protonplus
   lutris
   furmark
+  prismlauncher
 
   # Desktop
   swaynotificationcenter

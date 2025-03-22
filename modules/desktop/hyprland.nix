@@ -89,7 +89,7 @@
         gaps_in = 5;
         gaps_out = 14;
         border_size = 3;
-        "col.active_border" = "rgb(b385b2)";
+        "col.active_border" = "rgb(57A7DE)";
       };
 
       decoration = {
