@@ -40,8 +40,8 @@
     }
 
     window#waybar {
-        background-color: #252C42;
-        border: 3px solid #b385b2;
+        background-color: #091223;
+        border: 3px solid #57A7DE;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         padding: 0;
         margin: 0;
@@ -59,7 +59,7 @@
     }
 
     #hyprland-workspaces {
-        background: #393C60;
+        background: #152E51;
         margin: 1px 0;
         padding: 4px 8px;
         border-radius: 0px;
@@ -72,15 +72,15 @@
         padding: 4px 4px;
         margin: 3px 0px;
         border-radius: 0px;
-        color: #ebdbb2;
-        background-color: #393C60;
+        color:rgb(178, 193, 235);
+        background-color: #152E51;
         transition: all 0.3s ease-in-out;
         font-size: 14px;
     }
 
     #workspaces button.active {
-        color: #884D73;
-        background: #b385b2;
+        color: #FFFFFF;
+        background: #57A7DE;
     }
 
     #workspaces button:hover {
@@ -89,18 +89,18 @@
 
     #custom-exit {
         font-size: 16px;
-        background-color: #393C60;
-        color: #ebdbb2;
+        background-color: #152E51;
+        color: #FFFFFF;
         border-radius: 0px;
         padding: 4px 4px;
         margin: 3px 0px;
     }
 
     #clock, #custom-appmenu {
-        background-color: #b385b2;
+        background-color: #57A7DE;
         font-size: 16px;
         font-weight: 800;
-        color: #252C42;
+        color: #091223;
         border-radius: 0px;
         padding: 4px 8px;
         margin: 2px;
@@ -108,13 +108,13 @@
 
     tooltip {
         border-radius: 0px;
-        background-color: #252C42;
+        background-color: #091223;
         color: #ebdbb2;
         padding: 4px 8px;
     }
 
     #taskbar {
-        background-color: #393C60;
+        background-color: #152E51;
         padding: 4px 4px;
         margin: 3px 0px;
         border-radius: 0px;
@@ -132,7 +132,7 @@
     }
 
     #pulseaudio {
-        background-color: #393C60;
+        background-color: #152E51;
         font-size: 14px;
         font-weight: 800;
         color: #ebdbb2;
@@ -142,7 +142,7 @@
     }
 
     #backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
-        background-color: #393C60;
+        background-color: #152E51;
         font-size: 14px;
         font-weight: 800;
         color: #ebdbb2;
@@ -159,7 +159,7 @@
 
     @keyframes blink {
         to {
-            background-color: #252C42;
+            background-color: #091223;
             color: #ebdbb2;
         }
     }

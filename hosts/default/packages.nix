@@ -10,7 +10,10 @@ with pkgs;
   protonplus
   lutris
   furmark
+<<<<<<< HEAD
   dolphin-emu
+=======
+>>>>>>> stable-rollback
   prismlauncher
 
   # Desktop
