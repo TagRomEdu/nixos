@@ -26,6 +26,7 @@ in
     ../../modules/programs/fastfetch.nix
     ../../modules/programs/spicetify.nix
     ../../modules/programs/obs.nix
+    ../../modules/programs/pywal-vesktop.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default

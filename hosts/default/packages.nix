@@ -10,11 +10,10 @@ with pkgs;
   protonplus
   lutris
   furmark
-<<<<<<< HEAD
   dolphin-emu
-=======
->>>>>>> stable-rollback
   prismlauncher
+  heroic
+  peazip
 
   # Desktop
   swaynotificationcenter
@@ -40,4 +39,6 @@ with pkgs;
   pywalfox-native
   imagemagick
   amdvlk
+  rar
+  unzip
 ]

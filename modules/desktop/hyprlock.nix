@@ -6,7 +6,7 @@
     background {
         monitor =
         #path = screenshot
-        path = ~/nixos/assets/wallpapers/flowers.png
+        path = ~/nixos/assets/wallpapers/fence.png
         #color = $background
         blur_passes = 2
         contrast = 1
