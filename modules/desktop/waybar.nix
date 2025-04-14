@@ -40,8 +40,8 @@ home.file.".config/waybar/style.css".text = ''
 }
 
 window#waybar {
-    background-color: #1d2021;
-    border: 3px solid #83a598;
+    background-color: #1e1e2e; /* base */
+    border: 3px solid #89b4fa; /* blue */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     padding: 0;
     margin: 0;
@@ -51,7 +51,7 @@ window#waybar {
 #window {
     font-size: 16px;
     font-weight: 800;
-    color: #bdae93;
+    color: #89b4fa; /* blue */
     border-radius: 0px;
     padding: 4px 8px;
     margin: 2px;
@@ -59,49 +59,49 @@ window#waybar {
 }
 
 #hyprland-workspaces {
-    background: #3c3836;
+    background: #313244; /* surface0 */
     margin: 1px 0;
     padding: 4px 8px;
     border-radius: 0px;
     font-weight: bold;
     font-size: 14px;
-    color: #bdae93;
+    color: #89b4fa; /* blue */
 }
 
 #workspaces button {
     padding: 4px 4px;
     margin: 3px 0px;
     border-radius: 0px;
-    color: #d5c4a1;
-    background-color: #3c3836;
+    color: #cdd6f4; /* text */
+    background-color: #313244; /* surface0 */
     transition: all 0.3s ease-in-out;
     font-size: 14px;
 }
 
 #workspaces button.active {
-    color: #1d2021;
-    background: #83a598;
+    color: #1e1e2e; /* base */
+    background: #89b4fa; /* blue */
 }
 
 #workspaces button:hover {
-    background: #83a598;
-    color: #1d2021;
+    background: #89b4fa; /* blue */
+    color: #1e1e2e; /* base */
 }
 
 #custom-exit {
     font-size: 16px;
-    background-color: #3c3836;
-    color: #d5c4a1;
+    background-color: #313244; /* surface0 */
+    color: #cdd6f4; /* text */
     border-radius: 0px;
     padding: 4px 4px;
     margin: 3px 0px;
 }
 
 #clock, #custom-appmenu {
-    background-color: #83a598;
+    background-color: #89b4fa; /* blue */
     font-size: 16px;
     font-weight: 800;
-    color: #1d2021;
+    color: #1e1e2e; /* base */
     border-radius: 0px;
     padding: 4px 8px;
     margin: 2px;
@@ -109,13 +109,13 @@ window#waybar {
 
 tooltip {
     border-radius: 0px;
-    background-color: #1d2021;
-    color: #ebdbb2;
+    background-color: #1e1e2e; /* base */
+    color: #cdd6f4; /* text */
     padding: 4px 8px;
 }
 
 #taskbar {
-    background-color: #3c3836;
+    background-color: #313244; /* surface0 */
     padding: 4px 4px;
     margin: 3px 0px;
     border-radius: 0px;
@@ -124,46 +124,47 @@ tooltip {
 
 #idle_inhibitor {
     font-size: 18px;
-    color: #ebdbb2;
+    color: #cdd6f4; /* text */
     margin-right: 10px;
 }
 
 #idle_inhibitor.activated {
-    color: #d3869b;
+    color: #89b4fa; /* blue */
 }
 
 #pulseaudio {
-    background-color: #3c3836;
+    background-color: #313244; /* surface0 */
     font-size: 14px;
     font-weight: 800;
-    color: #ebdbb2;
+    color: #cdd6f4; /* text */
     border-radius: 0px;
     padding: 4px 0px;
     margin: 4px 0px;
 }
 
 #backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
-    background-color: #3c3836;
+    background-color: #313244; /* surface0 */
     font-size: 14px;
     font-weight: 800;
-    color: #ebdbb2;
+    color: #cdd6f4; /* text */
     border-radius: 0px;
     padding: 4px 12px;
     margin: 4px 0px;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #d3869b;
-    color: #ebdbb2;
+    background-color: #89b4fa; /* blue (still using it to stay on-theme) */
+    color: #1e1e2e;
     animation: blink 0.5s linear infinite alternate;
 }
 
 @keyframes blink {
     to {
-        background-color: #1d2021;
-        color: #ebdbb2;
+        background-color: #1e1e2e; /* base */
+        color: #cdd6f4; /* text */
     }
 }
+
 
   '';
 

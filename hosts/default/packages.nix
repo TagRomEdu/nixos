@@ -14,7 +14,6 @@ with pkgs;
   prismlauncher
   heroic
   peazip
-  kitty
 
   # Desktop
   swaynotificationcenter

@@ -144,7 +144,8 @@
 
   stylix.enable = true;
   #stylix.image = ../../assets/wallpapers/flowers_gruv.png;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+  #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
   #home-manager.backupFileExtension = "backup";
 

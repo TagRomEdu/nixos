@@ -9,9 +9,9 @@
 {
   programs.fish = {
     enable = true;
-
+  #cat ~/.cache/wal/sequences <- if I want to go back to pywal
     interactiveShellInit = "
-     
+      
       set -g fish_greeting ''
       fastfetch
     ";
