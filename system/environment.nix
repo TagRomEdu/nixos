@@ -8,8 +8,6 @@
 {
 
   environment.systemPackages = with pkgs; [
-    #spotify
-    pcmanfm
     wget
     unzip
     git
