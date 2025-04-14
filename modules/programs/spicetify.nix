@@ -14,7 +14,9 @@ in
     enabledExtensions = with spicePkgs.extensions; [
       hidePodcasts
       shuffle
+      groupSession
+      fullAppDisplay
     ];
-    theme = spicePkgs.themes.dracula;
+    #theme = spicePkgs.themes.dracula;
   };
 }

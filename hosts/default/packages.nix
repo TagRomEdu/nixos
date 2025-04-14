@@ -14,6 +14,7 @@ with pkgs;
   prismlauncher
   heroic
   peazip
+  kitty
 
   # Desktop
   swaynotificationcenter
@@ -41,4 +42,9 @@ with pkgs;
   amdvlk
   rar
   unzip
+  droidcam
+  wtfutil
+  gowall
+  gruvbox-gtk-theme
+  papirus-icon-theme
 ]

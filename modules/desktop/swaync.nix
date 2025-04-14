@@ -115,113 +115,110 @@
     }
   '';
   home.file.".config/swaync/style.css".text = ''
-    @define-color cc-bg #091223;
-    @define-color cc-light-bg rgb(46, 57, 77);
-    @define-color noti-border-color #57A7DE;
-    @define-color noti-bg #091223;
-    @define-color noti-bg-focus #2c3e50;
-    @define-color noti-close-bg #57A7DE;
-    @define-color noti-bg-hover #333333;
-    @define-color text-color #c3c6cd;
-    @define-color bg-selected #c3c6cd;
+@define-color cc-bg #1d2021; /* base00 */
+@define-color cc-light-bg #3c3836; /* base01 */
+@define-color noti-border-color #83a598; /* base0D */
+@define-color noti-bg #1d2021; /* base00 */
+@define-color noti-bg-focus #3c3836; /* base01 */
+@define-color noti-close-bg #83a598; /* base0D */
+@define-color noti-bg-hover #504945; /* base02 */
+@define-color text-color #d5c4a1; /* base05 */
+@define-color bg-selected #d5c4a1; /* base05 */
 
-    .control-center {
+.control-center {
     border: 3px solid @noti-border-color;
     border-radius: 0px;
     padding: 8px;
     background: @cc-bg;
     margin-bottom: 14px;
+}
 
-    }
-
-    .widget-title {
+.widget-title {
     border: 3px solid @noti-border-color;
     border-radius: 0px;
     padding: 8px;
     margin: 8px;
     background: @cc-light-bg;
     margin-bottom: 14px;
+}
 
-    }
-
-    .widget-title > button {
+.widget-title > button {
     background: @cc-light-bg;
     color: @text-color;
     border: 3px solid @noti-border-color;
     border-radius: 0px;
-    }
+}
 
-    .widget-title > button:hover {
+.widget-title > button:hover {
     background: @noti-border-color;
     color: @cc-bg;
     border: 3px solid @noti-border-color;
     border-radius: 0px;
-    }
+}
 
-    .widget-dnd {
+.widget-dnd {
     border: 3px solid @noti-border-color;
     border-radius: 0px;
     padding: 8px;
     margin: 8px;
     background: @cc-light-bg;
     margin-bottom: 14px;
+}
 
-    }
-
-    .widget-dnd > switch {
+.widget-dnd > switch {
     border-radius: 5px;
     background: @cc-light-bg;
     border: 3px solid @noti-border-color;
-    }
+}
 
-    .widget-dnd > switch:checked {
+.widget-dnd > switch:checked {
     background: @noti-border-color;
     border: 3px solid @noti-border-color;
-    }
+}
 
-    .widget-dnd > switch slider {
+.widget-dnd > switch slider {
     background: @cc-bg;
     border-radius: 0px;
-    }
+}
 
-    .widget-dnd > switch:checked slider {
+.widget-dnd > switch:checked slider {
     background: @cc-bg;
     border-radius: 0px;
-    }
+}
 
-    .widget-buttons-grid {
+.widget-buttons-grid {
     border: 3px solid @noti-border-color;
     border-radius: 0px;
     padding: 8px;
     margin: 8px;
     background: @cc-light-bg;
     margin-bottom: 14px;
-    }
+}
 
-    .widget-buttons-grid > flowbox > flowboxchild > button {
+.widget-buttons-grid > flowbox > flowboxchild > button {
     color: @foreground;
     background: @cc-light-bg;
     border: 3px solid @noti-border-color;
     border-radius: 0px;
     min-width: 110px;
-    }
+}
 
-    .widget-buttons-grid > flowbox > flowboxchild > button:hover {
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
     background: @noti-border-color;
     color: @cc-bg;
-    }
+}
 
-    .notification-row:focus,
-    .notification-row:hover {
+.notification-row:focus,
+.notification-row:hover {
     background: @noti-bg-hover;
-    }
+}
 
-    .notification-row .notification-background {
+.notification-row .notification-background {
     padding: 0px 0px;
     margin: 10px;
-    }
+}
 
-    .notification-row .notification-background .close-button {
+.notification-row .notification-background .close-button {
     background: @noti-close-bg;
     color: @text-color;
     padding: 0;
@@ -230,125 +227,124 @@
     border-radius: 0px;
     min-width: 24px;
     min-height: 24px;
-    }
+}
 
-    .notification-row .notification-background .close-button:hover {
+.notification-row .notification-background .close-button:hover {
     background: @noti-border-color;
-    }
+}
 
-    .notification-row .notification-background .notification {
+.notification-row .notification-background .notification {
     margin: 4px;
     border: 3px solid @noti-border-color;
     padding: 8px;
     background: @cc-bg;
     border-radius: 0px;
+}
 
-    }
-
-    .notification-row .notification-background .notification .notification-action,
-    .notification-row .notification-background .notification .notification-default-action {
+.notification-row .notification-background .notification .notification-action,
+.notification-row .notification-background .notification .notification-default-action {
     background: @cc-light-bg;
     color: @text-color;
     border-radius: 0px;
+}
 
-    }
-
-    .notification-row .notification-background .notification .notification-action:hover,
-    .notification-row .notification-background .notification .notification-default-action:hover {
+.notification-row .notification-background .notification .notification-action:hover,
+.notification-row .notification-background .notification .notification-default-action:hover {
     background: @noti-border-color;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action {
+.notification-row .notification-background .notification .notification-default-action {
     border-radius: 0px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action:not(:only-child) {
+.notification-row .notification-background .notification .notification-default-action:not(:only-child) {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content {
+.notification-row .notification-background .notification .notification-default-action .notification-content {
     border-radius: 0px;
     padding: 8px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .image {
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
     border-radius: 0px;
     margin: 6px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
+.notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
     border-radius: 0px;
     margin: 6px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
     font-size: 16px;
     font-weight: bold;
     color: @text-color;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
     font-size: 16px;
     font-weight: bold;
     color: @text-color;
     margin-right: 30px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
     font-size: 15px;
     font-weight: normal;
     color: @text-color;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content progressbar {
-    background: #00FFFF;
-    }
+.notification-row .notification-background .notification .notification-default-action .notification-content progressbar {
+    background: #8ec07c; /* base0C */
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .body-image {
+.notification-row .notification-background .notification .notification-default-action .notification-content .body-image {
     background-color: white;
     border-radius: 0px;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply {
-    background: #00FFFF;
-    }
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply {
+    background: #8ec07c; /* base0C */
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-entry {
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-entry {
     background: @noti-bg;
     color: @text-color;
     caret-color: @text-color;
     border: 3px solid @noti-border-color;
-    background: #00FFFF;
-    }
+    background: #8ec07c; /* base0C */
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button {
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button {
     background: @noti-bg;
     border: 1px solid @noti-border-color;
     border-radius: 0px;
     color: @text-color;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:hover {
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:hover {
     background: @noti-bg-hover;
-    }
+}
 
-    .notification-row .notification-background .notification:hover {
+.notification-row .notification-background .notification:hover {
     background: @noti-bg-hover;
-    }
+}
 
-    .notification-row .notification-background .notification .notification-action {
+.notification-row .notification-background .notification .notification-action {
     border-top: 1px solid @noti-border-color;
     border-right: 1px solid @noti-border-color;
-    background: #00FFFF;
-    }
+    background: #8ec07c; /* base0C */
+}
 
-    .notification-row .notification-background .notification .notification-action:first-child {
-    background: #00FFFF;
-    }
+.notification-row .notification-background .notification .notification-action:first-child {
+    background: #8ec07c; /* base0C */
+}
 
-    .notification-row .notification-background .notification .notification-action:last-child {
-    background: #00FFFF;
-    }
+.notification-row .notification-background .notification .notification-action:last-child {
+    background: #8ec07c; /* base0C */
+}
+
   '';
 }

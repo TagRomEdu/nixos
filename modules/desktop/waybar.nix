@@ -34,135 +34,136 @@
 
   '';
 
-  home.file.".config/waybar/style.css".text = ''
-    * {
+home.file.".config/waybar/style.css".text = ''
+* {
     font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    }
+}
 
-    window#waybar {
-        background-color: #091223;
-        border: 3px solid #57A7DE;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-        padding: 0;
-        margin: 0;
-        transition: background-color 0.3s;
-    }
+window#waybar {
+    background-color: #1d2021;
+    border: 3px solid #83a598;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin: 0;
+    transition: background-color 0.3s;
+}
 
-    #window {
-        font-size: 16px;
-        font-weight: 800;
-        color: #65688B;
-        border-radius: 0px;
-        padding: 4px 8px;
-        margin: 2px;
-        opacity: 1;
-    }
+#window {
+    font-size: 16px;
+    font-weight: 800;
+    color: #bdae93;
+    border-radius: 0px;
+    padding: 4px 8px;
+    margin: 2px;
+    opacity: 1;
+}
 
-    #hyprland-workspaces {
-        background: #152E51;
-        margin: 1px 0;
-        padding: 4px 8px;
-        border-radius: 0px;
-        font-weight: bold;
-        font-size: 14px;
-        color: #65688B;
-    }
+#hyprland-workspaces {
+    background: #3c3836;
+    margin: 1px 0;
+    padding: 4px 8px;
+    border-radius: 0px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #bdae93;
+}
 
-    #workspaces button {
-        padding: 4px 4px;
-        margin: 3px 0px;
-        border-radius: 0px;
-        color:rgb(178, 193, 235);
-        background-color: #152E51;
-        transition: all 0.3s ease-in-out;
-        font-size: 14px;
-    }
+#workspaces button {
+    padding: 4px 4px;
+    margin: 3px 0px;
+    border-radius: 0px;
+    color: #d5c4a1;
+    background-color: #3c3836;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+}
 
-    #workspaces button.active {
-        color: #FFFFFF;
-        background: #57A7DE;
-    }
+#workspaces button.active {
+    color: #1d2021;
+    background: #83a598;
+}
 
-    #workspaces button:hover {
-        background: #3c3836;
-    }
+#workspaces button:hover {
+    background: #83a598;
+    color: #1d2021;
+}
 
-    #custom-exit {
-        font-size: 16px;
-        background-color: #152E51;
-        color: #FFFFFF;
-        border-radius: 0px;
-        padding: 4px 4px;
-        margin: 3px 0px;
-    }
+#custom-exit {
+    font-size: 16px;
+    background-color: #3c3836;
+    color: #d5c4a1;
+    border-radius: 0px;
+    padding: 4px 4px;
+    margin: 3px 0px;
+}
 
-    #clock, #custom-appmenu {
-        background-color: #57A7DE;
-        font-size: 16px;
-        font-weight: 800;
-        color: #091223;
-        border-radius: 0px;
-        padding: 4px 8px;
-        margin: 2px;
-    }
+#clock, #custom-appmenu {
+    background-color: #83a598;
+    font-size: 16px;
+    font-weight: 800;
+    color: #1d2021;
+    border-radius: 0px;
+    padding: 4px 8px;
+    margin: 2px;
+}
 
-    tooltip {
-        border-radius: 0px;
-        background-color: #091223;
+tooltip {
+    border-radius: 0px;
+    background-color: #1d2021;
+    color: #ebdbb2;
+    padding: 4px 8px;
+}
+
+#taskbar {
+    background-color: #3c3836;
+    padding: 4px 4px;
+    margin: 3px 0px;
+    border-radius: 0px;
+    font-weight: normal;
+}
+
+#idle_inhibitor {
+    font-size: 18px;
+    color: #ebdbb2;
+    margin-right: 10px;
+}
+
+#idle_inhibitor.activated {
+    color: #d3869b;
+}
+
+#pulseaudio {
+    background-color: #3c3836;
+    font-size: 14px;
+    font-weight: 800;
+    color: #ebdbb2;
+    border-radius: 0px;
+    padding: 4px 0px;
+    margin: 4px 0px;
+}
+
+#backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
+    background-color: #3c3836;
+    font-size: 14px;
+    font-weight: 800;
+    color: #ebdbb2;
+    border-radius: 0px;
+    padding: 4px 12px;
+    margin: 4px 0px;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #d3869b;
+    color: #ebdbb2;
+    animation: blink 0.5s linear infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: #1d2021;
         color: #ebdbb2;
-        padding: 4px 8px;
     }
-
-    #taskbar {
-        background-color: #152E51;
-        padding: 4px 4px;
-        margin: 3px 0px;
-        border-radius: 0px;
-        font-weight: normal;
-    }
-
-    #idle_inhibitor {
-        font-size: 18px;
-        color: #ebdbb2;
-        margin-right: 10px;
-    }
-
-    #idle_inhibitor.activated {
-        color: #b385b2;
-    }
-
-    #pulseaudio {
-        background-color: #152E51;
-        font-size: 14px;
-        font-weight: 800;
-        color: #ebdbb2;
-        border-radius: 0px;
-        padding: 4px 0px;
-        margin: 4px 0px;
-    }
-
-    #backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
-        background-color: #152E51;
-        font-size: 14px;
-        font-weight: 800;
-        color: #ebdbb2;
-        border-radius: 0px;
-        padding: 4px 12px;
-        margin: 4px 0px;
-    }
-
-    #battery.critical:not(.charging) {
-        background-color: #b385b2;
-        color: #ebdbb2;
-        animation: blink 0.5s linear infinite alternate;
-    }
-
-    @keyframes blink {
-        to {
-            background-color: #091223;
-            color: #ebdbb2;
-        }
-    }
+}
 
   '';
 

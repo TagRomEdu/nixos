@@ -32,6 +32,8 @@ in
     inputs.spicetify-nix.homeManagerModules.default
   ];
 
+  xdg.portal.enable = true;
+
   home.stateVersion = "24.11";
 
   home.packages = allPackages;

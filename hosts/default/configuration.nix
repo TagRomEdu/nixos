@@ -54,7 +54,7 @@
     pkgs.nerd-fonts.droid-sans-mono
   ];
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -91,6 +91,9 @@
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
 
+  services.dbus.enable = true;
+  xdg.portal.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "de";
@@ -112,6 +115,19 @@
     pulse.enable = true;
   };
 
+  # DroidCam / v4l2loopback config
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback
+  ];
+
+  boot.kernelModules = [
+    "v4l2loopback"
+  ];
+
+  boot.extraModprobeConfig = ''
+    options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
+  '';
+
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
@@ -125,6 +141,12 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  stylix.enable = true;
+  #stylix.image = ../../assets/wallpapers/flowers_gruv.png;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+
+  #home-manager.backupFileExtension = "backup";
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
 

@@ -6,12 +6,10 @@
 }:
 
 {
-  environment.variables = {
-    GTK_THEME = "Adwaita-dark";
-    XCURSOR_SIZE = "24";
-  };
 
   environment.systemPackages = with pkgs; [
+    #spotify
+    pcmanfm
     wget
     unzip
     git
@@ -34,4 +32,10 @@
     libva-utils
     playerctl
   ];
+
+  environment.variables = {
+    GTK_THEME = "Gruvbox-Dark";
+    GTK_ICON_THEME = "Papirus-Dark";
+    XCURSOR_SIZE = "24";
+  };
 }

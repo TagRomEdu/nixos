@@ -6,8 +6,9 @@ let
     plenary-nvim = import ./nvim-plugins/plenary-nvim.nix { inherit pkgs; };
     telescope-nvim = import ./nvim-plugins/telescope-nvim.nix { inherit pkgs; };
     vim-fugitive = import ./nvim-plugins/vim-fugitive.nix { inherit pkgs; };
-    null-ls = import ./nvim-plugins/null-ls.nix { inherit pkgs; };
+    #null-ls = import ./nvim-plugins/null-ls.nix { inherit pkgs; };
     autopairs = import ./nvim-plugins/autopairs.nix { inherit pkgs; };
+    presence-nvim = import ./nvim-plugins/presence-nvim.nix { inherit pkgs; };
   };
 in
 {
@@ -33,8 +34,9 @@ in
       plugins.plenary-nvim
       plugins.telescope-nvim
       plugins.vim-fugitive
-      plugins.null-ls
+     # plugins.null-ls
       plugins.autopairs
+      plugins.presence-nvim
     ];
   };
 }

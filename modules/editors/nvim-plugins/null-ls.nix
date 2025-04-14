@@ -8,18 +8,25 @@
     null_ls.setup({
       sources = {
         null_ls.builtins.formatting.nixpkgs_fmt.with({
-          command = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt",
+          command = "/etc/profiles/per-user/lysec/bin/nixpkgs-fmt", -- Adjusted path
         }),
         null_ls.builtins.formatting.rustfmt.with({
-          command = "${pkgs.rustfmt}/bin/rustfmt",
+          command = "/etc/profiles/per-user/lysec/bin/rustfmt", -- Adjusted path
         }),
         null_ls.builtins.formatting.prettier.with({
-          command = "${pkgs.nodePackages.prettier}/bin/prettier",
+          command = "/run/current-system/sw/bin/prettier", -- Prettier path
         }),
-                null_ls.builtins.formatting.black.with({
-          command = "${pkgs.black}/bin/black",
+        null_ls.builtins.formatting.black.with({
+          command = "/etc/profiles/per-user/lysec/bin/black", -- Adjusted path
         }),
       },
+      on_attach = function(client, bufnr)
+        local bufname = vim.fn.bufname(bufnr)
+        if bufname:match("neo-tree") then
+          print("Skipping null-ls for Neo-tree buffer")
+          return
+        end
+      end,
     })
     EOF
   '';

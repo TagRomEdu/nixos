@@ -11,7 +11,7 @@
     enable = true;
 
     interactiveShellInit = "
-      cat ~/.cache/wal/sequences
+     
       set -g fish_greeting ''
       fastfetch
     ";

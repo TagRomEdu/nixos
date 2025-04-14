@@ -7,6 +7,10 @@
       jnoortheen.nix-ide
       esbenp.prettier-vscode
     ];
-  };
 
+    profiles.default.userSettings = {
+      "editor.formatOnSave" = true;
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    };
+  };
 }

@@ -237,28 +237,28 @@
     switcher_only = true
   '';
   home.file.".config/walker/themes/pink.css".text = ''
-    @define-color foreground #242036;
-    @define-color foreground-light #ebdbb2;
-    @define-color background #11101c;
-    @define-color cursor #c3c3c6;
+@define-color foreground #ebdbb2;
+@define-color foreground-light #fbf1c7;
+@define-color background #282828;
+@define-color cursor #d79921;
 
-    @define-color color0 #11101c;
-    @define-color color1 #b385b2;
-    @define-color color2 #b385b2;
-    @define-color color3 #b385b2;
-    @define-color color4 #4653BE;
-    @define-color color5 #6BB5C7;
-    @define-color color6 #AEA296;
-    @define-color color7 #c3c3c6;
-    @define-color color8 #5f5c71;
-    @define-color color9 #b385b2;
-    @define-color color10 #b385b2;
-    @define-color color11 #b385b2;
-    @define-color color12 #4653BE;
-    @define-color color13 #6BB5C7;
-    @define-color color14 #AEA296;
-    @define-color color15 #c3c3c6;
-    /* AUTO GENERATED. DO NOT EDIT. CHANGES WILL BE OVERWRITTEN. */
+@define-color color0 #282828;
+@define-color color1 #83a598;
+@define-color color2 #98971a;
+@define-color color3 #d79921;
+@define-color color4 #458588;
+@define-color color5 #b16286;
+@define-color color6 #689d6a;
+@define-color color7 #a89984;
+@define-color color8 #928374;
+@define-color color9 #fb4934;
+@define-color color10 #b8bb26;
+@define-color color11 #fabd2f;
+@define-color color12 #83a598;
+@define-color color13 #d3869b;
+@define-color color14 #8ec07c;
+@define-color color15 #ebdbb2;
+
 
     #window,
     #box,
