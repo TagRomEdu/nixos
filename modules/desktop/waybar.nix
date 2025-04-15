@@ -4,7 +4,6 @@
   home.file.".config/waybar/config".text = ''
     {
         "layer": "top",
-        "height": 10,
         "margin-top": 14,
         "margin-bottom": 0,
         "margin-left": 14,
@@ -41,118 +40,131 @@ home.file.".config/waybar/style.css".text = ''
 }
 
 window#waybar {
-    background-color: #1e1e2e;
-    border: 2px solid #89b4fa;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: #1e1e2e; /* base */
+    border: 3px solid #89b4fa; /* blue */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     padding: 0;
     margin: 0;
+    transition: background-color 0.3s;
 }
 
 #window {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 800;
-    color: #89b4fa;
-    padding: 3px 8px;
-    margin: 1px;
+    color: #89b4fa; /* blue */
+    border-radius: 0px;
+    padding: 4px 8px;
+    margin: 2px;
+    opacity: 1;
 }
 
 #hyprland-workspaces {
-    background: #313244;
-    margin: 0;
-    padding: 3px 8px;
+    background: #313244; /* surface0 */
+    margin: 1px 0;
+    padding: 4px 8px;
+    border-radius: 0px;
     font-weight: bold;
-    font-size: 13px;
-    color: #89b4fa;
+    font-size: 14px;
+    color: #89b4fa; /* blue */
 }
 
 #workspaces button {
-    padding: 3px 6px;
-    margin: 2px 0;
-    font-size: 13px;
-    color: #cdd6f4;
+    padding: 4px 4px;
+    margin: 3px 0px;
     border-radius: 0px;
-    background-color: #313244;
+    color: #cdd6f4; /* text */
+    background-color: #313244; /* surface0 */
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
 }
 
 #workspaces button.active {
-    background: #89b4fa;
-    color: #1e1e2e;
+    color: #1e1e2e; /* base */
+    background: #89b4fa; /* blue */
 }
 
 #workspaces button:hover {
-    background: #89b4fa;
-    color: #1e1e2e;
+    background: #89b4fa; /* blue */
+    color: #1e1e2e; /* base */
 }
 
 #custom-exit {
-    font-size: 14px;
-    background-color: #313244;
-    color: #cdd6f4;
-    padding: 3px 6px;
-    margin: 2px 0;
+    font-size: 16px;
+    background-color: #313244; /* surface0 */
+    color: #cdd6f4; /* text */
+    border-radius: 0px;
+    padding: 4px 4px;
+    margin: 3px 0px;
 }
 
 #clock, #custom-appmenu {
-    background-color: #89b4fa;
-    font-size: 14px;
+    background-color: #89b4fa; /* blue */
+    font-size: 16px;
     font-weight: 800;
-    color: #1e1e2e;
-    padding: 3px 8px;
-    margin: 1px;
+    color: #1e1e2e; /* base */
+    border-radius: 0px;
+    padding: 4px 8px;
+    margin: 2px;
 }
 
 tooltip {
-    background-color: #1e1e2e;
-    color: #cdd6f4;
-    padding: 4px 6px;
+    border-radius: 0px;
+    background-color: #1e1e2e; /* base */
+    color: #cdd6f4; /* text */
+    padding: 4px 8px;
 }
 
 #taskbar {
-    background-color: #313244;
-    padding: 3px 6px;
-    margin: 2px 0;
+    background-color: #313244; /* surface0 */
+    padding: 4px 4px;
+    margin: 3px 0px;
+    border-radius: 0px;
+    font-weight: normal;
 }
 
 #idle_inhibitor {
-    font-size: 15px;
-    color: #cdd6f4;
-    margin-right: 6px;
+    font-size: 18px;
+    color: #cdd6f4; /* text */
+    margin-right: 10px;
 }
 
 #idle_inhibitor.activated {
-    color: #89b4fa;
+    color: #89b4fa; /* blue */
 }
 
 #pulseaudio {
-    background-color: #313244;
-    font-size: 13px;
+    background-color: #313244; /* surface0 */
+    font-size: 14px;
     font-weight: 800;
-    color: #cdd6f4;
-    padding: 3px 8px;
-    margin: 2px 0;
+    color: #cdd6f4; /* text */
+    border-radius: 0px;
+    padding: 4px 0px;
+    margin: 4px 0px;
 }
 
 #backlight, #pulseaudio, #network, #bluetooth, #battery, #tray, #custom-updates, #custom-notification {
-    background-color: #313244;
-    font-size: 13px;
+    background-color: #313244; /* surface0 */
+    font-size: 14px;
     font-weight: 800;
-    color: #cdd6f4;
-    padding: 3px 8px;
-    margin: 2px 0;
+    color: #cdd6f4; /* text */
+    border-radius: 0px;
+    padding: 4px 12px;
+    margin: 4px 0px;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #89b4fa;
+    background-color: #89b4fa; /* blue (still using it to stay on-theme) */
     color: #1e1e2e;
     animation: blink 0.5s linear infinite alternate;
 }
 
 @keyframes blink {
     to {
-        background-color: #1e1e2e;
-        color: #cdd6f4;
+        background-color: #1e1e2e; /* base */
+        color: #cdd6f4; /* text */
     }
 }
+
 
   '';
 
