@@ -45,7 +45,6 @@ in
       plugins.plenary-nvim
       plugins.telescope-nvim
       plugins.vim-fugitive
-     # plugins.null-ls
       plugins.autopairs
       plugins.presence-nvim
       plugins.treesitter-nvim
