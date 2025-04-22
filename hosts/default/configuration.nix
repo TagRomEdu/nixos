@@ -143,11 +143,10 @@
   nixpkgs.config.allowUnfree = true;
 
   stylix.enable = true;
-  #stylix.image = ../../assets/wallpapers/flowers_gruv.png;
+  #stylix.image = "${self}/assets/wallpapers/fence.jpg";
   #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-  #home-manager.backupFileExtension = "backup";
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
 

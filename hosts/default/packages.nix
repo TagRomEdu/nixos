@@ -24,6 +24,7 @@ with pkgs;
   nwg-look
 
   # Development
+  nodejs
   rustup
   gcc
   gh

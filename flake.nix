@@ -18,27 +18,48 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    fabric.url = "github:Fabrics-Development/fabric";  # Add the Fabric flake
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      chaotic,
-      ...
-    }@inputs:
-    {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit self inputs; };
-        modules = [
-          ./hosts/default/configuration.nix
-          inputs.stylix.nixosModules.stylix
-          inputs.home-manager.nixosModules.default
-          inputs.spicetify-nix.nixosModules.default
-          chaotic.nixosModules.default
-        ];
-      };
+  outputs = { self, nixpkgs, home-manager, chaotic, fabric, ... }@inputs: {
+    # Define the NixOS configuration for your system
+    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit self inputs; };
+      modules = [
+        ./hosts/default/configuration.nix
+        inputs.stylix.nixosModules.stylix
+        inputs.home-manager.nixosModules.default
+        inputs.spicetify-nix.nixosModules.default
+        chaotic.nixosModules.default
+      ];
     };
+
+    # Fabric overlay setup and package definitions for Python packages
+    nixpkgs.lib.eachDefaultSystem (system: let
+      overlay = final: prev: {
+        pythonPackagesExtensions =
+          prev.pythonPackagesExtensions ++ [
+            (python-final: python-prev: {
+              python-fabric = prev.callPackage fabric.default {};
+            })
+          ];
+      };
+
+      pkgs = nixpkgs.legacyPackages.${system}.extend overlay;
+    in {
+      overlays.default = overlay;
+
+      # Fabric's Python package and run-widget
+      packages = {
+        default = pkgs.python3Packages.python-fabric;
+        run-widget = pkgs.callPackage fabric.run-widget {};
+      };
+
+      # Reference the devShell from the dev-shells folder
+      devShells = {
+        default = import ./dev-shells/fabric-shell.nix { pkgs = pkgs; python3 = pkgs.python3; };
+      };
+    });
+  };
 }
