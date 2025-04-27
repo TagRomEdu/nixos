@@ -7,6 +7,7 @@
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprland.url = "github:hyprwm/Hyprland";
     stylix.url = "github:danth/stylix";
+    niri.url = "github:sodiboo/niri-flake";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -19,7 +20,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, niri, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit self inputs; };

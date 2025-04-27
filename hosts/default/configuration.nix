@@ -150,5 +150,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
+  home-manager.backupFileExtension = "backup";
+
   system.stateVersion = "25.05";
 }

@@ -47,4 +47,5 @@ with pkgs;
   gowall
   gruvbox-gtk-theme
   papirus-icon-theme
+  xwayland-satellite
 ]
