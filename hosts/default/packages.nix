@@ -1,12 +1,25 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
+
 with pkgs;
 [
-
   # Applications
   firefox
-  (vesktop.override { electron = pkgs.electron_33; })
-  # vesktop
-  #(discord-canary.override { withVencord = true; })
+  (writeShellApplication {
+    name = "vesktop";
+
+    runtimeInputs = [ vesktop ]; # depend on the real vesktop binary
+
+    text = ''
+      if [ "$XDG_CURRENT_DESKTOP" = "niri" ]; then
+        exec vesktop --ozone-platform=x11 "$@"
+      else
+        exec vesktop "$@"
+      fi
+    '';
+  })
   protonplus
   lutris
   furmark
@@ -33,6 +46,9 @@ with pkgs;
   black
 
   # Utilities
+  eww
+  jq
+  socat
   tree
   libnotify
   nvd

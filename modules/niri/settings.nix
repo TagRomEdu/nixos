@@ -7,18 +7,29 @@
     enable = true;
     package = pkgs.niri;
     settings = {
+      
+      prefer-no-csd = true;
+
+      hotkey-overlay = {
+          skip-at-startup = true;
+      };
+
       environment = {
         CLUTTER_BACKEND = "wayland";
         DISPLAY = ":0";
         GDK_BACKEND = "wayland,x11";
+        OZONE_PLATFORM = "x11";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
-        QT_QPA_PLATFORM = "wayland;xcb";
+        QT_QPA_PLATFORM = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         SDL_VIDEODRIVER = "wayland";
+        ELECTRON_OZONE_PLATFORM_HINT = "auto";
+        ELECTRON_ENABLE_HARDWARE_ACCELERATION = "0";
+
+        XDG_SESSION_TYPE = "wayland";
       };
 
-      # Layout configuration (borders, gaps, etc.)
       layout = {
         border = {
           width = 3;
@@ -46,7 +57,7 @@
           accel-profile = "adaptive";
         };
         focus-follows-mouse.enable = true;
-        warp-mouse-to-focus = true;
+        warp-mouse-to-focus = false;
       };
 
       # Output configuration (monitors)

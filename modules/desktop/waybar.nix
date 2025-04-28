@@ -207,7 +207,7 @@ tooltip {
         }
     },
 
-    // Hyprland Window
+    // hyprland Window
     "hyprland/window": {
         "format": "{}",
         "rewrite": {

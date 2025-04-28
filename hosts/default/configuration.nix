@@ -143,7 +143,8 @@
   nixpkgs.config.allowUnfree = true;
 
   stylix.enable = true;
-  #stylix.image = "${self}/assets/wallpapers/fence.jpg";
+  #stylix.image = "${self}/assets/wallpapers/space_bw.jpg";
+  #stylix.polarity = "dark";
   #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 

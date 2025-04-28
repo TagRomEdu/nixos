@@ -9,6 +9,6 @@
     { command = ["xwayland-satellite"]; }
     { command = ["waypaper" "--restore"]; }
     { command = ["swaync"]; }
-   # { command = ["vesktop"]; }
+    { command = ["vesktop"]; }
   ];
 }
