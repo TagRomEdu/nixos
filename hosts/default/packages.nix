@@ -27,6 +27,7 @@ with pkgs;
   prismlauncher
   heroic
   peazip
+  firefox
 
   # Desktop
   swaynotificationcenter
