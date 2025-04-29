@@ -8,6 +8,10 @@
     hyprland.url = "github:hyprwm/Hyprland";
     stylix.url = "github:danth/stylix";
     niri.url = "github:sodiboo/niri-flake";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -20,10 +24,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, niri, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, nur, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit self inputs; };
+      specialArgs = {
+        inherit self inputs;
+      };
       modules = [
         ./hosts/default/configuration.nix
         inputs.stylix.nixosModules.stylix

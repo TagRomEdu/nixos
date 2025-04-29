@@ -1,11 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  self,
-  ...
-}:
+{ config, pkgs, inputs, lib, self, ... }:
 
 {
   imports = [
@@ -20,6 +13,16 @@
     "${self}/system/environment.nix"
     #"${self}/system/8bitdo.nix"
     inputs.home-manager.nixosModules.default
+  ];
+
+  # Add NUR overlay
+  nixpkgs.overlays = [
+    (final: prev: {
+      nur = import inputs.nur {
+        nurpkgs = prev;
+        pkgs = prev;
+      };
+    })
   ];
 
   # Define the lysec user
@@ -144,14 +147,11 @@
 
   stylix.enable = true;
   #stylix.image = "${self}/assets/wallpapers/space_bw.jpg";
-  #stylix.polarity = "dark";
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
-  #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
-  home-manager.backupFileExtension = "backup";
+  home-manager.backupFileExtension = "hm-backup";
 
   system.stateVersion = "25.05";
 }

@@ -5,8 +5,8 @@
 
 with pkgs;
 [
+  #stylix.targets.firefox.profileNames = "ide8k3pu";
   # Applications
-  firefox
   (writeShellApplication {
     name = "vesktop";
 

@@ -256,8 +256,8 @@
 
       #hyprland-workspaces {
         background: #131721;
-        margin: 1px 0;
-        padding: 4px 8px;
+        padding: 4px 4px;
+        margin: 3px 0px;
         border-radius: 0px;
         font-weight: bold;
         font-size: 14px;

@@ -29,6 +29,7 @@ in
     ../../modules/programs/spicetify.nix
     ../../modules/programs/obs.nix
     ../../modules/programs/pywal-vesktop.nix
+    ../../modules/programs/firefox.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
@@ -43,6 +44,6 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
   };
-
+  
   programs.home-manager.enable = true;
 }
