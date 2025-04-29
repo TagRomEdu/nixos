@@ -145,8 +145,8 @@
   stylix.enable = true;
   #stylix.image = "${self}/assets/wallpapers/space_bw.jpg";
   #stylix.polarity = "dark";
-  #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
+  #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;

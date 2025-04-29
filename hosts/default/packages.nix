@@ -30,7 +30,7 @@ with pkgs;
 
   # Desktop
   swaynotificationcenter
-  waybar
+  #waybar
   hyprshot
   hyprlock
   walker
