@@ -55,6 +55,7 @@
     pkgs.roboto
     pkgs.nerd-fonts._0xproto
     pkgs.nerd-fonts.droid-sans-mono
+    pkgs.jetbrains-mono
   ];
 
   # Bootloader

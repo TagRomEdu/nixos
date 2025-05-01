@@ -93,14 +93,13 @@
           "tooltip-format" = "Tools";
         };
 
-        # Rofi Application Launcher
+        # Application Launcher
         "custom/appmenu" = {
           "format" = "   ";
-          "on-click" = "sleep 0.2; rofi -show drun -replace";
-          "tooltip-format" = "Left: Open the application launcher\nRight: Show all keybindings";
+          "on-click" = "sleep 0.2; walker";
         };
 
-        # Rofi Application Launcher Icon
+        # Application Launcher Icon
         "custom/appmenuicon" = {
           "format" = "";
           "on-click" = "sleep 0.2; rofi -show drun -replace";

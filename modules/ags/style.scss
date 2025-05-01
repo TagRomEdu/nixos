@@ -1,0 +1,99 @@
+@use "sass:color";
+
+$bg: #0f1419;
+$bg-lighter: #0d1017;
+$fg: #b3b1ad;
+$accent: #39bae6;
+$radius: 0px;
+
+window.Bar {
+  border: 3px solid $accent;
+  box-shadow: none;
+  background-color: $bg;
+  color: $fg;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: "JetBrains Mono", monospace;
+
+  label {
+    margin: 0 8px;
+  }
+
+  .Workspaces {
+    border: 3px solid $accent;
+    button {
+      all: unset;
+      background-color: transparent;
+
+      &:hover label {
+        background-color: color.adjust($fg, $alpha: -0.84);
+        border-color: color.adjust($accent, $alpha: -0.8);
+      }
+
+      &:active label {
+        background-color: color.adjust($fg, $alpha: -0.8);
+      }
+    }
+
+    label {
+      transition: 200ms;
+      padding: 0 8px;
+      margin: 2px;
+      border-radius: $radius;
+      border: 1pt solid transparent;
+    }
+
+    .focused label {
+      color: $bg;
+      border-color: $accent;
+      background-color: $accent;
+    }
+  }
+
+  .SysTray {
+    margin-right: 8px;
+
+    button {
+      border-radius: 0;
+      padding: 0 4px;
+    }
+  }
+
+  .FocusedClient {
+    color: $accent;
+    font-weight: bold;
+    border: 1px solid $accent;
+    border-radius: $radius;
+    padding: 0 6px;
+    margin-left: 8px;
+  }
+
+  .Media .Cover {
+    min-height: 1.2em;
+    min-width: 1.2em;
+    border-radius: $radius;
+    background-position: center;
+    background-size: contain;
+  }
+
+  .Battery label {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .Audio {
+    margin: 0 1em;
+
+    icon {
+      margin-right: 0px;
+    }
+  }
+
+  .Time {
+    color: $fg;
+  }
+
+  > centerbox {
+    padding: 7 7;
+  }
+}

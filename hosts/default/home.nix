@@ -13,9 +13,7 @@ in
   home.homeDirectory = "/home/lysec";
 
   imports = [
-#    ../../modules/niri/default.nix
     ../../modules/desktop/hyprland.nix
-
     ../../modules/desktop/hyprlock.nix
     ../../modules/desktop/waybar.nix
     ../../modules/desktop/swaync.nix
@@ -32,6 +30,7 @@ in
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
+    inputs.ags.homeManagerModules.default
   ];
 
   xdg.portal.enable = true;
@@ -43,6 +42,26 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  programs.ags = {
+    enable = true;
+    configDir = ../../modules/ags;  # or wherever you want to place your AGS config
   
+    extraPackages = with pkgs; [
+      inputs.ags.packages.${pkgs.system}.battery
+      inputs.ags.packages.${pkgs.system}.hyprland
+      inputs.ags.packages.${pkgs.system}.tray
+      inputs.ags.packages.${pkgs.system}.mpris
+      inputs.ags.packages.${pkgs.system}.wireplumber
+      inputs.ags.packages.${pkgs.system}.bluetooth
+      inputs.ags.packages.${pkgs.system}.powerprofiles
+      inputs.ags.packages.${pkgs.system}.apps
+      inputs.ags.packages.${pkgs.system}.network
+      inputs.ags.packages.${pkgs.system}.notifd
+      fzf
+    ];
+  
+  };
+
   programs.home-manager.enable = true;
 }
