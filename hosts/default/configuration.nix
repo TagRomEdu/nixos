@@ -132,6 +132,11 @@
     options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
   '';
 
+  fileSystems."/home/lysec/storage" = {
+    device = "UUID=74697b82-1266-4372-96cc-aac599abfb72";
+    fsType = "ext4";
+  };
+
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
@@ -152,7 +157,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
-  home-manager.backupFileExtension = "hm-backup";
+  home-manager.backupFileExtension = "backups";
 
   system.stateVersion = "25.05";
 }
