@@ -36,7 +36,9 @@ in
 
   home.stateVersion = "24.11";
 
-  home.packages = allPackages;
+  home.packages = allPackages ++ [
+    inputs.fabric.packages.x86_64-linux.run-widget
+  ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
