@@ -1,85 +1,111 @@
 :vars {
-  --background: #150d16;
-  --foreground: #f5dbc4;
-  --color0: #150d16;
-  --color1: #72448d;
-  --color2: #9c5995;
-  --color3: #d5719f;
-  --color4: #9a62f3;
-  --color5: #e075df;
-  --color6: #f98f9f;
-  --color7: #f5dbc4;
-  --color8: #ab9989;
-  --color9: #72448d;
-  --color10: #9c5995;
-  --color11: #d5719f;
-  --color12: #9a62f3;
-  --color13: #e075df;
-  --color14: #f98f9f;
-  --color15: #f5dbc4;
-  --window-bg: alpha(var(--background), 0.6);
-  --module-bg: alpha(var(--background), 0.4);
-  --border-color: var(--color11);
+  --background: #0f1419;
+  --foreground: #e6e1cf;
+  --color0: #0f1419;
+  --color1: #ff3333;
+  --color2: #b8cc52;
+  --color3: #ffcc66;
+  --color4: #59c2ff;
+  --color5: #d2a6ff;
+  --color6: #95e6cb;
+  --color7: #e6e1cf;
+  --color8: #5c6773;
+  --color9: #ff3333;
+  --color10: #b8cc52;
+  --color11: #ffcc66;
+  --color12: #36a3d9;
+  --color13: #d2a6ff;
+  --color14: #95e6cb;
+  --color15: #ffffff;
+  --window-bg: var(--background);
+  --module-bg: #1f2430;
+  --border-color: var(--accent);
+  --accent: var(--color4); /* Blue accent */
 }
 
 * {
   all: unset;
-  font-family: "Jost*";
+  font-family: "Jost*", "Iosevka Nerd Font";
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--foreground);
 }
 
 #window-inner {
-  border: solid 2px;
-  border-color: var(--color11);
+  border: 3px solid var(--border-color);
   background-color: var(--window-bg);
-  border-radius: 100px;
-  border-radius: 12px;
-  padding: 10px;
+  padding: 15px;
 }
 
 #date-time > label {
-  font-weight: 900;
-  font-size: 28px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 #header {
-  border: solid 1px var(--border-color);
-  border-radius: 8px;
-  box-shadow: 0px 18px 23px -6px rgba(0, 0, 0, 0.75);
+  border: 1px solid var(--border-color);
+  padding: 12px;
   background: linear-gradient(
-    90deg,
-    alpha(var(--color11), 0.2),
-    alpha(var(--background), 0.2),
-    var(--module-bg)
+    135deg,
+    var(--module-bg) 0%,
+    var(--background) 100%
   );
+  margin-bottom: 12px;
 }
 
 #profile-pic {
-  background-color: alpha(var(--color11), 0.2);
-  background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 6px;
-  padding: 32px;
-  margin: 4px;
+  background-position: center;
+  min-width: 64px;
+  min-height: 64px;
+  margin-right: 12px;
+  border: 3px solid var(--border-color);
+}
+
+#greeter-label {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+#progress-bar-container,
+#control-buttons-container {
+  background-color: var(--module-bg);
+  padding: 8px;
+  margin: 10px 0;
 }
 
 #progress-bar {
-  color: var(--module-bg);
-  border: solid 10px var(--border-color);
+  background-color: var(--background);
+  border: 3px solid var(--border-color);
 }
 
-#progress-bar-sep {
-  padding: 4px;
-  margin: 16px 0px;
-  border-radius: 100px;
-  background-color: var(--module-bg);
+.progress-icon {
+  font-family: "Iosevka Nerd Font";
+  font-size: 20px;
 }
 
-#progress-bar-container {
+.control-button {
+  font-family: "Iosevka Nerd Font";
+  font-size: 20px;
+  min-width: 48px;
+  min-height: 48px;
   background-color: var(--module-bg);
-  border-radius: 100px;
-  padding: 8px;
+  border: 3px solid var(--border-color);
+  margin: 0 4px;
+}
+
+#logout-button,
+#lock-button,
+#reboot-button,
+#shutdown-button {
+  color: var(--accent);
+}
+
+#logout-button:hover,
+#lock-button:hover,
+#reboot-button:hover,
+#shutdown-button:hover {
+  background-color: var(--accent);
+  color: var(--background);
 }

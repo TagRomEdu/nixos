@@ -7,35 +7,12 @@ from fabric.widgets.box import Box
 from fabric.widgets.label import Label
 from fabric.widgets.overlay import Overlay
 from fabric.widgets.datetime import DateTime
-from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.wayland import WaylandWindow as Window
-from fabric.widgets.button import Button  # Import Button widget
+from fabric.widgets.button import Button
 from fabric.utils import invoke_repeater, get_relative_path
 
 
-def get_profile_picture_path() -> str | None:
-    path = os.path.expanduser("~/Pictures/Other/face.jpg")
-    if not os.path.exists(path):
-        path = os.path.expanduser("~/.face")
-    if not os.path.exists(path):
-        logger.warning(
-            "can't fetch a user profile picture, add a profile picture image at ~/.face or at ~/Pictures/Other/profile.jpg"
-        )
-        path = None
-    return path
-
-
 class SidePanel(Window):
-    @staticmethod
-    def bake_progress_bar(name: str = "progress-bar", size: int = 64, **kwargs):
-        return CircularProgressBar(
-            name=name, min_value=0, max_value=100, size=size, **kwargs
-        )
-
-    @staticmethod
-    def bake_progress_icon(**kwargs):
-        return Label(**kwargs).build().add_style_class("progress-icon").unwrap()
-
     def __init__(self, **kwargs):
         super().__init__(
             layer="overlay",
@@ -48,14 +25,17 @@ class SidePanel(Window):
             **kwargs,
         )
 
-        self.profile_pic = Box(
-            name="profile-pic",
-            style=f"background-image: url(\"file://{get_profile_picture_path() or ''}\")",
-        )
+        # Set the custom icon instead of the profile picture
+        self.profile_pic = Box(name="profile-pic", children=[])
+        pic_path = os.path.expanduser("/home/lysec/nixos/assets/icons/nix-catppuccin.png")  # Updated path
+        if os.path.exists(pic_path):
+            self.profile_pic.set_style(f"background-image: url('file://{pic_path}')")
+        else:
+            logger.warning("Custom icon not found at '~/nixos/assets/icon/test.png'")
+
         self.uptime_label = Label(label=f"{self.get_current_uptime()}")
 
         self.header = Box(
-            spacing=14,
             name="header",
             orientation="h",
             children=[
@@ -63,10 +43,7 @@ class SidePanel(Window):
                 Box(
                     orientation="v",
                     children=[
-                        DateTime(
-                            name="date-time",
-                            style="margin-top: 4px; min-width: 180px;",
-                        ),
+                        DateTime(name="date-time"),
                         self.uptime_label,
                     ],
                 ),
@@ -74,113 +51,210 @@ class SidePanel(Window):
         )
 
         self.greeter_label = Label(
+            name="greeter-label",
             label=f"Good {'Morning' if time.localtime().tm_hour < 12 else 'Afternoon'}, {os.getlogin().title()}!",
-            style="font-size: 20px;",
         )
-
-        self.cpu_progress = self.bake_progress_bar()
-        self.ram_progress = self.bake_progress_bar()
-        self.bat_circular = self.bake_progress_bar().build().set_value(42).unwrap()
 
         self.progress_container = Box(
             name="progress-bar-container",
-            spacing=12,
             children=[
+                Label(label="Hello Fabric <3"),
+            ],
+        )
+
+        # Control Buttons (no text, icon only)
+        def make_button(name, icon, tooltip):
+            btn = Button(name=name, label=icon, tooltip_text=tooltip)
+            btn.add_style_class("control-button")
+            return btn
+
+        self.logout_button = make_button("logout-button", "", "Logout")
+        self.logout_button.connect("clicked", self.on_logout_click)
+
+        self.lock_button = make_button("lock-button", "󰍹", "Lock")
+        self.lock_button.connect("clicked", self.on_lock_click)
+
+        self.reboot_button = make_button("reboot-button", "", "Reboot")
+        self.reboot_button.connect("clicked", self.on_reboot_click)
+
+        self.shutdown_button = make_button("shutdown-button", "", "Shutdown")
+        self.shutdown_button.connect("clicked", self.on_shutdown_click)
+
+        self.control_buttons = Box(
+            name="control-buttons-container",
+            orientation="h",
+            children=[
+                self.logout_button,
+                Box(name="control-button-sep"),
+                self.lock_button,
+                Box(name="control-button-sep"),
+                self.reboot_button,
+                Box(name="control-button-sep"),
+                self.shutdown_button,
+            ],
+        )
+        self.add(
+            Box(
+                name="window-inner",
+                orientation="v",
+                children=[
+                    self.header,
+                    self.greeter_label,
+                    self.progress_container,
+                    self.control_buttons,
+                ],
+            ),
+        )
+        self.show_all()
+
+    def update_uptime_label(self):
+        self.uptime_label.set_label(self.get_current_uptime())
+
+    def on_logout_click(self, button):
+        logger.info("Logout clicked")
+
+    def on_lock_click(self, button):
+        logger.info("Lock clicked")
+
+    def on_reboot_click(self, button):
+        logger.info("Reboot clicked")
+
+    def on_shutdown_click(self, button):
+        logger.info("Shutdown clicked")
+
+    def get_current_uptime(self):
+        uptime = time.time() - psutil.boot_time()
+        days, rem = divmod(uptime, 86400)
+        hours, _ = divmod(rem, 3600)
+        return f"{int(days)} {'days' if days != 1 else 'day'}, {int(hours)} {'hours' if hours != 1 else 'hour'}"
+
+
+if __name__ == "__main__":
+    panel = SidePanel()
+    app = Application("side-panel", panel)
+    app.set_stylesheet_from_file(get_relative_path("./style.css"))
+    app.run()
+from fabric.widgets.datetime import DateTime
+
+class SidePanel(Window):
+    def __init__(self, **kwargs):
+        super().__init__(
+            layer="overlay",
+            title="fabric-overlay",
+            anchor="top right",
+            margin="10px 10px 10px 0px",
+            exclusivity="none",
+            visible=False,
+            all_visible=False,
+            **kwargs,
+        )
+
+        # Set the custom icon instead of the profile picture
+        self.profile_pic = Box(name="profile-pic", children=[])
+        pic_path = os.path.expanduser("/home/lysec/nixos/assets/icons/nix-catppuccin.png")  # Updated path
+        if os.path.exists(pic_path):
+            self.profile_pic.set_style(f"background-image: url('file://{pic_path}')")
+        else:
+            logger.warning("Custom icon not found at '/home/lysec/nixos/assets/icons/nix-catppuccin.png'")
+
+        self.uptime_label = Label(label=f"{self.get_current_uptime()}")
+
+        self.header = Box(
+            name="header",
+            orientation="h",
+            children=[
+                self.profile_pic,
                 Box(
+                    orientation="v",
                     children=[
-                        Overlay(
-                            child=self.cpu_progress,
-                            overlays=[
-                                self.bake_progress_icon(
-                                    label="",
-                                    style="margin-right: 8px; text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;",
-                                )
-                            ],
-                        ),
-                    ],
-                ),
-                Box(name="progress-bar-sep"),
-                Box(
-                    children=[
-                        Overlay(
-                            child=self.ram_progress,
-                            overlays=[
-                                self.bake_progress_icon(
-                                    label="󰘚",
-                                    style="margin-right: 4px; text-shadow: 0 0 10px #fff;",
-                                )
-                            ],
-                        )
-                    ]
-                ),
-                Box(name="progress-bar-sep"),
-                Box(
-                    children=[
-                        Overlay(
-                            child=self.bat_circular,
-                            overlays=[
-                                self.bake_progress_icon(
-                                    label="󱊣",
-                                    style="margin-right: 0px; text-shadow: 0 0 10px #fff, 0 0 18px #fff;",
-                                )
-                            ],
-                        ),
+                        DateTime(name="date-time", format="%H:%M:%S"),  # 24-hour time format
+                        self.uptime_label,
                     ],
                 ),
             ],
         )
 
-        # Button to trigger an action
-        self.button = Button(
-            label="Click Me",
-            style="background-color: #008CBA; color: white; padding: 10px; font-size: 14px;",
-            visible=True,
-            tooltip_text="This is a clickable button",
+        self.greeter_label = Label(
+            name="greeter-label",
+            label=f"Good {'Morning' if time.localtime().tm_hour < 12 else 'Afternoon'}, {os.getlogin().title()}!",
         )
-        self.button.on_click = self.on_button_click  # Bind the button click event
 
-        self.update_status()
-        invoke_repeater(
-            15 * 60 * 1000,  # every 15min
-            lambda: (self.uptime_label.set_label(self.get_current_uptime()), True)[1],
+        self.progress_container = Box(
+            name="progress-bar-container",
+            children=[
+                Label(label="CachyNix when @Naim?"),
+            ],
         )
-        invoke_repeater(1000, self.update_status)
 
+        # Control Buttons (no text, icon only)
+        def make_button(name, icon, tooltip):
+            btn = Button(name=name, label=icon, tooltip_text=tooltip)
+            btn.add_style_class("control-button")
+            return btn
+
+        self.logout_button = make_button("logout-button", "", "Logout")
+        self.logout_button.connect("clicked", self.on_logout_click)
+
+        self.lock_button = make_button("lock-button", "󰍹", "Lock")
+        self.lock_button.connect("clicked", self.on_lock_click)
+
+        self.reboot_button = make_button("reboot-button", "", "Reboot")
+        self.reboot_button.connect("clicked", self.on_reboot_click)
+
+        self.shutdown_button = make_button("shutdown-button", "", "Shutdown")
+        self.shutdown_button.connect("clicked", self.on_shutdown_click)
+
+        self.control_buttons = Box(
+            name="control-buttons-container",
+            orientation="h",
+            children=[
+                self.logout_button,
+                Box(name="control-button-sep"),
+                self.lock_button,
+                Box(name="control-button-sep"),
+                self.reboot_button,
+                Box(name="control-button-sep"),
+                self.shutdown_button,
+            ],
+        )
         self.add(
             Box(
                 name="window-inner",
                 orientation="v",
-                spacing=24,
-                children=[self.header, self.greeter_label, self.progress_container, self.button],  # Add button here
+                children=[
+                    self.header,
+                    self.greeter_label,
+                    self.progress_container,
+                    self.control_buttons,
+                ],
             ),
         )
         self.show_all()
 
-    def update_status(self):
-        self.cpu_progress.value = psutil.cpu_percent()
-        self.ram_progress.value = psutil.virtual_memory().percent
-        if not (bat_sen := psutil.sensors_battery()):
-            self.bat_circular.value = 42
-        else:
-            self.bat_circular.value = bat_sen.percent
+    def update_uptime_label(self):
+        self.uptime_label.set_label(self.get_current_uptime())
 
-        return True
+    def on_logout_click(self, button):
+        logger.info("Logout clicked")
 
-    def on_button_click(self, widget):
-        logger.info("Button clicked!")
-        # Add more functionality for the button here
+    def on_lock_click(self, button):
+        logger.info("Lock clicked")
+
+    def on_reboot_click(self, button):
+        logger.info("Reboot clicked")
+
+    def on_shutdown_click(self, button):
+        logger.info("Shutdown clicked")
 
     def get_current_uptime(self):
         uptime = time.time() - psutil.boot_time()
-        uptime_days, remainder = divmod(uptime, 86400)
-        uptime_hours, remainder = divmod(remainder, 3600)
-        # uptime_minutes, _ = divmod(remainder, 60)
-        return f"{int(uptime_days)} {'days' if uptime_days > 1 else 'day'}, {int(uptime_hours)} {'hours' if uptime_hours > 1 else 'hour'}"
+        days, rem = divmod(uptime, 86400)
+        hours, _ = divmod(rem, 3600)
+        return f"{int(days)} {'days' if days != 1 else 'day'}, {int(hours)} {'hours' if hours != 1 else 'hour'}"
 
 
 if __name__ == "__main__":
-    side_panel = SidePanel()
-    app = Application("side-panel", side_panel)
+    panel = SidePanel()
+    app = Application("side-panel", panel)
     app.set_stylesheet_from_file(get_relative_path("./style.css"))
-
     app.run()
