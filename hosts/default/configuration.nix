@@ -160,4 +160,17 @@
   home-manager.backupFileExtension = "backups";
 
   system.stateVersion = "25.05";
+
+
+  # Log rebuild time & date for fabric panel (modules/fabric/config.py)
+  system.activationScripts.logRebuildTime = {
+    text = ''
+      LOG_FILE="/var/log/nixos-rebuild-log.json"
+      TIMESTAMP=$(date "+%d/%m")
+      GENERATION=$(readlink /nix/var/nix/profiles/system | grep -o '[0-9]\+')
+
+      echo "{\"last_rebuild\": \"$TIMESTAMP\", \"generation\": $GENERATION}" > "$LOG_FILE"
+      chmod 644 "$LOG_FILE"
+    '';
+  };
 }

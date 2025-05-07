@@ -20,7 +20,7 @@
   --window-bg: var(--background);
   --module-bg: #1f2430;
   --border-color: var(--accent);
-  --accent: var(--color4); /* Blue accent */
+  --accent: var(--color4);
 }
 
 * {
@@ -35,6 +35,7 @@
   border: 3px solid var(--border-color);
   background-color: var(--window-bg);
   padding: 15px;
+  margin: 14px 14px;
 }
 
 #date-time > label {
@@ -68,6 +69,16 @@
   margin: 8px 0;
 }
 
+#rebuild-label {
+  font-weight: bold;
+}
+
+#os-age-label,
+#uptime-label {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: bold;
+}
+
 #progress-bar-container,
 #control-buttons-container {
   background-color: var(--module-bg);
@@ -81,18 +92,18 @@
 }
 
 .progress-icon {
-  font-family: "Iosevka Nerd Font";
   font-size: 20px;
 }
 
 .control-button {
-  font-family: "Iosevka Nerd Font";
   font-size: 20px;
   min-width: 48px;
   min-height: 48px;
   background-color: var(--module-bg);
   border: 3px solid var(--border-color);
-  margin: 0 4px;
+  padding: 0;
+  margin: 5;
+  font-family: "Font Awesome 6 Free", "Iosevka Nerd Font";
 }
 
 #logout-button,
