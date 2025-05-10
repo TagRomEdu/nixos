@@ -51,57 +51,60 @@ let
   };
 
   powerModule = {
-    type = "custom";
-    class = "power";
-    bar = [
-      {
-        type = "button";
-        class = "power-icon";
-        label = "";
-        on_click = "popup:toggle";
-        tooltip = "Power menu";
-      }
-    ];
-    popup = [
-      {
-        orientation = "vertical";
-        type = "box";
-        class = "power-popup";
-        name = "power-popup";
-        widgets = [
-          {
-            label = "<span font-weight='bold'>Power Menu</span>";
-            name = "header";
-            type = "label";
-          }
-          {
-            type = "box";
-            class = "power-button-box";
-            widgets = [
-              {
-                class = "power-button";
-                label = "";
-                on_click = "!shutdown now";
-                type = "button";
-              }
-              {
-                class = "power-button";
-                label = "";
-                on_click = "!reboot";
-                type = "button";
-              }
-              {
-                class = "power-button";
-                label = "";
-                on_click = "!hyprlock";
-                type = "button";
-              }
-            ];
-          }
-        ];
-      }
-    ];
-  };
+  type = "custom";
+  class = "power";
+  on_click_left = "swaync-client -t";  # Toggle notification center on left click
+  on_click_right = "popup:toggle";     # Show power menu on right click
+  tooltip = "Left click: Notifications\nRight click: Power menu";
+  
+  bar = [
+    {
+      type = "label";
+      class = "power-icon";
+      label = "";  # Bell icon (using Nerd Font)
+    }
+  ];
+  
+  popup = [
+    {
+      orientation = "vertical";
+      type = "box";
+      class = "power-popup";
+      name = "power-popup";
+      widgets = [
+        {
+          label = "<span font-weight='bold'>Power Menu</span>";
+          name = "header";
+          type = "label";
+        }
+        {
+          type = "box";
+          class = "power-button-box";
+          widgets = [
+            {
+              class = "power-button";
+              label = "";
+              on_click = "!shutdown now";
+              type = "button";
+            }
+            {
+              class = "power-button";
+              label = "";
+              on_click = "!reboot";
+              type = "button";
+            }
+            {
+              class = "power-button";
+              label = "";
+              on_click = "!hyprlock";
+              type = "button";
+            }
+          ];
+        }
+      ];
+    }
+  ];
+};
 
   ironbarConfig = pkgs.writeText "ironbar-config.json" (builtins.toJSON {
     position = barPosition;
