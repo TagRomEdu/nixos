@@ -4,7 +4,7 @@ let
   # Configuration options
   barHeight = 36;
   barPosition = "top";
-  fontName = "JetBrains Mono";  # Use JetBrains Mono font
+  fontName = "JetBrains Mono";
 
   # Module definitions
   workspacesModule = {
@@ -19,6 +19,19 @@ let
     type = "label";
     class = "clock";
     label = "{{10000:date '+%H:%M'}}";
+  };
+
+  musicModule = {
+    type = "music";
+    player = "*";
+    interval = 2;
+    truncate = {
+      mode = "end";
+      length = 28;
+      max_length = 32;
+    };
+    tooltip = true;
+    format = "{artist} - {title}";
   };
 
   volumeModule = {
@@ -51,219 +64,221 @@ let
   };
 
   powerModule = {
-  type = "custom";
-  class = "power";
-  on_click_left = "swaync-client -t";  # Toggle notification center on left click
-  on_click_right = "popup:toggle";     # Show power menu on right click
-  tooltip = "Left click: Notifications\nRight click: Power menu";
-  
-  bar = [
-    {
-      type = "label";
-      class = "power-icon";
-      label = "";  # Bell icon (using Nerd Font)
-    }
-  ];
-  
-  popup = [
-    {
-      orientation = "vertical";
-      type = "box";
-      class = "power-popup";
-      name = "power-popup";
-      widgets = [
-        {
-          label = "<span font-weight='bold'>Power Menu</span>";
-          name = "header";
-          type = "label";
-        }
-        {
-          type = "box";
-          class = "power-button-box";
-          widgets = [
-            {
-              class = "power-button";
-              label = "";
-              on_click = "!shutdown now";
-              type = "button";
-            }
-            {
-              class = "power-button";
-              label = "";
-              on_click = "!reboot";
-              type = "button";
-            }
-            {
-              class = "power-button";
-              label = "";
-              on_click = "!hyprlock";
-              type = "button";
-            }
-          ];
-        }
-      ];
-    }
-  ];
-};
+    type = "custom";
+    class = "power";
+    on_click_left = "swaync-client -t";
+    on_click_right = "popup:toggle";
+    tooltip = "Left click: Notifications\nRight click: Power menu";
+    bar = [
+      {
+        type = "label";
+        class = "power-icon";
+        label = "";
+      }
+    ];
+    popup = [
+      {
+        orientation = "vertical";
+        type = "box";
+        class = "power-popup";
+        name = "power-popup";
+        widgets = [
+          {
+            label = "<span font-weight='bold'>Power Menu</span>";
+            name = "header";
+            type = "label";
+          }
+          {
+            type = "box";
+            class = "power-button-box";
+            widgets = [
+              {
+                class = "power-button";
+                label = "";
+                on_click = "!shutdown now";
+                type = "button";
+              }
+              {
+                class = "power-button";
+                label = "";
+                on_click = "!reboot";
+                type = "button";
+              }
+              {
+                class = "power-button";
+                label = "";
+                on_click = "!hyprlock";
+                type = "button";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+  };
 
   ironbarConfig = pkgs.writeText "ironbar-config.json" (builtins.toJSON {
     position = barPosition;
     anchor_to_edges = true;
     height = barHeight;
     start = [ workspacesModule ];
-    center = [ clockModule ];
-    end = [ volumeModule systrayModule powerModule ];
+    center = [ musicModule ];
+    end = [ volumeModule systrayModule powerModule clockModule ];
   });
 
   ironbarStyle = pkgs.writeText "ironbar-style.css" ''
   .background {
-  background: none;
-}
+    background: none;
+  }
 
-#bar {
-  all: unset;
-  font-family: "JetBrains Mono", "Font Awesome 6 Free";
-  font-weight: bold;
-  background-color: #0f1419;
-  color: #c5cdd3;
-  padding-right: 5px;
-  padding-left: 10px;
-}
+  #bar {
+    all: unset;
+    font-family: "JetBrains Mono", "Font Awesome 6 Free";
+    font-weight: bold;
+    background-color: #0f1419;
+    color: #c5cdd3;
+    padding-right: 5px;
+    padding-left: 10px;
+  }
 
-.popup {
-  font-family: "JetBrains Mono";
-  background-color: #0f1419;
-  color: #c5cdd3;
-  padding: 15px;
-  border: 1px solid #1e2429;
-  border-radius: 10px;
-}
+  .popup {
+    font-family: "JetBrains Mono";
+    background-color: #0f1419;
+    color: #c5cdd3;
+    padding: 15px;
+    border: 1px solid #1e2429;
+    border-radius: 10px;
+  }
 
-tooltip.background,
-menu {
-  background-color: #0f1419;
-  color: #c5cdd3;
-  border: 1px solid #1e2429;
-  border-radius: 10px;
-}
+  tooltip.background,
+  menu {
+    background-color: #0f1419;
+    color: #c5cdd3;
+    border: 1px solid #1e2429;
+    border-radius: 10px;
+  }
 
-tooltip label {
-  color: #c5cdd3;
-}
+  tooltip label {
+    color: #c5cdd3;
+  }
 
-.workspaces {
-  font-weight: bold;
-  margin: 0;
-  padding-left: 0;
-}
+  .workspaces {
+    font-weight: bold;
+    margin: 0;
+    padding-left: 0;
+  }
 
-.clock,
-.workspaces .item,
-.tray,
-.script,
-.battery-icon,
-.power-icon,
-.volume-icon,
-.brightness-icon,
-.brightness-percent,
-.battery-percent,
-.volume-percent,
-.network_manager,
-.systray-revealer-icon {
-  margin: 0;
-  background: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: #c5cdd3;
-}
+  .clock,
+  .music,
+  .workspaces .item,
+  .tray,
+  .script,
+  .battery-icon,
+  .power-icon,
+  .volume-icon,
+  .brightness-icon,
+  .brightness-percent,
+  .battery-percent,
+  .volume-percent,
+  .network_manager,
+  .systray-revealer-icon {
+    margin: 0;
+    background: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #c5cdd3;
+  }
 
-.power-icon {
-  color: #c5cdd3;
-}
+  .music {
+    font-style: italic;
+    color: #91b4d5;
+  }
 
-.battery,
-.custom-volume,
-.brightness {
-  margin: 0;
-  padding: 0;
-}
+  .power-icon {
+    color: #c5cdd3;
+  }
 
-.battery-icon,
-.brightness-icon,
-.systray-revealer-icon {
-  font-size: 16px;
-}
+  .battery,
+  .custom-volume,
+  .brightness {
+    margin: 0;
+    padding: 0;
+  }
 
-.volume-icon {
-  font-size: 21px;
-}
+  .battery-icon,
+  .brightness-icon,
+  .systray-revealer-icon {
+    font-size: 16px;
+  }
 
-.battery-percent,
-.volume-percent,
-.brightness-percent,
-.tray {
-  margin: 0;
-  padding-right: 10px;
-  padding-left: 0px;
-}
+  .volume-icon {
+    font-size: 21px;
+  }
 
-.workspaces .item {
-  color: #5c6773;
-  padding-left: 3px;
-  padding-right: 10px;
-}
+  .battery-percent,
+  .volume-percent,
+  .brightness-percent,
+  .tray {
+    margin: 0;
+    padding-right: 10px;
+    padding-left: 0px;
+  }
 
-.workspaces .item.focused {
-  color: #36a3d9;
-}
+  .workspaces .item {
+    color: #5c6773;
+    padding-left: 3px;
+    padding-right: 10px;
+  }
 
-.power-button {
-  font-size: 42pt;
-  padding-right: 35px;
-  padding-left: 20px;
-  margin: 5px;
-}
+  .workspaces .item.focused {
+    color: #36a3d9;
+  }
 
-.power-button-box {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .power-button {
+    font-size: 42pt;
+    padding-right: 35px;
+    padding-left: 20px;
+    margin: 5px;
+  }
 
-.popup-music .album-art {
-  margin-right: 1em;
-}
+  .power-button-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 
-.popup-music .icon-box {
-  margin-right: 0.4em;
-}
+  .popup-music .album-art {
+    margin-right: 1em;
+  }
 
-.popup-music .title .icon, .popup-music .title .label {
-  font-size: 1.7em;
-}
+  .popup-music .icon-box {
+    margin-right: 0.4em;
+  }
 
-.popup-music .volume .slider slider {
-  border-radius: 0px
-}
+  .popup-music .title .icon, .popup-music .title .label {
+    font-size: 1.7em;
+  }
 
-.popup-music .volume .icon {
-  margin-left: 4px;
-}
+  .popup-music .volume .slider slider {
+    border-radius: 0px
+  }
 
-.popup-music .progress .slider slider {
-  border-radius: 0px
-}
+  .popup-music .volume .icon {
+    margin-left: 4px;
+  }
 
-scale trough, scale slider {
-  min-width: 5px;
-  min-height: 5px;
-}
+  .popup-music .progress .slider slider {
+    border-radius: 0px
+  }
 
-.popup-volume .device-box .btn-mute,
-.popup-volume .apps-box .app-box .btn-mute {
-  font-size: 24px;
-}
+  scale trough, scale slider {
+    min-width: 5px;
+    min-height: 5px;
+  }
 
-
+  .popup-volume .device-box .btn-mute,
+  .popup-volume .apps-box .app-box .btn-mute {
+    font-size: 24px;
+  }
   '';
 
 in {
