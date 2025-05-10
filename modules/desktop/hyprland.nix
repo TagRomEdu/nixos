@@ -137,7 +137,8 @@
         "arrpc"
         "waypaper --restore"
         "swaync"
-        "waybar -c ~/.config/waybar/config -s ~/.config/waybar/style.css"
+        "ironbar"
+        #"waybar -c ~/.config/waybar/config -s ~/.config/waybar/style.css"
       ];
       # Startup ends
 

@@ -9,6 +9,7 @@
     "${self}/system/shell/fish.nix"
     "${self}/system/programs/steam.nix"
     "${self}/system/programs/lact.nix"
+    "${self}/system/programs/stylix.nix"
     "${self}/system/xdg.nix"
     "${self}/system/environment.nix"
     #"${self}/system/8bitdo.nix"
@@ -151,13 +152,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  stylix.enable = true;
-  #stylix.image = "${self}/assets/wallpapers/space_bw.jpg";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
-
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
-  home-manager.backupFileExtension = "backups";
+  home-manager.backupFileExtension = "backup";
 
   system.stateVersion = "25.05";
 

@@ -65,4 +65,5 @@ with pkgs;
   gruvbox-gtk-theme
   papirus-icon-theme
   #xwayland-satellite
+  ironbar
 ]

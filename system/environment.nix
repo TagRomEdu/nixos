@@ -29,11 +29,13 @@
     libva
     libva-utils
     playerctl
+    libayatana-appindicator
   ];
 
   environment.variables = {
     GTK_THEME = "Gruvbox-Dark";
     GTK_ICON_THEME = "Papirus-Dark";
     XCURSOR_SIZE = "24";
+    QT_QPA_PLATFORM = "wayland";
   };
 }

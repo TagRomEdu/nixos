@@ -14,9 +14,14 @@
     nixvim.url = "github:nix-community/nixvim";
 
     fabric.url = "github:Fabric-Development/fabric";
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, fabric, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, fabric, quickshell, ... }@inputs: {
 
     # Expose NixOS configuration
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
@@ -28,20 +33,22 @@
         inputs.home-manager.nixosModules.default
         inputs.spicetify-nix.nixosModules.default
         chaotic.nixosModules.default
+
+        ({pkgs, ...}: {
+          environment.systemPackages = [
+            (quickshell.packages.${pkgs.system}.default.override {
+              withWayland = true;
+              withHyprland = true;
+              withQtSvg = true;
+            })
+          ];
+        })
       ];
     };
 
     # Expose Fabric packages for usage
     packages.x86_64-linux = {
       run-widget = fabric.packages.x86_64-linux.run-widget;  # Expose run-widget directly
-    };
-
-    # Optionally expose devShell for development
-    devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
-      buildInputs = [
-        nixpkgs.legacyPackages.x86_64-linux.python3
-        fabric.packages.x86_64-linux.run-widget
-      ];
     };
   };
 }

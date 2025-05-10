@@ -237,30 +237,30 @@
     switcher_only = true
   '';
   home.file.".config/walker/themes/pink.css".text = ''
-@define-color foreground        #cdd6f4;  /* text */
-@define-color foreground-light #f5e0dc;  /* rosewater (lighter text for contrast if needed) */
-@define-color background        #1e1e2e;  /* base */
-@define-color cursor            #89b4fa;  /* blue accent */
+  @define-color foreground        #c5c8c6;  /* text */
+  @define-color foreground-light #d0d0d0;  /* light text */
+  @define-color background        #1e1e2e;  /* base */
+  @define-color cursor            #8c8c8c;  /* grey accent */
 
-/* Base colors (0–7) */
-@define-color color0  #1e1e2e;  /* base */
-@define-color color1  #89b4fa;  /* blue */
-@define-color color2  #a6e3a1;  /* green */
-@define-color color3  #f9e2af;  /* yellow */
-@define-color color4  #89b4fa;  /* blue (used again for coherence) */
-@define-color color5  #f5c2e7;  /* pink */
-@define-color color6  #94e2d5;  /* teal */
-@define-color color7  #bac2de;  /* subtext1 */
+  /* Base colors (0–7) */
+  @define-color color0  #1e1e2e;  /* base */
+  @define-color color1  #82aaff;  /* blue */
+  @define-color color2  #a6e3a1;  /* green */
+  @define-color color3  #f9e2af;  /* yellow */
+  @define-color color4  #82aaff;  /* blue (used again for coherence) */
+  @define-color color5  #f5c2e7;  /* pink */
+  @define-color color6  #94e2d5;  /* teal */
+  @define-color color7  #bac2de;  /* subtext1 */
 
-/* Bright colors (8–15) */
-@define-color color8  #585b70;  /* surface2 */
-@define-color color9  #f38ba8;  /* red */
-@define-color color10 #a6e3a1;  /* green */
-@define-color color11 #f9e2af;  /* yellow */
-@define-color color12 #89b4fa;  /* blue */
-@define-color color13 #f5c2e7;  /* pink */
-@define-color color14 #94e2d5;  /* teal */
-@define-color color15 #cdd6f4;  /* text */
+  /* Bright colors (8–15) */
+  @define-color color8  #585b70;  /* surface2 */
+  @define-color color9  #f38ba8;  /* red */
+  @define-color color10 #a6e3a1;  /* green */
+  @define-color color11 #f9e2af;  /* yellow */
+  @define-color color12 #89b4fa;  /* blue */
+  @define-color color13 #f5c2e7;  /* pink */
+  @define-color color14 #94e2d5;  /* teal */
+  @define-color color15 #cdd6f4;  /* text */
 
 
 

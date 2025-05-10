@@ -18,6 +18,7 @@ in
     ../../modules/desktop/waybar.nix
     ../../modules/desktop/swaync.nix
     ../../modules/desktop/walker.nix
+    ../../modules/desktop/ironbar.nix
 
     ../../modules/editors/vscode.nix
     ../../modules/editors/neovim.nix
