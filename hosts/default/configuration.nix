@@ -158,10 +158,6 @@
 
   system.stateVersion = "25.05";
 
-  # Ports (998 ALVR, ...)
-  networking.firewall.allowedUDPPorts = [ 9988 ];
-
-
   # Log rebuild time & date for fabric panel (modules/fabric/config.py)
   system.activationScripts.logRebuildTime = {
     text = ''
