@@ -27,7 +27,7 @@ in
     ../../modules/programs/fastfetch.nix
     ../../modules/programs/spicetify.nix
     ../../modules/programs/obs.nix
-    ../../modules/programs/pywal-vesktop.nix
+    ../../modules/programs/vesktop-themes.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
@@ -46,4 +46,9 @@ in
   };
 
   programs.home-manager.enable = true;
+  stylix.autoEnable = true;
+  stylix.targets.firefox = {
+    enable = true;
+    profileNames = [ "default" ];
+  };
 }

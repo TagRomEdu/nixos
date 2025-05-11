@@ -1,6 +1,16 @@
 { config, pkgs, lib, ... }:
 
 let
+
+  ironbarConfig = pkgs.writeText "ironbar-config.json" (builtins.toJSON {
+    position = barPosition;
+    anchor_to_edges = true;
+    height = barHeight;
+    start = [ workspacesModule ];
+    center = [ musicModule ];
+    end = [ volumeModule systrayModule powerModule clockModule ];
+  });
+  
   # Configuration options
   barHeight = 36;
   barPosition = "top";
@@ -117,14 +127,6 @@ let
     ];
   };
 
-  ironbarConfig = pkgs.writeText "ironbar-config.json" (builtins.toJSON {
-    position = barPosition;
-    anchor_to_edges = true;
-    height = barHeight;
-    start = [ workspacesModule ];
-    center = [ musicModule ];
-    end = [ volumeModule systrayModule powerModule clockModule ];
-  });
 
   ironbarStyle = pkgs.writeText "ironbar-style.css" ''
   .background {
