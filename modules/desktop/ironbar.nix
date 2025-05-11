@@ -78,7 +78,7 @@ let
     class = "power";
     on_click_left = "swaync-client -t";
     on_click_right = "popup:toggle";
-    tooltip = "Left click: Notifications\nRight click: Power menu";
+    tooltip = "Opens SwayNC";
     bar = [
       {
         type = "label";
