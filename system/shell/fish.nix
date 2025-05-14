@@ -13,7 +13,7 @@
     interactiveShellInit = "
       
       set -g fish_greeting ''
-      fastfetch
+      swiftfetch
     ";
 
     shellAliases = {

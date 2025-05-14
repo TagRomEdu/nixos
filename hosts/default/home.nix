@@ -25,6 +25,7 @@ in
 
     ../../modules/programs/ghostty.nix
     ../../modules/programs/fastfetch.nix
+    ../../modules/programs/swiftfetch.nix
     ../../modules/programs/spicetify.nix
     ../../modules/programs/obs.nix
     ../../modules/programs/vesktop-themes.nix
@@ -39,6 +40,7 @@ in
 
   home.packages = allPackages ++ [
     inputs.fabric.packages.x86_64-linux.run-widget
+    inputs.swiftfetch.packages.${pkgs.system}.swiftfetch
   ];
 
   home.sessionVariables = {

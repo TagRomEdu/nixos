@@ -15,13 +15,18 @@
 
     fabric.url = "github:Fabric-Development/fabric";
 
+    swiftfetch = {
+      url = "github:ly-sec/swiftfetch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, fabric, quickshell, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, nur, swiftfetch, nixvim, fabric, quickshell, ... }@inputs: {
 
     # Expose NixOS configuration
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
