@@ -22,7 +22,8 @@ in
     ../../modules/desktop/ironbar.nix
 
     ../../modules/editors/vscode.nix
-    ../../modules/editors/neovim.nix
+    #../../modules/editors/neovim.nix
+    ../../modules/editors/nixvim.nix
 
     ../../modules/programs/ghostty.nix
     ../../modules/programs/fastfetch.nix
@@ -34,6 +35,7 @@ in
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
+    inputs.nixvim.homeManagerModules.nixvim
   ];
 
   xdg.portal.enable = true;
