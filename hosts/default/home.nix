@@ -14,6 +14,7 @@ in
 
   imports = [
     ../../modules/desktop/hyprland.nix
+    #../../modules/niri/default.nix
     ../../modules/desktop/hyprlock.nix
     ../../modules/desktop/waybar.nix
     ../../modules/desktop/swaync.nix
@@ -29,6 +30,7 @@ in
     ../../modules/programs/spicetify.nix
     ../../modules/programs/obs.nix
     ../../modules/programs/vesktop-themes.nix
+    ../../modules/programs/firefox.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
@@ -48,9 +50,5 @@ in
   };
 
   programs.home-manager.enable = true;
-  stylix.autoEnable = true;
-  stylix.targets.firefox = {
-    enable = true;
-    profileNames = [ "default" ];
-  };
+  #stylix.autoEnable = true;
 }

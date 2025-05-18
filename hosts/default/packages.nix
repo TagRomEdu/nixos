@@ -22,12 +22,10 @@ with pkgs;
   })
   protonplus
   lutris
-  furmark
   dolphin-emu
   prismlauncher
   heroic
   peazip
-  firefox
 
   # Desktop
   swaynotificationcenter
@@ -64,6 +62,8 @@ with pkgs;
   gowall
   gruvbox-gtk-theme
   papirus-icon-theme
-  #xwayland-satellite
+  xwayland-satellite
   ironbar
+  kdePackages.qt5compat
+  kdePackages.syntax-highlighting
 ]

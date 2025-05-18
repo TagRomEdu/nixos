@@ -12,10 +12,10 @@
         name = "super+${if i == 10 then "0" else toString i}";
         value.action = focus-workspace i;
       }
-      {
-        name = "super+Shift+${if i == 10 then "0" else toString i}";
-        value.action = move-column-to-workspace i;
-      }
+      #{
+      #  name = "super+Shift+${if i == 10 then "0" else toString i}";
+      #  value.action = move-column-to-workspace i;
+      #}
     ]) (lib.range 1 10));
 
   in

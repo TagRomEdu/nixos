@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
-
+{ config, inputs, ... }:
 {
   imports = [
     inputs.niri.homeModules.niri
@@ -12,5 +6,6 @@
     ./keybinds.nix
     #./rules.nix
     ./autostart.nix
+    ./workspaces.nix
   ];
 }
