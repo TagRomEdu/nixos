@@ -51,12 +51,16 @@
   };
 
   # Fonts
-  fonts.packages = [
-    pkgs.fira-sans
-    pkgs.roboto
-    pkgs.nerd-fonts._0xproto
-    pkgs.nerd-fonts.droid-sans-mono
-    pkgs.jetbrains-mono
+  fonts.packages = with pkgs; [
+    fira-sans
+    roboto
+    nerd-fonts._0xproto
+    nerd-fonts.droid-sans-mono
+    jetbrains-mono
+    noto-fonts
+    noto-fonts-emoji
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
   ];
 
   # Bootloader
@@ -95,6 +99,8 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
+
+  services.power-profiles-daemon.enable = true;
 
   services.dbus.enable = true;
   xdg.portal.enable = true;

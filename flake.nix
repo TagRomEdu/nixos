@@ -6,7 +6,6 @@
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprland.url = "github:hyprwm/Hyprland";
-    stylix.url = "github:danth/stylix";
     niri.url = "github:sodiboo/niri-flake";
     nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
@@ -14,6 +13,11 @@
     nixvim.url = "github:nix-community/nixvim";
 
     fabric.url = "github:Fabric-Development/fabric";
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     swiftfetch = {
       url = "github:ly-sec/swiftfetch";

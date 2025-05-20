@@ -14,7 +14,7 @@ in
 
   imports = [
     ../../modules/desktop/hyprland.nix
-    #../../modules/niri/default.nix
+    ../../modules/quickshell.nix
     ../../modules/desktop/hyprlock.nix
     ../../modules/desktop/waybar.nix
     ../../modules/desktop/swaync.nix

@@ -127,4 +127,5 @@
   };
 
   stylix.targets.firefox.profileNames = [ "lysec" ];
+  stylix.enableReleaseChecks = false;
 }

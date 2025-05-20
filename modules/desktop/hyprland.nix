@@ -136,8 +136,9 @@
         "[workspace 2] vesktop"
         "arrpc"
         "waypaper --restore"
-        "swaync"
-        "ironbar"
+        #"swaync"
+        #"ironbar"
+        "qs" # Run quickshell
         #"waybar -c ~/.config/waybar/config -s ~/.config/waybar/style.css"
       ];
       # Startup ends

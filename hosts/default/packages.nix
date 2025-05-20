@@ -64,6 +64,4 @@ with pkgs;
   papirus-icon-theme
   xwayland-satellite
   ironbar
-  kdePackages.qt5compat
-  kdePackages.syntax-highlighting
 ]
