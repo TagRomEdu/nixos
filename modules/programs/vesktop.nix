@@ -1,7 +1,10 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 # System24 (TUI style) Ayu Dark
 {
+  home.packages = with pkgs; [
+    vesktop
+  ];
   home.file.".config/vesktop/themes/system24-ayu-dark.theme.css".text = ''
     /**
     * @name system24 (ayu dark edit)

@@ -12,15 +12,8 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nixvim.url = "github:nix-community/nixvim";
 
-    fabric.url = "github:Fabric-Development/fabric";
-
     stylix = {
       url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    swiftfetch = {
-      url = "github:ly-sec/swiftfetch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -30,7 +23,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, nur, swiftfetch, nixvim, fabric, quickshell, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, quickshell, ... }@inputs: {
 
     # Expose NixOS configuration
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
@@ -53,11 +46,6 @@
           ];
         })
       ];
-    };
-
-    # Expose Fabric packages for usage
-    packages.x86_64-linux = {
-      run-widget = fabric.packages.x86_64-linux.run-widget;  # Expose run-widget directly
     };
   };
 }

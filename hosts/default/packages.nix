@@ -5,21 +5,7 @@
 
 with pkgs;
 [
-  #stylix.targets.firefox.profileNames = "ide8k3pu";
   # Applications
-  (writeShellApplication {
-    name = "vesktop";
-
-    runtimeInputs = [ vesktop ]; # depend on the real vesktop binary
-
-    text = ''
-      if [ "$XDG_CURRENT_DESKTOP" = "niri" ]; then
-        exec vesktop --ozone-platform=x11 "$@"
-      else
-        exec vesktop "$@"
-      fi
-    '';
-  })
   protonplus
   lutris
   dolphin-emu
@@ -28,12 +14,10 @@ with pkgs;
   peazip
 
   # Desktop
-  swaynotificationcenter
-  #waybar
   hyprshot
   hyprlock
-  walker
   nwg-look
+  walker
 
   # Development
   nodejs
@@ -62,6 +46,5 @@ with pkgs;
   gowall
   gruvbox-gtk-theme
   papirus-icon-theme
-  xwayland-satellite
   ironbar
 ]

@@ -18,8 +18,6 @@ This repository contains my personal NixOS configuration for a customized deskto
 - **`dev-shells/`** 🧑‍💻  
   Development environments.
 
-  - **`fabric-shell.nix`**: Custom shell for Fabric.
-
 - **`hosts/`** 🖥️  
   Host-specific configurations.
 
@@ -30,8 +28,8 @@ This repository contains my personal NixOS configuration for a customized deskto
 
   - **`desktop/`**: Configuration for Hyprland, Waybar, and related tools.
   - **`editors/`**: Neovim and VSCode configurations.
-  - **`niri/`**: Custom Niri configuration (WIP).
   - **`programs/`**: Additional program configurations (e.g., Fastfetch, Ghostty).
+  - **`quickshell/`**: The current quickshell setup, thanks to [Rexcrazy804](https://github.com/Rexcrazy804) for creating it.
 
 - **`system/`** 🔧  
   System-wide configurations.
@@ -39,10 +37,6 @@ This repository contains my personal NixOS configuration for a customized deskto
   - **`greeter/`**: Greetd configuration for login.
   - **`shell/`**: Shell configurations for Bash and Fish.
   - **`xdg.nix`**: XDG settings.
-
-## Niri 🛠️
-
-The **Niri** configuration is a **Work In Progress (WIP)**, providing a custom desktop environment.
 
 ## Getting Started
 

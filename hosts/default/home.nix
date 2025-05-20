@@ -14,23 +14,18 @@ in
 
   imports = [
     ../../modules/desktop/hyprland.nix
-    ../../modules/quickshell.nix
+    ../../modules/quickshell/quickshell.nix
     ../../modules/desktop/hyprlock.nix
-    ../../modules/desktop/waybar.nix
-    ../../modules/desktop/swaync.nix
     ../../modules/desktop/walker.nix
-    ../../modules/desktop/ironbar.nix
 
     ../../modules/editors/vscode.nix
-    #../../modules/editors/neovim.nix
     ../../modules/editors/nixvim.nix
 
     ../../modules/programs/ghostty.nix
     ../../modules/programs/fastfetch.nix
-    ../../modules/programs/swiftfetch.nix
     ../../modules/programs/spicetify.nix
     ../../modules/programs/obs.nix
-    ../../modules/programs/vesktop-themes.nix
+    ../../modules/programs/vesktop.nix
     ../../modules/programs/firefox.nix
 
     inputs.hyprland.homeManagerModules.default
@@ -38,19 +33,15 @@ in
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
+  home.packages = allPackages;
+
   xdg.portal.enable = true;
 
   home.stateVersion = "24.11";
-
-  home.packages = allPackages ++ [
-    inputs.fabric.packages.x86_64-linux.run-widget
-    inputs.swiftfetch.packages.${pkgs.system}.swiftfetch
-  ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
   };
 
   programs.home-manager.enable = true;
-  #stylix.autoEnable = true;
 }

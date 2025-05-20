@@ -1,6 +1,9 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    walker
+  ];
   home.file.".config/walker/config.toml".text = ''
     app_launch_prefix = ""
     terminal_title_flag = ""

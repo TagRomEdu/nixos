@@ -20,11 +20,6 @@
       termguicolors = true;
     };
 
-    # Colorscheme
-    colorschemes.catppuccin = {
-      enable = true;
-    };
-
     # Plugins
     plugins = {
       lualine = {
