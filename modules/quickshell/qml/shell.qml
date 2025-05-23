@@ -306,8 +306,8 @@ ShellRoot {
     PopupWindow {
         id: notificationWindow
         anchor.window: mainWindow
-        anchor.rect.x: screen.availableGeometry.maximumWidth
-        anchor.rect.y: screen.availableGeometry.maximumHeight - 200
+        anchor.rect.x: screen.width
+        anchor.rect.y: mainWindow.height
         implicitWidth: 400
         implicitHeight: 400
         color: "transparent"
