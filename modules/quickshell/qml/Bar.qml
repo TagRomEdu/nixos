@@ -147,10 +147,21 @@ Item {
                             onClicked: (mouse) => {
                                 if (!modelData) return;
                                 if (mouse.button === Qt.LeftButton) modelData.activate()
-                                else if (mouse.button === Qt.RightButton && modelData.hasMenu)
-                                    modelData.display(this, mouse.x, mouse.y)
-                                else if (mouse.button === Qt.MiddleButton) modelData.secondaryActivate()
+                                else if (mouse.button === Qt.RightButton && modelData.hasMenu) {
+                                  const window = QsWindow.window;
+                                  // the bellow is kinda hard coded, find a better solution
+                                  const widgetRect = window.contentItem.mapFromItem(bar, 80, bar.height + 10 , bar.width, bar.height);
+                                  menuAnchor.anchor.rect = widgetRect;
+                                  menuAnchor.open();
+                                }else if (mouse.button === Qt.MiddleButton) modelData.secondaryActivate()
                             }
+                        }
+
+                        QsMenuAnchor {
+                          id: menuAnchor
+                          menu: modelData.menu
+                          anchor.window: bar.QsWindow.window?? null
+                          anchor.adjustment: PopupAdjustment.Flip
                         }
                     }
                 }
@@ -184,5 +195,5 @@ Item {
                 }
             }
         }
-    }
+  }
 }
