@@ -95,6 +95,7 @@
       decoration = {
         active_opacity = 1.0;
         inactive_opacity = 0.95;
+        rounding = 20;
 
         blur = {
           enabled = true;
@@ -138,7 +139,7 @@
         "waypaper --restore"
         #"swaync"
         #"ironbar"
-        "qs" # Run quickshell
+        #"qs" # Run quickshell
         #"waybar -c ~/.config/waybar/config -s ~/.config/waybar/style.css"
       ];
       # Startup ends

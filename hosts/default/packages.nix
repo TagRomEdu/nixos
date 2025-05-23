@@ -47,4 +47,6 @@ with pkgs;
   gruvbox-gtk-theme
   papirus-icon-theme
   ironbar
+  qt6Packages.qt5compat
+  kdePackages.syntax-highlighting
 ]
