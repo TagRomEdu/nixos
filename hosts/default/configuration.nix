@@ -155,6 +155,14 @@
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
 
+  services.sunshine = {
+    enable = true;
+    autoStart = false;
+    capSysAdmin = true;
+    openFirewall = true;
+    
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

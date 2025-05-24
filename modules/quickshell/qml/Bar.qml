@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Io
 
 Item {
     required property var shell
@@ -10,6 +11,11 @@ Item {
     required property var bar
     
     anchors.fill: parent
+
+    Process {
+        id: pavucontrol
+        command: ["pavucontrol"]
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -98,6 +104,10 @@ Item {
                         family: "FiraCode Nerd Font"
                     }
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: pavucontrol.running = true
+                }
             }
 
             Row {
@@ -143,17 +153,16 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                            acceptedButtons: Qt.RightButton
                             onClicked: (mouse) => {
-                                if (!modelData) return;
-                                if (mouse.button === Qt.LeftButton) modelData.activate()
-                                else if (mouse.button === Qt.RightButton && modelData.hasMenu) {
-                                  const window = QsWindow.window;
-                                  // the bellow is kinda hard coded, find a better solution
-                                  const widgetRect = window.contentItem.mapFromItem(bar, 80, bar.height + 10 , bar.width, bar.height);
-                                  menuAnchor.anchor.rect = widgetRect;
-                                  menuAnchor.open();
-                                }else if (mouse.button === Qt.MiddleButton) modelData.secondaryActivate()
+                                if (!modelData || !modelData.hasMenu) return;
+
+                                const window = bar.QsWindow.window;
+                                if (!window) return;
+
+                                const globalPos = mapToItem(window.contentItem, 0, height); // map to below this icon
+                                menuAnchor.anchor.rect = Qt.rect(globalPos.x, globalPos.y, width, height);
+                                menuAnchor.open();
                             }
                         }
 

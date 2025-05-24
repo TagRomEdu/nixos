@@ -17,8 +17,8 @@ ShellRoot {
     property alias popupWindow: popupWindow
     property alias notificationWindow: notificationWindow
     property alias bar: mainWindow
+    property alias notificationServer: notificationServer
 
-    
     // Global color scheme
     readonly property color bgColor: Dat.Colors.bgColor
     readonly property color fgColor: Dat.Colors.fgColor
@@ -49,6 +49,21 @@ ShellRoot {
         objects: [Pipewire.defaultAudioSink]
     }
 
+    function addToNotificationHistory(notification) {
+        notificationHistory.unshift({
+            appName: notification.appName,
+            summary: notification.summary,
+            body: notification.body,
+            timestamp: new Date(),
+            icon: notification.appIcon
+        })
+        
+        if (notificationHistory.length > maxHistoryItems) {
+            notificationHistory.pop()
+        }
+        notificationHistoryChanged()
+    }
+
     // Notification server
     NotificationServer {
     id: notificationServer
@@ -71,12 +86,6 @@ ShellRoot {
         notificationWindow.showNotification(notification)
     }
 }
-
-    NotificationPopup {
-        id: notificationContainer
-        shell: root
-        notificationServer: notificationServer
-    }
 
     Component.onCompleted: {
         if (Hyprland.refreshWorkspaces) Hyprland.refreshWorkspaces()
@@ -303,37 +312,48 @@ ShellRoot {
         }
     }
 
-    PopupWindow {
-        id: notificationWindow
-        anchor.window: mainWindow
-        anchor.rect.x: screen.width
-        anchor.rect.y: mainWindow.height
-        implicitWidth: 400
-        implicitHeight: 400
-        color: "transparent"
+    PanelWindow {
+    id: notificationWindow
 
-         property var currentNotification: null
+    anchors {
+        top: true
+        right: true
+    }
+    margins.right: 14
+    margins.top: 14
+
+    implicitWidth: 400
+    implicitHeight: notificationPopup.calculatedHeight
+    color: "transparent"
+    visible: false
+
+    property var currentNotification: null
+    onWidthChanged: {
+        console.log("Width changed to:", width)
+        console.log("New X position would be:", Screen.width - width - 200)
+    }
 
     function showNotification(notification) {
         currentNotification = notification
         visible = true
         notificationTestTimer.restart()
-        updatePosition()
-    }
-
-    function updatePosition() {
-        if (Quickshell.screens.length > 0) {
-            var screen = Quickshell.screens[0]
-            x = screen.virtualX + screen.width - width - 20
-            y = screen.virtualY + 20
-        }
+        
+        console.log("Showing notification - current position values:")
+        console.log("Actual x:", x)
+        console.log("Actual y:", y)
+        console.log("Actual width:", width)
+        console.log("Actual height:", height)
     }
 
     NotificationPopup {
-        id: notificationContent
+        id: notificationPopup
         anchors.fill: parent
         shell: root
         notification: notificationWindow.currentNotification
+        notificationServer: notificationServer
+        
+        onWidthChanged: console.log("NotificationPopup width:", width)
+        onHeightChanged: console.log("NotificationPopup height:", height)
     }
 
     Timer {
@@ -342,7 +362,18 @@ ShellRoot {
         onTriggered: notificationWindow.visible = false
     }
 
-    onVisibleChanged: if (visible) updatePosition()
+    onVisibleChanged: {
+        if (visible) {
+        console.log("NotificationWindow initialized")
+        console.log("Screen.width:", Screen.width)
+        console.log("Screen.height:", Screen.height)
+        console.log("mainWindow.height:", mainWindow.height)
+        console.log("this.width:", width)
+        console.log("this.implicitWidth:", implicitWidth)
+        console.log("Calculated Y position:", mainWindow.height + 8)
+        console.log("anchor.rect.x:", anchor.rect.x)
+        }
+    }
 }
 
     PopupWindow {

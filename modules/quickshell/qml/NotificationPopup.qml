@@ -6,14 +6,14 @@ import Quickshell.Services.Notifications
 Item {
     required property var shell
     property var notification: null
-
     property var notificationQueue: []
     property var currentNotification: null
-    property int displayTime: 5000 // 5 seconds
+    property int displayTime: 5000
+    property int calculatedHeight: Math.min(600, calculateHeight()) // Max height 600px
+    property int maxWidth: 400
 
     required property var notificationServer
 
-    // Connect to the notification server
     Connections {
         target: notificationServer
         
@@ -23,13 +23,12 @@ Item {
         }
     }
 
-    // Notification container
     Rectangle {
         id: notificationContainer
-        width: 400
-        height: notificationContent.height + 24
+        width: maxWidth
+        height: calculatedHeight
         color: shell.bgColor
-        radius: 8
+        radius: 20
         border.width: 3
         border.color: shell.accentColor
 
@@ -41,12 +40,10 @@ Item {
             anchors.centerIn: parent
             spacing: 8
 
-            // Header with app name and time
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 12
 
-                // App icons not working yet
                 Image {
                     source: {
                         let icon = notification?.appIcon || "";
@@ -88,7 +85,16 @@ Item {
                 }
             }
 
-            // Notification body
+            Text {
+                text: notification?.summary || ""
+                color: shell.fgColor
+                font.bold: true
+                font.pixelSize: 14
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
+                visible: text !== ""
+            }
+
             Text {
                 text: notification?.body || ""
                 color: shell.fgColor
@@ -97,7 +103,6 @@ Item {
                 Layout.maximumWidth: parent.width
             }
 
-            // Notification image (if available)
             Image {
                 source: {
                     let icon = notification?.image || "";
@@ -120,7 +125,6 @@ Item {
                 }
             }
 
-            // Actions row
             RowLayout {
                 visible: notification?.actions?.length > 0 && 
                          NotificationServer.actionsSupported
@@ -153,9 +157,13 @@ Item {
                     }
                 }
             }
+
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 1
+            }
         }
 
-        // Close button
         Button {
             anchors {
                 top: parent.top
@@ -175,6 +183,27 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
+        }
+    }
+
+    function calculateHeight() {
+        let h = 0;
+        // Add heights of all visible children plus spacing
+        for (let i = 0; i < notificationContent.children.length; i++) {
+            const child = notificationContent.children[i];
+            if (child.visible && child.Layout) {
+                h += child.implicitHeight + notificationContent.spacing;
+            }
+        }
+        return h + 24; // Add padding
+    }
+
+    onNotificationChanged: {
+        if (notification) {
+            notificationContent.forceLayout();
+            Qt.callLater(() => {
+                calculatedHeight = calculateHeight();
+            });
         }
     }
 }

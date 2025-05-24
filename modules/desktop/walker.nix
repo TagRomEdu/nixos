@@ -242,11 +242,11 @@
   home.file.".config/walker/themes/pink.css".text = ''
   @define-color foreground        #c5c8c6;  /* text */
   @define-color foreground-light #d0d0d0;  /* light text */
-  @define-color background        #1e1e2e;  /* base */
+  @define-color background        #0F1419;  /* base */
   @define-color cursor            #8c8c8c;  /* grey accent */
 
   /* Base colors (0–7) */
-  @define-color color0  #1e1e2e;  /* base */
+  @define-color color0  #0F1419;  /* base */
   @define-color color1  #82aaff;  /* blue */
   @define-color color2  #a6e3a1;  /* green */
   @define-color color3  #f9e2af;  /* yellow */
@@ -302,7 +302,7 @@
     }
 
     #box {
-        border-radius: 2px;
+        border-radius: 20px;
         background: @background;
         padding: 32px;
         border: 3px solid @color1;
