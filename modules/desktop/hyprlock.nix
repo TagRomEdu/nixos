@@ -5,9 +5,8 @@
     # BACKGROUND
     background {
         monitor =
-        #path = screenshot
-        path = ~/nixos/assets/wallpapers/fence.png
-        #color = $background
+        path = ${config.home.homeDirectory}/nixos/assets/wallpapers/cat-vibing.png
+        #color = $background"
         blur_passes = 2
         contrast = 1
         brightness = 0.5

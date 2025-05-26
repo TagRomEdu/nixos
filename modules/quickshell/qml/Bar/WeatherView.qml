@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import "../Data/Weather.qml" as Weather
 
 Rectangle {
     required property var shell
-
+    
     color: Qt.lighter(shell.bgColor, 1.2)
     radius: 20
 
@@ -108,9 +109,8 @@ Rectangle {
     // Forecast days
 GridLayout {
     columns: 3
-    columnSpacing: 40
+    columnSpacing: 70
     Layout.alignment: Qt.AlignHCenter
-    Layout.leftMargin: 40 // Adjust this to nudge it right slightly
  
     Repeater {
         model: weatherLoading ? [] : weatherData.forecast.slice(0, 3)

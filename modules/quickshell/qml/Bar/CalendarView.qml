@@ -5,7 +5,7 @@ Rectangle {
     required property var shell
 
     radius: 20
-    anchors.fill: parent
+    
     color: Qt.lighter(shell.bgColor, 1.2)
 
     ColumnLayout {
@@ -108,10 +108,12 @@ Rectangle {
             rightPadding: 0
             locale: Qt.locale("en_US")
 
+             implicitHeight: 400
+
             delegate: Rectangle {
                 width: 30
                 height: 30
-                radius: 20
+                radius: 30
                 color: model.day === new Date().getDate()
                        && calendar.month === new Date().getMonth()
                        && calendar.year === new Date().getFullYear()

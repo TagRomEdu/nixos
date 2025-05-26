@@ -4,6 +4,7 @@ import Quickshell
 
 Singleton {
     // Colors
+    id: colors
     readonly property color bgColor: "#0F1419"
     readonly property color fgColor: "#E6E1E5"
     readonly property color accentColor: "#73D0FF"

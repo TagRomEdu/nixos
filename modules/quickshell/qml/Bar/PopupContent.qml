@@ -1,17 +1,20 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Shapes
 
 Item {
     required property var shell
 
     property string selectedWidget: "calendar"
 
+    
     ColumnLayout {
         anchors.fill: parent
         spacing: 12
 
         Item {
+            
             Layout.fillWidth: true
             Layout.fillHeight: true
 

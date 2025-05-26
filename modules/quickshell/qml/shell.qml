@@ -3,21 +3,28 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Shapes
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Services.SystemTray
 import Quickshell.Hyprland
+import Quickshell.Wayland
 import Quickshell.Services.Pipewire
 import Quickshell.Services.Notifications
 import "Data" as Dat
+import "Bar" as Bar
 
 ShellRoot {
     id: root
+    property alias bar: mainWindow
     property alias popupWindow: popupWindow
     property alias notificationWindow: notificationWindow
-    property alias bar: mainWindow
     property alias notificationServer: notificationServer
+
+    property var notificationHistory: []
+    property int maxHistoryItems: 50
+
 
     // Global color scheme
     readonly property color bgColor: Dat.Colors.bgColor
@@ -28,6 +35,9 @@ ShellRoot {
     // Time and date
     property string time: Qt.formatDateTime(new Date(), "hh:mm AP")
     property string date: Qt.formatDateTime(new Date(), "ddd MMM d")
+
+    // Active Window
+    property string active_window: ToplevelManager.activeToplevel ? ToplevelManager.activeToplevel.title : ""
 
     // Workspaces model from Hyprland
     property var workspaces: Hyprland.workspaces || []
@@ -66,26 +76,33 @@ ShellRoot {
 
     // Notification server
     NotificationServer {
-    id: notificationServer
-    actionsSupported: true
-    bodyMarkupSupported: true
-    imageSupported: true
-    keepOnReload: false
-    persistenceSupported: true
+        id: notificationServer
+        actionsSupported: true
+        bodyMarkupSupported: true
+        imageSupported: true
+        keepOnReload: false
+        persistenceSupported: true
 
-    Component.onCompleted: {
-        console.log("Notification server initialized")
-    }
+        Component.onCompleted: {
+            console.log("Notification server initialized")
+        }
 
-    onNotification: (notification) => {
-        console.log("[RAW NOTIFICATION] App:", notification.appName, 
-                "Summary:", notification.summary,
-                "Body:", notification.body)
-        
-        // Pass the full notification to the window
-        notificationWindow.showNotification(notification)
+        onNotification: (notification) => {
+            if (!notification.appName && !notification.summary && !notification.body) {
+                console.warn("Skipping empty notification")
+                return
+            }
+            console.log("[RAW NOTIFICATION] App:", notification.appName, 
+                    "Summary:", notification.summary,
+                    "Body:", notification.body)
+            
+            // Add to history
+            addToNotificationHistory(notification)
+            
+            // Show notification window
+            notificationWindow.visible = true
+        }
     }
-}
 
     Component.onCompleted: {
         if (Hyprland.refreshWorkspaces) Hyprland.refreshWorkspaces()
@@ -298,107 +315,100 @@ ShellRoot {
 
     PanelWindow {
         id: mainWindow
-        implicitWidth: 520
+        implicitWidth: 640
         implicitHeight: 42
         anchors.top: true
         color: "transparent"
         exclusiveZone: 36
 
-        Bar {
+        Bar.Bar {
             shell: root
             popup: popupWindow
-            anchors.fill: parent
+            //anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 520
             bar: this
         }
     }
 
     PanelWindow {
-    id: notificationWindow
+        id: notificationWindow
 
-    anchors {
-        top: true
-        right: true
+        anchors {
+            top: true
+            right: true
+        }
+        margins.right: 14
+        margins.top: 14
+
+        implicitWidth: 400
+        implicitHeight: notificationPopup.calculatedHeight
+        color: "transparent"
+        visible: false
+
+        Bar.NotificationPopup {
+            id: notificationPopup
+            anchors.fill: parent
+            shell: root
+            notificationServer: notificationServer
+        }
+
+        // Hide notification window when no notifications are visible
+        Connections {
+            target: notificationPopup
+            function onNotificationQueueChanged() {
+                if (notificationPopup.notificationQueue.length === 0) {
+                    notificationWindow.visible = false
+                }
+            }
+        }
+
+        onVisibleChanged: {
+            if (visible) {
+            console.log("NotificationWindow initialized")
+            console.log("Screen.width:", Screen.width)
+            console.log("Screen.height:", Screen.height)
+            console.log("mainWindow.height:", mainWindow.height)
+            console.log("this.width:", width)
+            console.log("this.implicitWidth:", implicitWidth)
+            console.log("Calculated Y position:", mainWindow.height + 8)
+            console.log("anchor.rect.x:", anchor.rect.x)
+            }
+        }
     }
-    margins.right: 14
-    margins.top: 14
 
-    implicitWidth: 400
-    implicitHeight: notificationPopup.calculatedHeight
-    color: "transparent"
+    PopupWindow {
+    id: popupWindow
+    anchor {
+        window: mainWindow
+        rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
+        rect.y: mainWindow.implicitHeight + 8
+    }
+    implicitWidth: 500
+    implicitHeight: 320
     visible: false
+    color: "transparent"
 
-    property var currentNotification: null
-    onWidthChanged: {
-        console.log("Width changed to:", width)
-        console.log("New X position would be:", Screen.width - width - 200)
-    }
 
-    function showNotification(notification) {
-        currentNotification = notification
-        visible = true
-        notificationTestTimer.restart()
-        
-        console.log("Showing notification - current position values:")
-        console.log("Actual x:", x)
-        console.log("Actual y:", y)
-        console.log("Actual width:", width)
-        console.log("Actual height:", height)
-    }
-
-    NotificationPopup {
-        id: notificationPopup
+    Rectangle {
         anchors.fill: parent
-        shell: root
-        notification: notificationWindow.currentNotification
-        notificationServer: notificationServer
-        
-        onWidthChanged: console.log("NotificationPopup width:", width)
-        onHeightChanged: console.log("NotificationPopup height:", height)
-    }
 
-    Timer {
-        id: notificationTestTimer
-        interval: 5000
-        onTriggered: notificationWindow.visible = false
-    }
+        border.color: accentColor
+        border.width: 3
 
-    onVisibleChanged: {
-        if (visible) {
-        console.log("NotificationWindow initialized")
-        console.log("Screen.width:", Screen.width)
-        console.log("Screen.height:", Screen.height)
-        console.log("mainWindow.height:", mainWindow.height)
-        console.log("this.width:", width)
-        console.log("this.implicitWidth:", implicitWidth)
-        console.log("Calculated Y position:", mainWindow.height + 8)
-        console.log("anchor.rect.x:", anchor.rect.x)
+        color: bgColor
+        radius: 20
+        //bottomLeftRadius: 20
+        //bottomRightRadius: 20
+
+        Bar.PopupContent {
+            shell: root
+            anchors.fill: parent
+            anchors.margins: 12
         }
     }
 }
 
-    PopupWindow {
-        id: popupWindow
-        anchor.window: mainWindow
-        anchor.rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
-        anchor.rect.y: mainWindow.implicitHeight - 3
-        implicitWidth: 520
-        implicitHeight: 320
-        visible: false
-        color: "transparent"
 
-        Rectangle {
-            anchors.fill: parent
-            color: root.bgColor
-            bottomLeftRadius: 20
-            bottomRightRadius: 20
-            border.width: 1
-            border.color: Qt.darker(root.bgColor, 1.5)
 
-            PopupContent {
-                shell: root
-                anchors.fill: parent
-                anchors.margins: 12
-            }
-        }
-    }
 }

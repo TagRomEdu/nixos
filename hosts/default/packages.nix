@@ -49,4 +49,6 @@ with pkgs;
   ironbar
   qt6Packages.qt5compat
   kdePackages.syntax-highlighting
+  btop
 ]
+
