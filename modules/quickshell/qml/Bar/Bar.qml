@@ -10,6 +10,7 @@ import QtQuick.Shapes
 Item {
     required property var shell
     required property var popup
+
     required property var bar
 
     width: 520
@@ -27,6 +28,19 @@ Item {
         color: shell.bgColor
         bottomLeftRadius: 20
         bottomRightRadius: 20
+
+        // Subtle entrance animation
+        opacity: 0
+        Component.onCompleted: {
+            opacity = 1
+        }
+        
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 500
+                easing.type: Easing.OutCubic
+            }
+        }
 
         Item {
             anchors.fill: parent
@@ -48,11 +62,58 @@ Item {
                         Repeater {
                             model: shell.workspaces
                             delegate: Rectangle {
+                                id: workspaceRect
                                 radius: 20
                                 width: 24
                                 height: 24
                                 color: modelData && modelData.id === shell.focusedWorkspace?.id
                                     ? shell.accentColor : Qt.darker(shell.fgColor, 2.5)
+                                
+                                property bool isActive: modelData && modelData.id === shell.focusedWorkspace?.id
+                                property bool isHovered: workspaceMouseArea.containsMouse
+
+                                // Smooth color transitions
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 200
+                                        easing.type: Easing.OutCubic
+                                    }
+                                }
+
+                                // Scale animation for active workspace
+                                scale: isActive ? 1.1 : (isHovered ? 1.05 : 1.0)
+                                Behavior on scale {
+                                    NumberAnimation {
+                                        duration: 150
+                                        easing.type: Easing.OutCubic
+                                    }
+                                }
+
+                                // Subtle glow effect for active workspace
+                                Rectangle {
+                                    anchors.centerIn: parent
+                                    width: parent.width + 4
+                                    height: parent.height + 4
+                                    radius: parent.radius + 2
+                                    color: "transparent"
+                                    border.color: shell.accentColor
+                                    border.width: isActive ? 1 : 0
+                                    opacity: isActive ? 0.3 : 0
+                                    
+                                    Behavior on opacity {
+                                        NumberAnimation {
+                                            duration: 200
+                                            easing.type: Easing.OutCubic
+                                        }
+                                    }
+                                    
+                                    Behavior on border.width {
+                                        NumberAnimation {
+                                            duration: 200
+                                            easing.type: Easing.OutCubic
+                                        }
+                                    }
+                                }
 
                                 Label {
                                     text: modelData?.id || "?"
@@ -60,10 +121,21 @@ Item {
                                     color: shell.bgColor
                                     font.pixelSize: 12
                                     font.bold: true
+                                    
+                                    // Subtle text animation
+                                    scale: parent.isActive ? 1.05 : 1.0
+                                    Behavior on scale {
+                                        NumberAnimation {
+                                            duration: 150
+                                            easing.type: Easing.OutCubic
+                                        }
+                                    }
                                 }
 
                                 MouseArea {
+                                    id: workspaceMouseArea
                                     anchors.fill: parent
+                                    hoverEnabled: true
                                     onClicked: {
                                         if (modelData?.id && Hyprland.dispatch) {
                                             Hyprland.dispatch("workspace " + modelData.id)
@@ -78,13 +150,34 @@ Item {
                 Item { Layout.fillWidth: true }
 
                 Rectangle {
+                    id: volumeRect
                     width: 48
                     height: 24
                     radius: 20
                     color: shell.accentColor
                     Layout.alignment: Qt.AlignVCenter
+                    
+                    property bool isHovered: volumeMouseArea.containsMouse
+
+                    // Hover animation
+                    scale: isHovered ? 1.05 : 1.0
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+
+                    // Color animation on hover
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                        }
+                    }
 
                     Label {
+                        id: volumeLabel
                         anchors.centerIn: parent
                         text: shell.volume + "%"
                         verticalAlignment: Text.AlignVCenter
@@ -92,10 +185,32 @@ Item {
                         font.pixelSize: 12
                         font.bold: true
                         font.family: "FiraCode Nerd Font"
+                        
+                        // Animate volume changes
+                        Behavior on text {
+                            SequentialAnimation {
+                                NumberAnimation {
+                                    target: volumeLabel
+                                    property: "scale"
+                                    to: 1.1
+                                    duration: 100
+                                    easing.type: Easing.OutCubic
+                                }
+                                NumberAnimation {
+                                    target: volumeLabel
+                                    property: "scale"
+                                    to: 1.0
+                                    duration: 100
+                                    easing.type: Easing.OutCubic
+                                }
+                            }
+                        }
                     }
 
                     MouseArea {
+                        id: volumeMouseArea
                         anchors.fill: parent
+                        hoverEnabled: true
                         onClicked: pavucontrol.running = true
                     }
                 }
@@ -110,6 +225,26 @@ Item {
                             width: 24
                             height: 24
                             visible: modelData && modelData.appName !== "spotify"
+                            
+                            property bool isHovered: trayMouseArea.containsMouse
+
+                            // Hover scale animation
+                            scale: isHovered ? 1.15 : 1.0
+                            Behavior on scale {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.OutCubic
+                                }
+                            }
+
+                            // Subtle rotation on hover
+                            rotation: isHovered ? 5 : 0
+                            Behavior on rotation {
+                                NumberAnimation {
+                                    duration: 200
+                                    easing.type: Easing.OutCubic
+                                }
+                            }
 
                             Image {
                                 anchors.centerIn: parent
@@ -124,10 +259,22 @@ Item {
                                     }
                                     return icon;
                                 }
+                                
+                                // Smooth opacity animation on load
+                                opacity: 0
+                                Component.onCompleted: opacity = 1
+                                Behavior on opacity {
+                                    NumberAnimation {
+                                        duration: 300
+                                        easing.type: Easing.OutCubic
+                                    }
+                                }
                             }
 
                             MouseArea {
+                                id: trayMouseArea
                                 anchors.fill: parent
+                                hoverEnabled: true
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
                                 onClicked: (mouse) => {
                                     if (!modelData) return;
@@ -169,6 +316,7 @@ Item {
                     Layout.alignment: Qt.AlignVCenter
 
                     Label {
+                        id: timeLabel
                         width: parent.width
                         text: shell.time
                         color: shell.accentColor
@@ -177,6 +325,22 @@ Item {
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        
+                        // Subtle pulse animation every minute
+                        SequentialAnimation on scale {
+                            loops: Animation.Infinite
+                            NumberAnimation {
+                                to: 1.02
+                                duration: 60000 // 1 minute
+                                easing.type: Easing.InOutSine
+                            }
+                            NumberAnimation {
+                                to: 1.0
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
+                            PauseAnimation { duration: 59800 }
+                        }
                     }
 
                     Label {
@@ -187,13 +351,23 @@ Item {
                         font.pixelSize: 10
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        
+                        // Fade in animation
+                        opacity: 0
+                        Component.onCompleted: opacity = 1
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 800
+                                easing.type: Easing.OutCubic
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    // Right Corner Shape
+    // Right Corner Shape - Now controls cliphistWindow
     Shape {
         id: rightCornerShape
         width: 60
@@ -201,6 +375,16 @@ Item {
         y: barRect.y
         x: barRect.x + barRect.width - 5
         preferredRendererType: Shape.CurveRenderer
+
+        // Entrance animation
+        opacity: 0
+        Component.onCompleted: opacity = 1
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 600
+                easing.type: Easing.OutCubic
+            }
+        }
 
         ShapePath {
             strokeWidth: 0
@@ -238,27 +422,74 @@ Item {
             width: 24
             height: 24
             radius: 20
-            color: popup.visible ? Qt.darker(shell.accentColor, 1.3) : shell.bgColor
+            color: (shell.cliphistWindow && shell.cliphistWindow.visible) ? Qt.darker(shell.accentColor, 1.3) : shell.bgColor
             anchors.verticalCenter: parent.verticalCenter
-            x: 22
+            x: 23
+            
+            property bool isHovered: rightPopupMouseArea.containsMouse
+            property bool isCliphistActive: shell.cliphistWindow && shell.cliphistWindow.visible
+
+            // Smooth color transitions
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+
+            // Hover and active state animations
+            scale: isCliphistActive ? 1.1 : (isHovered ? 1.05 : 1.0)
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 150
+                    easing.type: Easing.OutCubic
+                }
+            }
 
             Label {
                 anchors.centerIn: parent
-                text: shell.getWeatherEmoji(shell.weatherData.currentCondition || "?")
+                text: ""
                 font.family: "FiraCode Nerd Font"
                 font.pixelSize: 14
                 color: shell.fgColor
+                
+                // Clipboard icon bounce animation
+                scale: parent.isHovered ? 1.1 : 1.0
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.OutBack
+                    }
+                }
             }
 
             MouseArea {
+                id: rightPopupMouseArea
                 anchors.fill: parent
-                onClicked: popup.visible = !popup.visible
                 hoverEnabled: true
+                onClicked: {
+                    console.log("Right button clicked - toggling cliphistWindow")
+                    if (shell.cliphistWindow) {
+                        // Close the main popup if it's open
+                        if (popup.visible) {
+                            popup.visible = false
+                        }
+                        
+                        // Toggle clipboard window
+                        if (shell.cliphistWindow.visible) {
+                            shell.cliphistWindow.visible = false
+                        } else {
+                            shell.cliphistWindow.visible = true
+                        }
+                    } else {
+                        console.log("cliphistWindow not found")
+                    }
+                }
             }
         }
     }
 
-    // Left Corner Shape
+    // Left Corner Shape - Now controls popupWindow
     Shape {
         id: leftCornerShape
         width: 60
@@ -266,6 +497,25 @@ Item {
         y: barRect.y
         x: barRect.x - width + 5
         preferredRendererType: Shape.CurveRenderer
+
+        // Entrance animation with slight delay
+        opacity: 0
+        Component.onCompleted: {
+            leftAnimationTimer.start()
+        }
+        
+        Timer {
+            id: leftAnimationTimer
+            interval: 100
+            onTriggered: leftCornerShape.opacity = 1
+        }
+        
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 600
+                easing.type: Easing.OutCubic
+            }
+        }
 
         ShapePath {
             strokeWidth: 0
@@ -306,19 +556,56 @@ Item {
             color: popup.visible ? Qt.darker(shell.accentColor, 1.3) : shell.bgColor
             anchors.verticalCenter: parent.verticalCenter
             x: width - 13
+            
+            property bool isHovered: leftPopupMouseArea.containsMouse
+
+            // Smooth color transitions
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+
+            // Hover and active state animations
+            scale: popup.visible ? 1.1 : (isHovered ? 1.05 : 1.0)
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 150
+                    easing.type: Easing.OutCubic
+                }
+            }
 
             Label {
                 anchors.centerIn: parent
-                text: ""
+                text: "󰘖"
                 font.family: "FiraCode Nerd Font"
                 font.pixelSize: 14
                 color: shell.fgColor
+                
+                // Icon pulse animation
+                scale: parent.isHovered ? 1.1 : 1.0
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.OutBack
+                    }
+                }
             }
 
             MouseArea {
+                id: leftPopupMouseArea
                 anchors.fill: parent
-                onClicked: popup.visible = !popup.visible
                 hoverEnabled: true
+                onClicked: {
+                    // Close the clipboard window if it's open
+                    if (shell.cliphistWindow && shell.cliphistWindow.visible) {
+                        shell.cliphistWindow.visible = false
+                    }
+                    
+                    // Toggle main popup
+                    popup.visible = !popup.visible
+                }
             }
         }
     }

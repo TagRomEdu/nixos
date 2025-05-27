@@ -43,5 +43,11 @@ in
     EDITOR = "nvim";
   };
 
+  # Enable cliphist
+  services.cliphist = {
+    enable = true;
+    allowImages = true;
+  };
+
   programs.home-manager.enable = true;
 }

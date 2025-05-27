@@ -158,7 +158,7 @@ Item {
         spacing: notificationSpacing
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.rightMargin: 8 // Add some margin from edge
+        anchors.rightMargin: 2 // Add some margin from edge
 
         Repeater {
             model: Math.min(notificationQueue.length, maxNotifications)
@@ -172,33 +172,27 @@ Item {
                 // Use the helper function for consistent height calculation
                 height: calculateIndividualHeight(notification)
                 
-                // Modern glassmorphism design with accent border
-                color: Qt.rgba(0, 0, 0, 0.05)
-
+                // Main container with border and proper radius
                 radius: 16
+                color: shell.bgColor
                 
-                // Subtle gradient background
+                // Apply border directly to the main container
+                border.width: 3
+                border.color: shell.accentColor
+                
+                // Subtle gradient overlay
                 Rectangle {
-                    border.width: 3//yyy
-                    border.color: shell.accentColor
                     anchors.fill: parent
-                    radius: parent.radius
+                    anchors.margins: parent.border.width // Inset by border width
+                    radius: parent.radius - parent.border.width // Adjust radius for inset
                     gradient: Gradient {
                         GradientStop { position: 0.0; color: Qt.rgba(255, 255, 255, 0.08) }
                         GradientStop { position: 1.0; color: Qt.rgba(255, 255, 255, 0.02) }
                     }
                 }
-                
-                // Backdrop blur effect simulation
-                Rectangle {
-                    anchors.fill: parent
-                    radius: parent.radius
-                    color: shell.bgColor
-                    opacity: 0.92
-                }
 
                 // Only animate the newest notification with improved initial state
-                opacity: isNewest ? 0 : 1
+                opacity: isNewest ? 0 : 0.92
                 scale: isNewest ? 0.95 : 1
                 
                 Component.onCompleted: {
@@ -213,7 +207,7 @@ Item {
                         target: notificationContainer
                         property: "opacity"
                         from: 0
-                        to: 1
+                        to: 0.92
                         duration: 300
                         easing.type: Easing.OutCubic
                     }
@@ -377,7 +371,7 @@ Item {
                         // Body text with plain text format to handle line breaks properly
                         Text {
                             text: notification?.body || ""
-                            textFormat: Text.PlainText // Changed from MarkdownText to handle line breaks
+                            textFormat: Text.Markdown
                             color: Qt.lighter(shell.fgColor, 1.2)
                             font.pixelSize: 14
                             wrapMode: Text.Wrap

@@ -127,17 +127,17 @@
   };
 
   # DroidCam / v4l2loopback config
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    v4l2loopback
-  ];
+  #boot.extraModulePackages = with config.boot.kernelPackages; [
+  #  v4l2loopback
+  #];
 
-  boot.kernelModules = [
-    "v4l2loopback"
-  ];
+  #boot.kernelModules = [
+  #  "v4l2loopback"
+  #];
 
-  boot.extraModprobeConfig = ''
-    options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
-  '';
+  #boot.extraModprobeConfig = ''
+  #  options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
+  #'';
 
   fileSystems."/home/lysec/storage" = {
     device = "UUID=74697b82-1266-4372-96cc-aac599abfb72";

@@ -21,16 +21,18 @@ ShellRoot {
     property alias popupWindow: popupWindow
     property alias notificationWindow: notificationWindow
     property alias notificationServer: notificationServer
+    property alias cliphistWindow: cliphistWindow
 
     property var notificationHistory: []
     property int maxHistoryItems: 50
-
 
     // Global color scheme
     readonly property color bgColor: Dat.Colors.bgColor
     readonly property color fgColor: Dat.Colors.fgColor
     readonly property color accentColor: Dat.Colors.accentColor
     readonly property color highlightBg: Dat.Colors.highlightBg
+    readonly property color borderColor: Qt.darker(bgColor, 1.1)
+    readonly property color errorColor: "#ff5555"
 
     // Time and date
     property string time: Qt.formatDateTime(new Date(), "hh:mm AP")
@@ -54,6 +56,11 @@ ShellRoot {
     // Audio properties
     property var defaultAudioSink: Dat.Settings.defaultAudioSink
     property int volume: defaultAudioSink && defaultAudioSink.audio ? Math.round(defaultAudioSink.audio.volume * 100) : 0
+
+    // Clipboard function
+    function copyToClipboard(text) {
+        Clipboard.copy(text);
+    }
 
     PwObjectTracker {
         objects: [Pipewire.defaultAudioSink]
@@ -324,24 +331,21 @@ ShellRoot {
         Bar.Bar {
             shell: root
             popup: popupWindow
-            //anchors.fill: parent
+            bar: this
             anchors.horizontalCenter: parent.horizontalCenter
             width: 520
-            bar: this
         }
     }
 
     PanelWindow {
         id: notificationWindow
-
         anchors {
             top: true
             right: true
         }
         margins.right: 14
         margins.top: 14
-
-        implicitWidth: 400
+        implicitWidth: 420
         implicitHeight: notificationPopup.calculatedHeight
         color: "transparent"
         visible: false
@@ -353,7 +357,6 @@ ShellRoot {
             notificationServer: notificationServer
         }
 
-        // Hide notification window when no notifications are visible
         Connections {
             target: notificationPopup
             function onNotificationQueueChanged() {
@@ -362,53 +365,67 @@ ShellRoot {
                 }
             }
         }
+    }
 
-        onVisibleChanged: {
-            if (visible) {
-            console.log("NotificationWindow initialized")
-            console.log("Screen.width:", Screen.width)
-            console.log("Screen.height:", Screen.height)
-            console.log("mainWindow.height:", mainWindow.height)
-            console.log("this.width:", width)
-            console.log("this.implicitWidth:", implicitWidth)
-            console.log("Calculated Y position:", mainWindow.height + 8)
-            console.log("anchor.rect.x:", anchor.rect.x)
+    PopupWindow {
+        id: popupWindow
+        anchor {
+            window: mainWindow
+            rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
+            rect.y: mainWindow.implicitHeight + 8
+        }
+        implicitWidth: 500
+        implicitHeight: 320
+        visible: false
+        color: "transparent"
+
+        Rectangle {
+            anchors.fill: parent
+            border.color: accentColor
+            border.width: 3
+            color: bgColor
+            radius: 20
+
+            Bar.PopupContent {
+                shell: root
+                anchors.fill: parent
+                anchors.margins: 12
             }
         }
     }
 
     PopupWindow {
-    id: popupWindow
-    anchor {
-        window: mainWindow
-        rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
-        rect.y: mainWindow.implicitHeight + 8
-    }
-    implicitWidth: 500
-    implicitHeight: 320
-    visible: false
-    color: "transparent"
+        id: cliphistWindow
+        anchor {
+            window: mainWindow
+            rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
+            rect.y: mainWindow.implicitHeight + 8
+        }
+        implicitWidth: 500
+        implicitHeight: 320
+        visible: false
+        color: "transparent"
 
+        function toggle() {
+            if (visible) {
+                hide()
+            } else {
+                show()
+            }
+        }
 
-    Rectangle {
-        anchors.fill: parent
-
-        border.color: accentColor
-        border.width: 3
-
-        color: bgColor
-        radius: 20
-        //bottomLeftRadius: 20
-        //bottomRightRadius: 20
-
-        Bar.PopupContent {
-            shell: root
+        Rectangle {
             anchors.fill: parent
-            anchors.margins: 12
+            border.color: accentColor
+            border.width: 3
+            color: bgColor
+            radius: 20
+
+            Bar.Cliphist {
+                shell: root
+                anchors.fill: parent
+                anchors.margins: 12
+            }
         }
     }
-}
-
-
-
 }
