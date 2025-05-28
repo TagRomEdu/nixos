@@ -4,27 +4,14 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.UPower
-import "../Data/" as Dat
+import "../Data" as Data
 
 Rectangle {
-    required property var shell
+    required property var shell  // Keeping for ProcessManager functionality
+    
     anchors.fill: parent
-    color: Qt.lighter(shell.bgColor, 1.2)
+    color: Qt.lighter(Data.Colors.bgColor, 1.2)
     radius: 20
-
-    Process {
-        id: shutdown
-        command: ["shutdown", "-h", "now"]
-    }
-
-    Process {
-        id: reboot
-        command: ["reboot"]
-    }
-    Process {
-        id: lock
-        command: ["hyprlock"]
-    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -34,7 +21,7 @@ Rectangle {
 
         Label {
             text: "System Controls"
-            color: shell.accentColor
+            color: Data.Colors.accentColor
             font {
                 pixelSize: 18
                 bold: true
@@ -57,17 +44,17 @@ Rectangle {
                 font.family: "FiraCode Nerd Font"
                 background: Rectangle {
                     radius: 20
-                    color: parent.down ? Qt.darker(shell.highlightBg, 1.3) :
-                           parent.hovered ? Qt.lighter(shell.highlightBg, 1.1) : shell.highlightBg
+                    color: parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3) :
+                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
                     border.width: 1
-                    border.color: Qt.darker(shell.highlightBg, 1.2)
+                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
                 }
 
-                onClicked: shutdown.running = true
+                onClicked: Data.ProcessManager.shutdown()
 
                 contentItem: Label {
                     text: parent.text
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
@@ -79,20 +66,19 @@ Rectangle {
                 Layout.preferredHeight: 40
                 text: ""
                 font.family: "FiraCode Nerd Font"
-                // Logout button?
                 background: Rectangle {
                     radius: 20
-                    color: parent.down ? Qt.darker(shell.highlightBg, 1.3) :
-                           parent.hovered ? Qt.lighter(shell.highlightBg, 1.1) : shell.highlightBg
+                    color: parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3) :
+                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
                     border.width: 1
-                    border.color: Qt.darker(shell.highlightBg, 1.2)
+                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
                 }
 
-                onClicked: reboot.running = true
+                onClicked: Data.ProcessManager.reboot()
 
                 contentItem: Label {
                     text: parent.text
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
@@ -104,31 +90,29 @@ Rectangle {
                 Layout.preferredHeight: 40
                 text: ""
                 font.family: "FiraCode Nerd Font"
-                // Logout button?
                 background: Rectangle {
                     radius: 20
-                    color: parent.down ? Qt.darker(shell.highlightBg, 1.3) :
-                           parent.hovered ? Qt.lighter(shell.highlightBg, 1.1) : shell.highlightBg
+                    color: parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3) :
+                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
                     border.width: 1
-                    border.color: Qt.darker(shell.highlightBg, 1.2)
+                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
                 }
 
-                onClicked: lock.running = true
+                onClicked: Data.ProcessManager.lock()
 
                 contentItem: Label {
                     text: parent.text
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
                 }
             }
-            
         }
 
         Label {
             text: "Power Profile"
-            color: shell.accentColor
+            color: Data.Colors.accentColor
             font {
                 pixelSize: 18
                 bold: true
@@ -159,17 +143,17 @@ Rectangle {
                 background: Rectangle {
                     radius: 20
                     color: PowerProfiles.profile === PowerProfile.Performance
-                        ? shell.accentColor
-                        : parent.down ? Qt.darker(shell.highlightBg, 1.3)
-                        : parent.hovered ? Qt.lighter(shell.highlightBg, 1.1)
-                        : shell.highlightBg
+                        ? Data.Colors.accentColor
+                        : parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3)
+                        : parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1)
+                        : Data.Colors.highlightBg
                     border.width: 1
-                    border.color: Qt.darker(shell.highlightBg, 1.2)
+                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
                 }
 
                 contentItem: Label {
                     text: parent.text
-                    color: PowerProfiles.profile === PowerProfile.Performance ? shell.bgColor : shell.fgColor
+                    color: PowerProfiles.profile === PowerProfile.Performance ? Data.Colors.bgColor : Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
@@ -187,17 +171,17 @@ Rectangle {
                 background: Rectangle {
                     radius: 20
                     color: PowerProfiles.profile === PowerProfile.Balanced
-                        ? shell.accentColor
-                        : parent.down ? Qt.darker(shell.highlightBg, 1.3)
-                        : parent.hovered ? Qt.lighter(shell.highlightBg, 1.1)
-                        : shell.highlightBg
+                        ? Data.Colors.accentColor
+                        : parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3)
+                        : parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1)
+                        : Data.Colors.highlightBg
                     border.width: 1
-                    border.color: Qt.darker(shell.highlightBg, 1.2)
+                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
                 }
 
                 contentItem: Label {
                     text: parent.text
-                    color: PowerProfiles.profile === PowerProfile.Balanced ? shell.bgColor : shell.fgColor
+                    color: PowerProfiles.profile === PowerProfile.Balanced ? Data.Colors.bgColor : Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
@@ -219,17 +203,17 @@ Rectangle {
                 background: Rectangle {
                     radius: 20
                     color: PowerProfiles.profile === PowerProfile.PowerSaver
-                        ? shell.accentColor
-                        : parent.down ? Qt.darker(shell.highlightBg, 1.3)
-                        : parent.hovered ? Qt.lighter(shell.highlightBg, 1.1)
-                        : shell.highlightBg
+                        ? Data.Colors.accentColor
+                        : parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3)
+                        : parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1)
+                        : Data.Colors.highlightBg
                     border.width: 1
-                    border.color: Qt.darker(shell.highlightBg, 1.2)
+                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
                 }
 
                 contentItem: Label {
                     text: parent.text
-                    color: PowerProfiles.profile === PowerProfile.PowerSaver ? shell.bgColor : shell.fgColor
+                    color: PowerProfiles.profile === PowerProfile.PowerSaver ? Data.Colors.bgColor : Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent

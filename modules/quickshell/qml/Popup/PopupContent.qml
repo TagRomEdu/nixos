@@ -8,13 +8,11 @@ Item {
 
     property string selectedWidget: "calendar"
 
-    
     ColumnLayout {
         anchors.fill: parent
         spacing: 12
 
         Item {
-            
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -29,9 +27,9 @@ Item {
                     }
                 }
 
-                CalendarView { shell: root }
-                WeatherView { shell: root }
-                SystemView { shell: root }
+                CalendarView { shell: shell }
+                WeatherView { shell: shell }
+                SystemView { shell: shell }
             }
         }
 

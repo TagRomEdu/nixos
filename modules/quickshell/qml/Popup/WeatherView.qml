@@ -1,12 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "../Data/Weather.qml" as Weather
+import "../Data" as Data
 
 Rectangle {
     required property var shell
     
-    color: Qt.lighter(shell.bgColor, 1.2)
+    color: Qt.lighter(Data.Colors.bgColor, 1.2)
     radius: 20
 
     // Defensive: fallback colors if shell is undefined
@@ -23,8 +23,8 @@ Rectangle {
 
         // Location header
         Label {
-            text: shell.weatherLoading ? "Loading weather..." : "Weather"
-            color: shell.accentColor
+            text: weatherLoading ? "Loading weather..." : "Weather"
+            color: Data.Colors.accentColor
             font {
                 pixelSize: 18
                 bold: true
@@ -44,19 +44,19 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
 
                 Label {
-                    text: shell.weatherLoading ? "⏳" : shell.getWeatherEmoji(shell.weatherData.currentCondition || "?")
+                    text: weatherLoading ? "⏳" : getWeatherEmoji(weatherData.currentCondition || "?")
                     font.pixelSize: 48
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                 }
 
                 Label {
-                    text: shell.weatherLoading ? "..." : (shell.weatherData.currentTemp || "?")
+                    text: weatherLoading ? "..." : (weatherData.currentTemp || "?")
                     font {
                         pixelSize: 24
                         bold: true
                         family: "FiraCode Nerd Font"
                     }
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                 }
             }
 
@@ -68,12 +68,12 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
 
                 Repeater {
-                    model: shell.weatherLoading ? [] : shell.weatherData.details
+                    model: weatherLoading ? [] : weatherData.details
                     delegate: RowLayout {
                         spacing: 8
                         Label {
                             text: modelData ? modelData.split(":")[0] + ":" : ""
-                            color: Qt.lighter(shell.fgColor, 1.2)
+                            color: Qt.lighter(Data.Colors.fgColor, 1.2)
                             font {
                                 pixelSize: 12
                                 bold: true
@@ -81,7 +81,7 @@ Rectangle {
                         }
                         Label {
                             text: modelData ? modelData.split(":")[1] : ""
-                            color: shell.fgColor
+                            color: Data.Colors.fgColor
                             font.pixelSize: 12
                         }
                     }
@@ -96,7 +96,7 @@ Rectangle {
  
     Label {
         text: "3-Day Forecast"
-        color: accentColor
+        color: Data.Colors.accentColor
         font {
             pixelSize: 14
             bold: true
@@ -121,7 +121,7 @@ GridLayout {
             // Day name
             Label {
                 text: modelData?.dayName || "?"
-                color: fgColor
+                color: Data.Colors.fgColor
                 font.pixelSize: 12
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
@@ -132,7 +132,7 @@ GridLayout {
             Label {
                 text: weatherLoading ? "?" : getWeatherEmoji(modelData?.condition || "?")
                 font.pixelSize: 32
-                color: fgColor
+                color: Data.Colors.fgColor
                 horizontalAlignment: Text.AlignHCenter
                 Layout.alignment: Qt.AlignHCenter
             }
@@ -148,7 +148,7 @@ GridLayout {
                     return "?"
                 }
                 font.pixelSize: 12
-                color: fgColor
+                color: Data.Colors.fgColor
                 horizontalAlignment: Text.AlignHCenter
                 Layout.alignment: Qt.AlignHCenter
             }

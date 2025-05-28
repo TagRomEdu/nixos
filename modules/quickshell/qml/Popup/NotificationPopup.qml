@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Quickshell.Services.Notifications
 
 Item {
+    id: root
     required property var shell
     property var notificationQueue: []
     property int displayTime: 10000 // 10 seconds
@@ -33,7 +34,7 @@ Item {
             }
         }
         
-        return totalHeight + 40; // Increased bottom margin for safety
+        return Math.max(totalHeight + 20, 0); // Minimum height with some padding
     }
 
     // Helper function to calculate individual notification height
@@ -71,44 +72,61 @@ Item {
             interval: displayTime
             running: true
             onTriggered: {
+                console.log("Timer triggered for notification:", targetNotification?.summary || "unknown")
                 if (targetNotification && targetNotification.tracked) {
                     console.log("Auto-expiring notification:", targetNotification.summary)
-                    targetNotification.expire()
+                    dismissNotification(targetNotification)
                 }
                 destroy()
             }
         }
     }
 
+    // Connect to the notification server
     Connections {
         target: notificationServer
         
         function onNotification(notification) {
-            console.log("Multi-notification component received notification:", notification.appName, notification.summary)
-            notification.tracked = true
+            console.log("NotificationPopup received notification:", notification?.appName || "Unknown", notification?.summary || "No summary")
             
-            // Mark this as the newest notification
+            // Validate notification
+            if (!notification) {
+                console.warn("Received null notification")
+                return
+            }
+            
+            // Mark as tracked and set arrival time
+            notification.tracked = true
             let currentTime = Date.now()
             notification.arrivalTime = currentTime
             lastNotificationTime = currentTime
             
+            // Add to queue at the beginning (newest first)
             notificationQueue.unshift(notification)
             notificationQueueChanged()
-            calculatedHeightChanged()
             
-            // Create timer for auto-expiry using the notification's expire() method
-            let timer = expiryTimerComponent.createObject(parent, {
+            // Create timer for auto-expiry
+            let timer = expiryTimerComponent.createObject(root, {
                 "targetNotification": notification
             });
             
-            // Store the timer reference using the notification's ID
-            activeTimers[notification.id] = timer;
+            if (timer && notification.id) {
+                activeTimers[notification.id] = timer;
+                console.log("Created timer for notification ID:", notification.id)
+            }
             
-            // Listen for the notification's closed signal to remove it from our queue
-            notification.closed.connect(function(reason) {
-                console.log("Notification closed with reason:", reason, "- removing from queue")
-                removeFromQueue(notification.id)
-            })
+            // Listen for the notification's closed signal
+            if (notification.closed) {
+                notification.closed.connect(function(reason) {
+                    console.log("Notification closed signal received, reason:", reason)
+                    removeFromQueue(notification.id)
+                })
+            }
+            
+            // Make sure parent window is visible when we have notifications
+            if (root.parent && root.parent.visible !== undefined) {
+                root.parent.visible = true
+            }
         }
     }
 
@@ -123,33 +141,66 @@ Item {
         
         // Remove from queue
         for (let i = 0; i < notificationQueue.length; i++) {
-            if (notificationQueue[i].id === notificationId) {
+            if (notificationQueue[i] && notificationQueue[i].id === notificationId) {
                 notificationQueue.splice(i, 1)
                 notificationQueueChanged()
-                calculatedHeightChanged()
                 break
             }
+        }
+        
+        // Hide parent window if no more notifications
+        if (notificationQueue.length === 0 && root.parent && root.parent.visible !== undefined) {
+            root.parent.visible = false
         }
     }
 
     function dismissNotification(notification) {
-        console.log("Manually dismissing notification:", notification.summary)
-        // Clean up timer
-        if (activeTimers[notification.id]) {
+        if (!notification) {
+            console.warn("Attempted to dismiss null notification")
+            return
+        }
+        
+        console.log("Manually dismissing notification:", notification.summary || "unknown")
+        
+        // Clean up timer first
+        if (notification.id && activeTimers[notification.id]) {
             activeTimers[notification.id].destroy();
             delete activeTimers[notification.id];
         }
-        // Use the proper dismiss method
-        notification.dismiss()
+        
+        // Remove from our queue immediately
+        removeFromQueue(notification.id)
+        
+        // Try to call dismiss on the notification if it exists
+        if (typeof notification.dismiss === 'function') {
+            try {
+                notification.dismiss()
+            } catch (e) {
+                console.warn("Error calling notification.dismiss():", e)
+            }
+        } else if (typeof notification.expire === 'function') {
+            try {
+                notification.expire()
+            } catch (e) {
+                console.warn("Error calling notification.expire():", e)
+            }
+        }
     }
 
     // Clean up all timers when component is destroyed
     Component.onDestruction: {
+        console.log("NotificationPopup destroying, cleaning up", Object.keys(activeTimers).length, "timers")
         for (let id in activeTimers) {
             if (activeTimers[id]) {
                 activeTimers[id].destroy();
             }
         }
+        activeTimers = {}
+    }
+
+    // Debug output
+    onNotificationQueueChanged: {
+        console.log("Notification queue changed, length:", notificationQueue.length)
     }
 
     Column {
@@ -158,22 +209,24 @@ Item {
         spacing: notificationSpacing
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.rightMargin: 2 // Add some margin from edge
+        anchors.rightMargin: 2
 
         Repeater {
-            model: Math.min(notificationQueue.length, maxNotifications)
+            model: notificationQueue.length > 0 ? Math.min(notificationQueue.length, maxNotifications) : 0
             
             delegate: Rectangle {
                 id: notificationContainer
-                property var notification: notificationQueue[index]
-                property bool isNewest: notification.arrivalTime === lastNotificationTime
+                property var notification: index < notificationQueue.length ? notificationQueue[index] : null
+                property bool isNewest: notification ? (notification.arrivalTime === lastNotificationTime) : false
+                
+                // Skip rendering if notification is null
+                visible: notification !== null
                 
                 width: maxWidth
-                // Use the helper function for consistent height calculation
-                height: calculateIndividualHeight(notification)
+                height: notification ? calculateIndividualHeight(notification) : 0
                 
                 // Main container with border and proper radius
-                radius: 16
+                radius: 20
                 color: shell.bgColor
                 
                 // Apply border directly to the main container
@@ -183,15 +236,15 @@ Item {
                 // Subtle gradient overlay
                 Rectangle {
                     anchors.fill: parent
-                    anchors.margins: parent.border.width // Inset by border width
-                    radius: parent.radius - parent.border.width // Adjust radius for inset
+                    anchors.margins: parent.border.width
+                    radius: parent.radius - parent.border.width
                     gradient: Gradient {
                         GradientStop { position: 0.0; color: Qt.rgba(255, 255, 255, 0.08) }
                         GradientStop { position: 1.0; color: Qt.rgba(255, 255, 255, 0.02) }
                     }
                 }
 
-                // Only animate the newest notification with improved initial state
+                // Animation for newest notification
                 opacity: isNewest ? 0 : 0.92
                 scale: isNewest ? 0.95 : 1
                 
@@ -227,7 +280,11 @@ Item {
                     id: hoverArea
                     anchors.fill: parent
                     hoverEnabled: true
-                    onClicked: dismissNotification(notification)
+                    onClicked: {
+                        if (notification) {
+                            dismissNotification(notification)
+                        }
+                    }
                     z: -1
                     
                     onEntered: hoverAnimation.start()
@@ -252,7 +309,7 @@ Item {
                     easing.type: Easing.OutCubic
                 }
 
-                // Content area with minimal margins to prevent empty space
+                // Content area
                 Item {
                     id: contentArea
                     anchors.fill: parent
@@ -279,12 +336,12 @@ Item {
                                 border.width: 1
                                 border.color: shell.accentColor
                                 Layout.alignment: Qt.AlignTop
-                                Layout.topMargin: 6 // Better alignment with text content
+                                Layout.topMargin: 6
 
                                 // Try to show image first
                                 Image {
                                     id: appImage
-                                    source: notification?.image || notification?.appIcon || ""
+                                    source: notification ? (notification.image || notification.appIcon || "") : ""
                                     anchors.fill: parent
                                     anchors.margins: 2
                                     fillMode: Image.PreserveAspectFit
@@ -295,7 +352,7 @@ Item {
                                 Text {
                                     id: fallbackText
                                     anchors.centerIn: parent
-                                    text: notification?.appName ? notification.appName.charAt(0).toUpperCase() : "!"
+                                    text: notification && notification.appName ? notification.appName.charAt(0).toUpperCase() : "!"
                                     color: shell.accentColor
                                     font.pixelSize: 12
                                     font.bold: true
@@ -311,7 +368,7 @@ Item {
                                     Layout.fillWidth: true
                                     
                                     Text {
-                                        text: notification?.appName || "Notification"
+                                        text: notification ? (notification.appName || "Notification") : "Notification"
                                         color: shell.accentColor
                                         font.bold: true
                                         font.pixelSize: 13
@@ -332,7 +389,11 @@ Item {
                                         width: 18
                                         height: 18
                                         flat: true
-                                        onClicked: dismissNotification(notification)
+                                        onClicked: {
+                                            if (notification) {
+                                                dismissNotification(notification)
+                                            }
+                                        }
 
                                         background: Rectangle {
                                             radius: 9
@@ -355,7 +416,7 @@ Item {
                                 }
 
                                 Text {
-                                    text: notification?.summary || ""
+                                    text: notification ? (notification.summary || "") : ""
                                     color: shell.fgColor
                                     font.bold: true
                                     font.pixelSize: 12
@@ -368,9 +429,9 @@ Item {
                             }
                         }
 
-                        // Body text with plain text format to handle line breaks properly
+                        // Body text
                         Text {
-                            text: notification?.body || ""
+                            text: notification ? (notification.body || "") : ""
                             textFormat: Text.Markdown
                             color: Qt.lighter(shell.fgColor, 1.2)
                             font.pixelSize: 14
@@ -380,7 +441,7 @@ Item {
                             elide: Text.ElideRight
                             visible: text !== "" && text.trim() !== ""
                             lineHeight: 1.2
-                            Layout.preferredHeight: visible ? implicitHeight : 0 // Only take space when visible
+                            Layout.preferredHeight: visible ? implicitHeight : 0
                         }
                     }
                 }
@@ -400,7 +461,6 @@ Item {
         height: 28
         radius: 20
         
-        // Glassmorphism for overflow indicator too
         color: Qt.rgba(0, 0, 0, 0.2)
         border.width: 1
         border.color: Qt.rgba(255, 255, 255, 0.3)

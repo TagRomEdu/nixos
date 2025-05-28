@@ -136,11 +136,7 @@ Item {
                                 
                                 RowLayout {
                                     Layout.fillWidth: true
-                                    Label {
-                                        text: model.timestamp
-                                        font.pixelSize: 10
-                                        color: Qt.darker(shell.fgColor, 1.5)
-                                    }
+
                                     Item { Layout.fillWidth: true }
                                     Label {
                                         text: model.type === "image" ? "Image" : (model.content.length + " chars")
@@ -183,8 +179,7 @@ Item {
     SequentialAnimation {
         id: clickScale
         property var target
-        PropertyAnimation { target: clickScale.target; property: "scale"; to: 0.9; duration: 50; easing.type: Easing.OutQuart }
-        PropertyAnimation { target: clickScale.target; property: "scale"; to: 1.0; duration: 100; easing.type: Easing.OutBack; easing.overshoot: 1.1 }
+       
     }
     
     ListModel { id: cliphistModel }

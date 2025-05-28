@@ -14,6 +14,7 @@ import Quickshell.Services.Pipewire
 import Quickshell.Services.Notifications
 import "Data" as Dat
 import "Bar" as Bar
+import "Popup" as Popup
 
 ShellRoot {
     id: root
@@ -343,14 +344,14 @@ ShellRoot {
             top: true
             right: true
         }
-        margins.right: 14
+        margins.right: 12
         margins.top: 14
         implicitWidth: 420
         implicitHeight: notificationPopup.calculatedHeight
         color: "transparent"
         visible: false
 
-        Bar.NotificationPopup {
+        Popup.NotificationPopup {
             id: notificationPopup
             anchors.fill: parent
             shell: root
@@ -386,7 +387,7 @@ ShellRoot {
             color: bgColor
             radius: 20
 
-            Bar.PopupContent {
+            Popup.PopupContent {
                 shell: root
                 anchors.fill: parent
                 anchors.margins: 12
@@ -421,7 +422,7 @@ ShellRoot {
             color: bgColor
             radius: 20
 
-            Bar.Cliphist {
+            Popup.Cliphist {
                 shell: root
                 anchors.fill: parent
                 anchors.margins: 12

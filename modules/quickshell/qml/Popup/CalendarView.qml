@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-Rectangle {
-    required property var shell
+import "../Data" as Data  // Better practice than direct .qml import
 
-    radius: 20
+Rectangle {
+    required property var shell  // Keep this only for functionality needs
     
-    color: Qt.lighter(shell.bgColor, 1.2)
+    radius: 20
+    color: Qt.lighter(Data.Colors.bgColor, 1.2)
 
     ColumnLayout {
         anchors.fill: parent
@@ -31,12 +32,12 @@ Rectangle {
                 implicitWidth: 30
                 background: Rectangle {
                     radius: 20
-                    color: parent.down ? Qt.darker(shell.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(shell.highlightBg, 1.1) : shell.highlightBg
+                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
+                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
                 }
                 contentItem: Label {
                     text: parent.text
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -44,7 +45,7 @@ Rectangle {
 
             Label {
                 text: Qt.locale("en_US").monthName(calendar.month) + " " + calendar.year
-                color: shell.accentColor
+                color: Data.Colors.accentColor
                 font.bold: true
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
@@ -63,12 +64,12 @@ Rectangle {
                 implicitWidth: 30
                 background: Rectangle {
                     radius: 20
-                    color: parent.down ? Qt.darker(shell.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(shell.highlightBg, 1.1) : shell.highlightBg
+                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
+                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
                 }
                 contentItem: Label {
                     text: parent.text
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -86,7 +87,7 @@ Rectangle {
                 model: ["S", "M", "T", "W", "T", "F", "S"]
                 delegate: Label {
                     text: modelData
-                    color: shell.fgColor
+                    color: Data.Colors.fgColor
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -107,8 +108,7 @@ Rectangle {
             leftPadding: 0
             rightPadding: 0
             locale: Qt.locale("en_US")
-
-             implicitHeight: 400
+            implicitHeight: 400
 
             delegate: Rectangle {
                 width: 30
@@ -117,8 +117,8 @@ Rectangle {
                 color: model.day === new Date().getDate()
                        && calendar.month === new Date().getMonth()
                        && calendar.year === new Date().getFullYear()
-                       ? shell.accentColor
-                       : model.month === calendar.month ? shell.highlightBg : Qt.darker(shell.highlightBg, 1.2)
+                       ? Data.Colors.accentColor
+                       : model.month === calendar.month ? Data.Colors.highlightBg : Qt.darker(Data.Colors.highlightBg, 1.2)
 
                 Label {
                     text: model.day
@@ -126,8 +126,8 @@ Rectangle {
                     color: model.day === new Date().getDate()
                            && calendar.month === new Date().getMonth()
                            && calendar.year === new Date().getFullYear()
-                           ? shell.bgColor
-                           : model.month === calendar.month ? shell.fgColor : Qt.darker(shell.fgColor, 1.5)
+                           ? Data.Colors.bgColor
+                           : model.month === calendar.month ? Data.Colors.fgColor : Qt.darker(Data.Colors.fgColor, 1.5)
                     font.bold: model.day === new Date().getDate()
                 }
             }
@@ -143,12 +143,12 @@ Rectangle {
             Layout.fillWidth: true
             background: Rectangle {
                 radius: 20
-                color: parent.down ? Qt.darker(shell.accentColor, 1.2) :
-                      parent.hovered ? Qt.lighter(shell.highlightBg, 1.1) : shell.highlightBg
+                color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
+                      parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
             }
             contentItem: Label {
                 text: parent.text
-                color: shell.fgColor
+                color: Data.Colors.fgColor
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }

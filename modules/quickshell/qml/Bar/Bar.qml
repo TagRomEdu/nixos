@@ -6,6 +6,7 @@ import Quickshell.Hyprland
 import Quickshell.Wayland
 import Quickshell.Io
 import QtQuick.Shapes
+import "../Data" as Data
 
 Item {
     required property var shell
@@ -248,18 +249,18 @@ Item {
 
                             Image {
                                 anchors.centerIn: parent
-                                width: 16
-                                height: 16
+                                width: 18
+                                height: 18
                                 source: {
                                     let icon = modelData?.icon || "";
                                     if (icon.includes("?path=")) {
                                         const [name, path] = icon.split("?path=");
                                         const fileName = name.substring(name.lastIndexOf("/") + 1);
-                                        return `file://${path}/${fileName}`;
+                                         return `file://${path}/${fileName}`;
                                     }
                                     return icon;
                                 }
-                                
+
                                 // Smooth opacity animation on load
                                 opacity: 0
                                 Component.onCompleted: opacity = 1
