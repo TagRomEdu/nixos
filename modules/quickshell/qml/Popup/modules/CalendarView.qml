@@ -108,8 +108,8 @@ Rectangle {
             leftPadding: 0
             rightPadding: 0
             
-            // Create custom locale with Monday as first day of week
-            locale: Qt.locale("de_DE")  // German locale starts with Monday by default
+            // German locale starts with Monday by default
+            locale: Qt.locale("de_DE")
             
             implicitHeight: 400
 

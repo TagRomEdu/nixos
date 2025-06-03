@@ -9,7 +9,7 @@
     terminal_title_flag = ""
     locale = ""
     close_when_open = false
-    theme = "pink"
+    theme = "rose-pine"
     monitor = ""
     hotreload_theme = true
     as_window = false
@@ -239,31 +239,29 @@
     placeholder = "Dmenu"
     switcher_only = true
   '';
-  home.file.".config/walker/themes/pink.css".text = ''
-  @define-color foreground        #c5c8c6;  /* text */
-  @define-color foreground-light #d0d0d0;  /* light text */
-  @define-color background        #0F1419;  /* base */
-  @define-color cursor            #8c8c8c;  /* grey accent */
+  home.file.".config/walker/themes/rose-pine.css".text = ''
+    @define-color foreground        #e0def4;  /* text */
+    @define-color foreground-light #f6c177;  /* accent text */
+    @define-color background        #191724;  /* base */
+    @define-color cursor            #524f67;  /* subtle gray */
 
-  /* Base colors (0–7) */
-  @define-color color0  #0F1419;  /* base */
-  @define-color color1  #82aaff;  /* blue */
-  @define-color color2  #a6e3a1;  /* green */
-  @define-color color3  #f9e2af;  /* yellow */
-  @define-color color4  #82aaff;  /* blue (used again for coherence) */
-  @define-color color5  #f5c2e7;  /* pink */
-  @define-color color6  #94e2d5;  /* teal */
-  @define-color color7  #bac2de;  /* subtext1 */
+    @define-color color0  #191724;  /* base */
+    @define-color color1  #eb6f92;  /* love */
+    @define-color color2  #9ccfd8;  /* foam */
+    @define-color color3  #f6c177;  /* gold */
+    @define-color color4  #31748f;  /* iris */
+    @define-color color5  #c4a7e7;  /* highlight */
+    @define-color color6  #ebbcba;  /* rose */
+    @define-color color7  #e0def4;  /* text */
 
-  /* Bright colors (8–15) */
-  @define-color color8  #585b70;  /* surface2 */
-  @define-color color9  #f38ba8;  /* red */
-  @define-color color10 #a6e3a1;  /* green */
-  @define-color color11 #f9e2af;  /* yellow */
-  @define-color color12 #89b4fa;  /* blue */
-  @define-color color13 #f5c2e7;  /* pink */
-  @define-color color14 #94e2d5;  /* teal */
-  @define-color color15 #cdd6f4;  /* text */
+    @define-color color8  #6e6a86;  /* surface2 */
+    @define-color color9  #eb6f92;  /* love */
+    @define-color color10 #9ccfd8;  /* foam */
+    @define-color color11 #f6c177;  /* gold */
+    @define-color color12 #31748f;  /* iris */
+    @define-color color13 #c4a7e7;  /* highlight */
+    @define-color color14 #ebbcba;  /* rose */
+    @define-color color15 #e0def4;  /* text */
 
 
 
@@ -428,7 +426,7 @@
     }
 
   '';
-  home.file.".config/walker/themes/pink.toml".text = ''
+  home.file.".config/walker/themes/rose-pine.toml".text = ''
 
     [ui.anchors]
     bottom = true
