@@ -12,7 +12,7 @@
     "${self}/system/programs/stylix.nix"
     "${self}/system/xdg.nix"
     "${self}/system/environment.nix"
-    # "${self}/system/8bitdo.nix"
+    "${self}/system/filesystems.nix"
     inputs.home-manager.nixosModules.default
   ];
 
@@ -137,11 +137,6 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
     v4l2loopback
   ];
-
-  fileSystems."/mnt/storage" = {
-    device = "UUID=74697b82-1266-4372-96cc-aac599abfb72";
-    fsType = "ext4";
-  };
 
   nix.settings.auto-optimise-store = true;
   nix.gc = {
