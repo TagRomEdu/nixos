@@ -12,7 +12,7 @@
     "${self}/system/programs/stylix.nix"
     "${self}/system/xdg.nix"
     "${self}/system/environment.nix"
-    #"${self}/system/8bitdo.nix"
+    # "${self}/system/8bitdo.nix"
     inputs.home-manager.nixosModules.default
   ];
 
@@ -73,7 +73,7 @@
     "flakes"
   ];
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -126,20 +126,19 @@
     pulse.enable = true;
   };
 
-  # DroidCam / v4l2loopback config
-  #boot.extraModulePackages = with config.boot.kernelPackages; [
-  #  v4l2loopback
-  #];
+  # v4l2loopback support (DroidCam)
+  boot.kernelModules = [ "v4l2loopback" ];
 
-  #boot.kernelModules = [
-  #  "v4l2loopback"
-  #];
+  boot.extraModprobeConfig = ''
+    options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
+  '';
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
-  #boot.extraModprobeConfig = ''
-  #  options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
-  #'';
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback
+  ];
 
-  fileSystems."/home/lysec/storage" = {
+  fileSystems."/mnt/storage" = {
     device = "UUID=74697b82-1266-4372-96cc-aac599abfb72";
     fsType = "ext4";
   };
@@ -148,31 +147,26 @@
   nix.gc = {
     automatic = true;
     dates = "daily";
-    options = "--delete-older-than 5d"; # Deletes generations older than 5 days
+    options = "--delete-older-than 5d";
   };
 
   programs.thunar.enable = true;
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
 
   services.sunshine = {
     enable = true;
     autoStart = false;
     capSysAdmin = true;
     openFirewall = true;
-    
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
   home-manager.backupFileExtension = "backup";
 
   system.stateVersion = "25.05";
 
-  # Log rebuild time & date for fabric panel (modules/fabric/config.py)
   system.activationScripts.logRebuildTime = {
     text = ''
       LOG_FILE="/var/log/nixos-rebuild-log.json"

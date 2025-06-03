@@ -10,6 +10,8 @@
     inputs.hyprpolkitagent.packages."${pkgs.system}".hyprpolkitagent
   ];
 
+  stylix.targets.hyprland.enable = false;
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -25,9 +27,9 @@
 
       # Keybinds Start
       bind = [
-        "CTRL SHIFT, 1, exec, hyprshot -m region --clipboard-only"
-        "CTRL SHIFT, 2, exec, hyprshot -m window --clipboard-only"
-        "CTRL SHIFT, 3, exec, hyprshot -m output --clipboard-only"
+        "CTRL SHIFT, 1, exec, grimblast --freeze copy area"
+        "CTRL SHIFT, 2, exec, grimblast --freeze copy window"
+        "CTRL SHIFT, 3, exec, grimblast --freeze copy output"
 
         "$mainMod, RETURN, exec, $terminal"
         "$mainMod, B, exec, $browser"
@@ -89,7 +91,8 @@
         gaps_in = 5;
         gaps_out = 14;
         border_size = 3;
-        #"col.active_border" = "rgb(57A7DE)";
+        "col.active_border" = "rgb(eb6f92)";
+        "col.inactive_border" = "rgb(6e6a86)";
       };
 
       decoration = {

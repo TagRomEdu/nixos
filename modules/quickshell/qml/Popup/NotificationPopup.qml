@@ -245,7 +245,7 @@ Item {
                 }
 
                 // Animation for newest notification
-                opacity: isNewest ? 0 : 0.92
+                opacity: isNewest ? 0 : 1
                 scale: isNewest ? 0.95 : 1
                 
                 Component.onCompleted: {
@@ -461,7 +461,7 @@ Item {
         height: 28
         radius: 20
         
-        color: Qt.rgba(0, 0, 0, 0.2)
+        color: Qt.rgb(0, 0, 0, 0.2)
         border.width: 1
         border.color: Qt.rgba(255, 255, 255, 0.3)
 
@@ -469,7 +469,7 @@ Item {
             anchors.fill: parent
             radius: parent.radius
             color: shell.accentColor
-            opacity: 0.8
+            //opacity: 0.8
         }
 
         Text {

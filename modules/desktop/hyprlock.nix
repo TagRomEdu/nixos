@@ -5,7 +5,7 @@
     # BACKGROUND
     background {
         monitor =
-        path = ${config.home.homeDirectory}/nixos/assets/wallpapers/cat-vibing.png
+        path = ${config.home.homeDirectory}/nixos/assets/wallpapers/girl.jpg
         #color = $background"
         blur_passes = 2
         contrast = 1
@@ -27,16 +27,17 @@
     input-field {
         monitor =
         size = 250, 60
-        outline_thickness = 2
-        dots_size = 0.2 # Scale of input-field height, 0.2 - 0.8
-        dots_spacing = 0.35 # Scale of dots' absolute size, 0.0 - 1.0
+        outline_thickness = 3                # changed from 2 to 3
+        outline_color = rgb(235, 111, 146)  # #eb6f92 pinkish rose pine accent
+        dots_size = 0.2
+        dots_spacing = 0.35
         dots_center = true
-        outer_color = rgba(0, 0, 0, 0)
-        inner_color = rgba(0, 0, 0, 0.2)
-        font_color = rgb(255, 255, 255)  # Set font color to white
+        outer_color = rgb(235, 111, 146)  # rose pine surface (dark grayish)
+        inner_color = rgba(68, 71, 90, 0.6)  # rose pine base variant (darker)
+        font_color = rgb(242, 234, 218)       # rose pine text (light cream)
         fade_on_empty = false
         rounding = -1
-        check_color = rgb(204, 136, 34)
+        check_color = rgb(235, 111, 146)     # same rose pine pink accent
         placeholder_text = Input Password...
         hide_input = false
         position = 0, -200
@@ -48,7 +49,7 @@
     label {
       monitor =
       text = cmd[update:1000] LC_TIME=en_US.UTF-8 date +"%A, %B %d"
-      color = rgba(242, 243, 244, 0.75)
+      color = rgba(242, 234, 218, 0.75)     # rose pine text with transparency
       font_size = 22
       font_family = JetBrains Mono
       position = 0, 300
@@ -56,12 +57,11 @@
       valign = center
     }
 
-
     # TIME
     label {
       monitor = 
       text = cmd[update:1000] echo "$(date +"%-I:%M")"
-      color = rgba(242, 243, 244, 0.75)
+      color = rgba(242, 234, 218, 0.75)     # rose pine text with transparency
       font_size = 95
       font_family = JetBrains Mono Extrabold
       position = 0, 200

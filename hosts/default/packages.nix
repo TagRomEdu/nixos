@@ -13,8 +13,11 @@ with pkgs;
   heroic
   peazip
 
+  # TUI
+  btop
+  yazi
+
   # Desktop
-  hyprshot
   hyprlock
   nwg-look
   walker
@@ -29,7 +32,6 @@ with pkgs;
   black
 
   # Utilities
-  eww
   jq
   socat
   tree
@@ -42,13 +44,14 @@ with pkgs;
   rar
   unzip
   droidcam
-  wtfutil
   gowall
   gruvbox-gtk-theme
   papirus-icon-theme
-  ironbar
-  qt6Packages.qt5compat
-  kdePackages.syntax-highlighting
-  btop
+  #qt6Packages.qt5compat
+  #kdePackages.syntax-highlighting
+  grimblast
+  gpu-screen-recorder
+  mpv
+  slop
 ]
 

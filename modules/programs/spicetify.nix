@@ -17,7 +17,6 @@ in
       groupSession
       fullAppDisplay
     ];
-
     enabledCustomApps = with spicePkgs.apps; [
       marketplace
     ];

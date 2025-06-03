@@ -3,10 +3,10 @@ import QtQuick
 import Quickshell
 
 Singleton {
-    // Colors
+    // Rosé Pine Colors
     id: colors
-    readonly property color bgColor: "#0F1419"
-    readonly property color fgColor: "#E6E1E5"
-    readonly property color accentColor: "#73D0FF"
-    readonly property color highlightBg: "#1A1F26"
+    readonly property color bgColor: "#1f1d2e"          // Base background
+    readonly property color fgColor: "#e0def4"          // Base foreground (text)
+    readonly property color accentColor: "#eb6f92"      // Pink accent ("love")
+    readonly property color highlightBg: "#26233a"      // Highlight background
 }

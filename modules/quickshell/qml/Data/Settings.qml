@@ -14,7 +14,14 @@ Singleton {
         details: [],
         forecast: []
     })
-    readonly property bool weatherLoading: false
+
+    // System Monitor
+    property int cpuRefreshInterval: 5000
+    property int ramRefreshInterval: 10000
+    property string videoPath: "~/Videos/yeet/"
+
+    // Hot Corner bar
+    property bool hideRecordButton: false // Hide record icon true/false
 
     // Audio
     readonly property var defaultAudioSink: Pipewire.defaultAudioSink

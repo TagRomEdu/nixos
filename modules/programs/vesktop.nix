@@ -1,14 +1,13 @@
 { config, pkgs, ... }:
 
-# System24 (TUI style) Ayu Dark
 {
   home.packages = with pkgs; [
     vesktop
   ];
-  home.file.".config/vesktop/themes/system24-ayu-dark.theme.css".text = ''
+  home.file.".config/vesktop/themes/system24-rosepine.theme.css".text = ''
     /**
-    * @name system24 (ayu dark edit)
-    * @description a tui-like discord theme with Ayu Dark colors.
+    * @name system24 (rosé pine edit)
+    * @description a tui-like discord theme with Rosé Pine colors.
     * @author refact0r
     */
 
@@ -41,15 +40,15 @@
       --dms-icon-svg-url: url("");
       --dms-icon-svg-size: 90%;
       --dms-icon-color-before: var(--icon-secondary);
-      --dms-icon-color-after: var(--white);
+      --dms-icon-color-after: var(--text-1);
       --custom-dms-background: off;
       --dms-background-image-url: url("");
       --dms-background-image-size: cover;
       --dms-background-color: linear-gradient(
         70deg,
-        var(--blue-2),
-        var(--purple-2),
-        var(--red-2)
+        var(--rose),
+        var(--iris),
+        var(--love)
       );
 
       --background-image: off;
@@ -74,100 +73,104 @@
     }
 
     :root {
-      --colors: on;
+  --colors: on;
 
-      /* Text colors */
-      --text-0: #0f1419;
-      --text-1: #f8f8f2;
-      --text-2: #e6e1cf;
-      --text-3: #c5c5c5;
-      --text-4: #a0a0a0;
-      --text-5: #5c6773;
+  /* Rosé Pine Palette */
+  --base: #191724;
+  --surface: #1f1d2e;
+  --overlay: #26233a;
+  --muted: #7e7a94; /* slightly brighter for better contrast */
+  --subtle: #a8a4c2; /* more readable than original */
+  --text: #f6f3ff;   /* brighter than #e0def4 */
+  --love: #eb6f92;
+  --gold: #f6c177;
+  --rose: #ebbcba;
+  --pine: #31748f;
+  --foam: #9ccfd8;
+  --iris: #c4a7e7;
+  --highlight-low: #21202e;
+  --highlight-med: #403d52;
+  --highlight-high: #524f67;
 
-      /* Backgrounds */
-      --bg-1: #1b202a;
-      --bg-2: #181c25;
-      --bg-3: #131721;
-      --bg-4: #0f1419;
-      --hover: rgba(255, 255, 255, 0.05);
-      --active: rgba(255, 255, 255, 0.1);
-      --active-2: rgba(255, 255, 255, 0.15);
-      --message-hover: var(--hover);
+  /* Text colors */
+  --text-0: #000000;
+  --text-1: var(--text);
+  --text-2: var(--subtle);
+  --text-3: var(--muted);
+  --text-4: #5e5a70;
+  --text-5: #4a4658;
 
-      /* Accent colors */
-      --accent-1: #39bae6;
-      --accent-2: #39bae6;
-      --accent-3: #2aa2cd;
-      --accent-4: #1c8bb3;
-      --accent-5: #15799c;
-      --mention: linear-gradient(
-        to right,
-        rgba(255, 204, 102, 0.1) 40%,
-        transparent
-      );
-      --mention-hover: linear-gradient(
-        to right,
-        rgba(255, 204, 102, 0.2) 40%,
-        transparent
-      );
-      --reply: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.05) 40%,
-        transparent
-      );
-      --reply-hover: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.1) 40%,
-        transparent
-      );
+  /* Backgrounds */
+  --bg-1: var(--overlay);
+  --bg-2: var(--surface);
+  --bg-3: var(--base);
+  --bg-4: var(--highlight-low);
+  --hover: rgba(235, 111, 146, 0.08);
+  --active: rgba(235, 111, 146, 0.15);
+  --active-2: rgba(235, 111, 146, 0.2);
+  --message-hover: var(--hover);
 
-      /* Status indicators */
-      --online: #b8cc52;
-      --dnd: #ff3333;
-      --idle: #e6b94c;
-      --streaming: #c792ea;
-      --offline: #5c6773;
 
-      /* Borders */
-      --border-light: var(--hover);
-      --border: var(--active);
-      --border-hover: var(--accent-2);
-      --button-border: rgba(255, 255, 255, 0.1);
+  /* Accent colors */
+  --accent-1: var(--foam);
+  --accent-2: var(--pine);
+  --accent-3: var(--iris);
+  --accent-4: var(--rose);
+  --accent-5: var(--gold);
 
-      /* Red */
-      --red-1: #ff6666;
-      --red-2: #ff4c4c;
-      --red-3: #ff3333;
-      --red-4: #e62e2e;
-      --red-5: #cc2929;
+  --mention: linear-gradient(to right, rgba(246, 193, 119, 0.1) 40%, transparent);
+  --mention-hover: linear-gradient(to right, rgba(246, 193, 119, 0.2) 40%, transparent);
+  --reply: linear-gradient(to right, rgba(235, 111, 146, 0.08) 40%, transparent);
+  --reply-hover: linear-gradient(to right, rgba(235, 111, 146, 0.15) 40%, transparent);
 
-      /* Green */
-      --green-1: #d2e685;
-      --green-2: #b8cc52;
-      --green-3: #a6b849;
-      --green-4: #94a53f;
-      --green-5: #829135;
+  /* Status indicators */
+  --online: #9ccfd8;
+  --dnd: #eb6f92;
+  --idle: #f6c177;
+  --streaming: #c4a7e7;
+  --offline: #6e6a86;
 
-      /* Blue */
-      --blue-1: #a8d9f0;
-      --blue-2: #7dcbe9;
-      --blue-3: #39bae6;
-      --blue-4: #2aa2cd;
-      --blue-5: #1c8bb3;
+  /* Borders (now using Rosé Pine `love`) */
+  --border-light: #eb6f92;
+  --border: #eb6f92;
+  --border-hover: #eb6f92;
+  --button-border: #eb6f92;
 
-      /* Purple (used for stream etc) */
-      --purple-1: #d4bfff;
-      --purple-2: #c792ea;
-      --purple-3: #b480e3;
-      --purple-4: #a16cd2;
-      --purple-5: #8e58c1;
+  /* Red (from love) */
+  --red-1: #f08399;
+  --red-2: #eb6f92;
+  --red-3: #d45b7a;
+  --red-4: #be4966;
+  --red-5: #a93552;
 
-      /* Yellow */
-      --yellow-1: #ffe291;
-      --yellow-2: #ffcc66;
-      --yellow-3: #e6b94c;
-      --yellow-4: #cca633;
-      --yellow-5: #b3931a;
-    }
-  '';  
+  /* Green (from foam) */
+  --green-1: #b1e3ed;
+  --green-2: #9ccfd8;
+  --green-3: #85bac3;
+  --green-4: #6ea5ae;
+  --green-5: #598f99;
+
+  /* Blue (from pine) */
+  --blue-1: #5c93ab;
+  --blue-2: #4d8198;
+  --blue-3: #3e6f85;
+  --blue-4: #2f5d72;
+  --blue-5: #204b5f;
+
+  /* Purple (from iris) */
+  --purple-1: #d9c2f0;
+  --purple-2: #c4a7e7;
+  --purple-3: #ae8cd3;
+  --purple-4: #9971be;
+  --purple-5: #8356aa;
+
+  /* Yellow (from gold) */
+  --yellow-1: #f8d3a6;
+  --yellow-2: #f6c177;
+  --yellow-3: #d6a05f;
+  --yellow-4: #b68047;
+  --yellow-5: #965f2f;
+}
+
+  '';
 }
