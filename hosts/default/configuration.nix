@@ -5,8 +5,6 @@
     ./hardware-configuration.nix
 
     "${self}/system/greeter/greetd.nix"
-    "${self}/system/shell/bash.nix"
-    "${self}/system/shell/fish.nix"
     "${self}/system/programs/steam.nix"
     "${self}/system/programs/lact.nix"
     "${self}/system/programs/stylix.nix"
@@ -30,7 +28,7 @@
   users.users.lysec = {
     isNormalUser = true;
     description = "lysec";
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -83,6 +81,9 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # Enable ZSH
+  programs.zsh.enable = true;
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";

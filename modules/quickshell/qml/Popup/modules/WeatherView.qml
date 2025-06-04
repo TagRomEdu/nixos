@@ -9,7 +9,6 @@ Rectangle {
     color: Qt.lighter(Data.Colors.bgColor, 1.2)
     radius: 20
 
-    // Local function to get weather emoji (copied from WeatherService)
     function getWeatherEmoji(condition) {
         if (!condition) return "❓"
         condition = condition.toLowerCase()
@@ -62,13 +61,13 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
 
                 Label {
-                    text: weatherLoading ? "⏳" : getWeatherEmoji(weatherData.currentCondition || "?")
+                    text: weatherLoading ? "⏳" : getWeatherEmoji((weatherData && weatherData.currentCondition) || "?")
                     font.pixelSize: 48
                     color: Data.Colors.fgColor
                 }
 
                 Label {
-                    text: weatherLoading ? "..." : (weatherData.currentTemp || "?")
+                    text: weatherLoading ? "..." : ((weatherData && weatherData.currentTemp) || "?")
                     font {
                         pixelSize: 24
                         bold: true
@@ -86,7 +85,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
 
                 Repeater {
-                    model: weatherLoading ? [] : weatherData.details
+                    model: weatherLoading ? [] : (weatherData && weatherData.details ? weatherData.details : [])
                     delegate: RowLayout {
                         spacing: 8
                         Label {
@@ -131,7 +130,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
      
                 Repeater {
-                    model: weatherLoading ? [] : weatherData.forecast.slice(0, 3)
+                    model: weatherLoading ? [] : (weatherData && weatherData.forecast ? weatherData.forecast.slice(0, 3) : [])
                     delegate: ColumnLayout {
                         spacing: 4
                         Layout.alignment: Qt.AlignHCenter

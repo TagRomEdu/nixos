@@ -7,11 +7,11 @@ Shape {
     required property var shell
     required property var popup
     required property var barRect
-    
     width: 60
     height: barRect.height
     y: barRect.y
-    x: barRect.x + barRect.width - 5
+    //x: barRect.x + barRect.width - 5
+    x: barRect.x + barRect.width - 16
     preferredRendererType: Shape.CurveRenderer
 
     // Entrance animation

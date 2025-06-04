@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  self,
   ...
 }:
 
@@ -28,6 +29,8 @@ in
     ../../modules/programs/vesktop.nix
     ../../modules/programs/firefox.nix
 
+    ../../system/shell/zsh.nix
+
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
@@ -43,7 +46,6 @@ in
     EDITOR = "nvim";
   };
 
-  # Enable cliphist
   services.cliphist = {
     enable = true;
     allowImages = true;

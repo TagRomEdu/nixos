@@ -3,6 +3,7 @@ import Quickshell
 import "root:/Bar" as Bar
 import "root:/HotCorner" as HotCorner
 import "root:/Popup" as Popup
+import "root:/Core" as Core
 
 Item {
     id: shellWindows
@@ -25,15 +26,14 @@ Item {
             right: true
         }
         margins.top: -36
-        implicitWidth: slideBarVisible ? 260 : 48
-        implicitHeight: slideBarVisible ? 248 : 48
+        implicitWidth: slideBarVisible ? 264 : 48
+        implicitHeight: slideBarVisible ? 252 : 48
         color: "transparent"
         exclusiveZone: 0
         
         // Track SlideBar visibility
         property bool slideBarVisible: false
         
-        // This makes the window ignore all mouse events
         Item {
             anchors.fill: parent
             MouseArea {
@@ -73,6 +73,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: 520
         }
+        
     }
     
     // Notification window
@@ -162,4 +163,18 @@ Item {
             }
         }
     }
+Core.ScreenBorder {
+    id: screenborderWindow
+    visible: true
+    width: Screen.width
+    height: Screen.height
+
+    anchors {
+        top: true
+    }
+
+    margins.top: -36
+    exclusiveZone: 0
+}
+
 }

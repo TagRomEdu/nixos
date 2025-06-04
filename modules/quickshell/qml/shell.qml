@@ -49,7 +49,7 @@ ShellRoot {
     property var trayItems: SystemTray.items.values || []
 
     // Audio properties
-    property var defaultAudioSink: Dat.Settings.defaultAudioSink
+    property var defaultAudioSink: Pipewire.defaultAudioSink
     property int volume: defaultAudioSink && defaultAudioSink.audio ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
     // Weather properties
@@ -111,6 +111,6 @@ ShellRoot {
     }
 
     // System info watermark
-    Bar.Version {}
+    Core.Version {}
     
 }

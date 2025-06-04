@@ -16,7 +16,6 @@ Item {
     function hide() { hideAnimation.start() }
     function toggle() { isVisible ? hide() : show() }
 
-    // Animation code remains the same...
     SequentialAnimation {
         id: showAnimation
         PropertyAction { target: root; property: "isVisible"; value: true }
@@ -227,7 +226,6 @@ Item {
                             id: id,
                             content: content,
                             type: detectContentType(content),
-                            //timestamp: "Recent"
                         })
                     } else {
                         console.log("Failed to parse line:", line)
@@ -302,7 +300,6 @@ Item {
         }
     }
 
-    // Fixed: Use a simpler approach for copying from clipboard history
     Process {
         id: copyHistoryProcess
         property string entryId: ""
@@ -329,15 +326,12 @@ Item {
         }
     }
 
-    // Smart update function that only changes what's different
     function updateModelIfChanged(newEntries) {
-        // Quick check: if lengths are different, we need to update
         if (newEntries.length !== currentEntries.length) {
             updateModel(newEntries)
             return
         }
         
-        // Check if any entries have changed
         let hasChanges = false
         for (let i = 0; i < newEntries.length; i++) {
             if (i >= currentEntries.length || 
@@ -355,11 +349,8 @@ Item {
     }
     
     function updateModel(newEntries) {
-        // Store scroll position
         const scrollPos = cliphistList.contentY
         
-        // Update model efficiently
-        // Remove items that are no longer present
         for (let i = cliphistModel.count - 1; i >= 0; i--) {
             const modelItem = cliphistModel.get(i)
             const found = newEntries.some(entry => entry.id === modelItem.id)
@@ -404,7 +395,7 @@ Item {
         cliphistList.contentY = scrollPos
         
         // Update our reference
-        currentEntries = newEntries.slice() // Make a copy
+        currentEntries = newEntries.slice()
     }
 
     function detectContentType(content) {
@@ -458,7 +449,7 @@ Item {
         }
     }
 
-    // Cleanup function to stop all processes when component is destroyed
+    // Cleanup function
     Component.onDestruction: {
         cliphistProcess.running = false
         clearCliphistProcess.running = false

@@ -19,7 +19,6 @@ Item {
     property var activeTimers: ({})
     property int lastNotificationTime: 0
 
-    // Improved height calculation with proper bounds
     property int calculatedHeight: {
         let totalHeight = 0;
         let visibleCount = Math.min(notificationQueue.length, maxNotifications);
@@ -34,7 +33,7 @@ Item {
             }
         }
         
-        return Math.max(totalHeight + 20, 0); // Minimum height with some padding
+        return Math.max(totalHeight + 20, 0);
     }
 
     // Helper function to calculate individual notification height
@@ -469,7 +468,6 @@ Item {
             anchors.fill: parent
             radius: parent.radius
             color: shell.accentColor
-            //opacity: 0.8
         }
 
         Text {

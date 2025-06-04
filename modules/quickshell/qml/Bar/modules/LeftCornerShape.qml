@@ -11,7 +11,8 @@ Shape {
     width: 60
     height: barRect.height
     y: barRect.y
-    x: barRect.x - width + 5
+    //x: barRect.x - width + 5
+    x: barRect.x - width + 16
     preferredRendererType: Shape.CurveRenderer
 
     // Entrance animation with slight delay

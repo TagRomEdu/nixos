@@ -8,7 +8,6 @@ import "root:/Data" as Data
 Rectangle {
     required property var shell
     
-    // Remove anchors.fill: parent - let the StackLayout manage sizing
     color: Qt.lighter(Data.Colors.bgColor, 1.2)
     radius: 20
 
@@ -129,104 +128,5 @@ Rectangle {
             }
         }
 
-        Label {
-            text: "Power Profile"
-            color: Data.Colors.accentColor
-            font {
-                pixelSize: 18
-                bold: true
-                family: "FiraCode Nerd Font"
-            }
-            horizontalAlignment: Text.AlignHCenter
-            Layout.alignment: Qt.AlignHCenter
-            Layout.bottomMargin: 8
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 8
-            Layout.alignment: Qt.AlignHCenter
-
-            // Performance
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 40
-                text: "󰓅 Performance"
-                font.family: "FiraCode Nerd Font"
-                onClicked: PowerProfiles.profile = PowerProfile.Performance
-
-                background: Rectangle {
-                    radius: 20
-                    color: PowerProfiles.profile === PowerProfile.Performance
-                        ? Data.Colors.accentColor
-                        : parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3)
-                        : parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1)
-                        : Qt.darker(Data.Colors.highlightBg, 1.1)
-                    border.width: 1
-                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
-                }
-
-                contentItem: Label {
-                    text: parent.text
-                    color: PowerProfiles.profile === PowerProfile.Performance ? Data.Colors.bgColor : Data.Colors.fgColor
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-
-            // Balanced
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 40
-                text: "󰾅 Balanced"
-                font.family: "FiraCode Nerd Font"
-                onClicked: PowerProfiles.profile = PowerProfile.Balanced
-
-                background: Rectangle {
-                    radius: 20
-                    color: PowerProfiles.profile === PowerProfile.Balanced
-                        ? Data.Colors.accentColor
-                        : parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3)
-                        : parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1)
-                        : Qt.darker(Data.Colors.highlightBg, 1.1)
-                    border.width: 1
-                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
-                }
-
-                contentItem: Label {
-                    text: parent.text
-                    color: PowerProfiles.profile === PowerProfile.Balanced ? Data.Colors.bgColor : Data.Colors.fgColor
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-
-            // Power Saver
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 40
-                text: "󰌪 Power Saver"
-                font.family: "FiraCode Nerd Font"
-                onClicked: PowerProfiles.profile = PowerProfile.PowerSaver
-
-                background: Rectangle {
-                    radius: 20
-                    color: PowerProfiles.profile === PowerProfile.PowerSaver
-                        ? Data.Colors.accentColor
-                        : parent.down ? Qt.darker(Data.Colors.highlightBg, 1.3)
-                        : parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1)
-                        : Qt.darker(Data.Colors.highlightBg, 1.1)
-                    border.width: 1
-                    border.color: Qt.darker(Data.Colors.highlightBg, 1.2)
-                }
-
-                contentItem: Label {
-                    text: parent.text
-                    color: PowerProfiles.profile === PowerProfile.PowerSaver ? Data.Colors.bgColor : Data.Colors.fgColor
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-        }
     }
 }

@@ -47,7 +47,7 @@ with pkgs;
   gowall
   gruvbox-gtk-theme
   papirus-icon-theme
-  #qt6Packages.qt5compat
+  qt6Packages.qt5compat
   #kdePackages.syntax-highlighting
   grimblast
   gpu-screen-recorder
