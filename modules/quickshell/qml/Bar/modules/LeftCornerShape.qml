@@ -11,60 +11,36 @@ Shape {
     width: 60
     height: barRect.height
     y: barRect.y
-    //x: barRect.x - width + 5
     x: barRect.x - width + 16
     preferredRendererType: Shape.CurveRenderer
-
-    // Entrance animation with slight delay
-    opacity: 0
-    Component.onCompleted: {
-        leftAnimationTimer.start()
-    }
     
-    Timer {
-        id: leftAnimationTimer
-        interval: 100
-        onTriggered: leftCornerShape.opacity = 1
-    }
+    opacity: 1
     
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.OutCubic
-        }
-    }
-
     ShapePath {
         strokeWidth: 0
         fillColor: shell.accentColor
         strokeColor: "transparent"
-
         startX: 0
         startY: 0
-
         PathLine { x: leftCornerShape.width - 15; y: 0 }
         PathLine { x: leftCornerShape.width - 15; y: 20 }
-
         PathArc {
             x: leftCornerShape.width - 5; y: 40
             radiusX: 20; radiusY: 20
             useLargeArc: false
             direction: PathArc.Counterclockwise
         }
-
         PathLine { x: leftCornerShape.width; y: 42 }
         PathLine { x: 20; y: leftCornerShape.height }
-
         PathArc {
             x: 0; y: leftCornerShape.height - 20
             radiusX: 20; radiusY: 20
             useLargeArc: false
             direction: PathArc.Clockwise
         }
-
         PathLine { x: 0; y: 0 }
     }
-
+    
     Rectangle {
         id: popupButtonsLeft
         width: 24
@@ -74,42 +50,50 @@ Shape {
         anchors.verticalCenter: parent.verticalCenter
         x: width - 13
         
-        property bool isHovered: leftPopupMouseArea.containsMouse
-
-        // Smooth color transitions
-        Behavior on color {
-            ColorAnimation {
-                duration: 200
-                easing.type: Easing.OutCubic
+        state: popup.visible ? "active" : (leftPopupMouseArea.containsMouse ? "hovered" : "normal")
+        
+        states: [
+            State {
+                name: "normal"
+                PropertyChanges { target: popupButtonsLeft; scale: 1.0 }
+                PropertyChanges { target: iconLabel; scale: 1.0 }
+            },
+            State {
+                name: "hovered"
+                PropertyChanges { target: popupButtonsLeft; scale: 1.05 }
+                PropertyChanges { target: iconLabel; scale: 1.1 }
+            },
+            State {
+                name: "active"
+                PropertyChanges { target: popupButtonsLeft; scale: 1.1 }
+                PropertyChanges { target: iconLabel; scale: 1.1 }
             }
-        }
-
-        // Hover and active state animations
-        scale: popup.visible ? 1.1 : (isHovered ? 1.05 : 1.0)
-        Behavior on scale {
-            NumberAnimation {
-                duration: 150
-                easing.type: Easing.OutCubic
+        ]
+        
+        transitions: [
+            Transition {
+                NumberAnimation {
+                    properties: "scale"
+                    duration: 150
+                    easing.type: Easing.OutCubic
+                }
+                ColorAnimation {
+                    properties: "color"
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
             }
-        }
-
+        ]
+        
         Label {
+            id: iconLabel
             anchors.centerIn: parent
             text: "󰘖"
             font.family: "FiraCode Nerd Font"
             font.pixelSize: 14
             color: shell.fgColor
-            
-            // Icon pulse animation
-            scale: parent.isHovered ? 1.1 : 1.0
-            Behavior on scale {
-                NumberAnimation {
-                    duration: 150
-                    easing.type: Easing.OutBack
-                }
-            }
         }
-
+        
         MouseArea {
             id: leftPopupMouseArea
             anchors.fill: parent

@@ -4,32 +4,45 @@ import QtQuick.Controls
 import "root:/Data" as Data
 
 Rectangle {
-    
-    
     color: Qt.lighter(Data.Colors.bgColor, 1.2)
     radius: 20
 
+    readonly property var weatherEmojiMap: ({
+        "clear": "☀️",
+        "mainly clear": "🌤️", 
+        "partly cloudy": "⛅",
+        "cloud": "☁️",
+        "overcast": "☁️",
+        "fog": "🌫️",
+        "mist": "🌫️",
+        "drizzle": "🌦️",
+        "rain": "🌧️",
+        "showers": "🌧️",
+        "freezing rain": "🌧️❄️",
+        "snow": "❄️",
+        "snow grains": "❄️",
+        "snow showers": "❄️",
+        "thunderstorm": "⛈️",
+        "wind": "🌬️"
+    })
+
     function getWeatherEmoji(condition) {
         if (!condition) return "❓"
-        condition = condition.toLowerCase()
-
-        if (condition.includes("clear")) return "☀️"
-        if (condition.includes("mainly clear")) return "🌤️"
-        if (condition.includes("partly cloudy")) return "⛅"
-        if (condition.includes("cloud") || condition.includes("overcast")) return "☁️"
-
-        if (condition.includes("fog") || condition.includes("mist")) return "🌫️"
-
-        if (condition.includes("drizzle")) return "🌦️"
-        if (condition.includes("rain") || condition.includes("showers")) return "🌧️"
-        if (condition.includes("freezing rain")) return "🌧️❄️"
-
-        if (condition.includes("snow") || condition.includes("snow grains") || condition.includes("snow showers")) return "❄️"
-
-        if (condition.includes("thunderstorm")) return "⛈️"
-
-        if (condition.includes("wind")) return "🌬️"
-
+        
+        const lowerCondition = condition.toLowerCase()
+        
+        // Check for exact matches first (most efficient)
+        if (weatherEmojiMap[lowerCondition]) {
+            return weatherEmojiMap[lowerCondition]
+        }
+        
+        // Check for partial matches
+        for (const key in weatherEmojiMap) {
+            if (lowerCondition.includes(key)) {
+                return weatherEmojiMap[key]
+            }
+        }
+        
         return "❓"
     }
 
@@ -83,13 +96,18 @@ Rectangle {
                 columnSpacing: 16
                 rowSpacing: 8
                 Layout.alignment: Qt.AlignHCenter
+                visible: !weatherLoading && weatherData && weatherData.details && weatherData.details.length > 0
 
                 Repeater {
-                    model: weatherLoading ? [] : (weatherData && weatherData.details ? weatherData.details : [])
+                    model: weatherLoading ? 0 : (weatherData && weatherData.details ? weatherData.details.length : 0)
                     delegate: RowLayout {
                         spacing: 8
+                        
+                        property var detailItem: weatherData && weatherData.details ? weatherData.details[index] : ""
+                        property var detailParts: detailItem ? detailItem.split(":") : ["", ""]
+                        
                         Label {
-                            text: modelData ? modelData.split(":")[0] + ":" : ""
+                            text: detailParts[0] + ":"
                             color: Qt.lighter(Data.Colors.fgColor, 1.2)
                             font {
                                 pixelSize: 12
@@ -97,7 +115,7 @@ Rectangle {
                             }
                         }
                         Label {
-                            text: modelData ? modelData.split(":")[1] : ""
+                            text: detailParts[1] || ""
                             color: Data.Colors.fgColor
                             font.pixelSize: 12
                         }
@@ -110,6 +128,7 @@ Rectangle {
         ColumnLayout {
             Layout.alignment: Qt.AlignHCenter
             spacing: 4
+            visible: !weatherLoading
      
             Label {
                 text: "3-Day Forecast"
@@ -130,14 +149,16 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
      
                 Repeater {
-                    model: weatherLoading ? [] : (weatherData && weatherData.forecast ? weatherData.forecast.slice(0, 3) : [])
+                    model: weatherLoading ? 0 : (weatherData && weatherData.forecast ? Math.min(3, weatherData.forecast.length) : 0)
                     delegate: ColumnLayout {
                         spacing: 4
                         Layout.alignment: Qt.AlignHCenter
+                        
+                        property var forecastItem: weatherData && weatherData.forecast ? weatherData.forecast[index] : null
      
                         // Day name
                         Label {
-                            text: modelData?.dayName || "?"
+                            text: forecastItem ? forecastItem.dayName : "?"
                             color: Data.Colors.fgColor
                             font.pixelSize: 12
                             font.bold: true
@@ -145,9 +166,9 @@ Rectangle {
                             Layout.alignment: Qt.AlignHCenter
                         }
      
-                        // Weather emoji - now use the local function
+                        // Weather emoji
                         Label {
-                            text: weatherLoading ? "?" : getWeatherEmoji(modelData?.condition || "?")
+                            text: forecastItem ? getWeatherEmoji(forecastItem.condition) : "?"
                             font.pixelSize: 32
                             color: Data.Colors.fgColor
                             horizontalAlignment: Text.AlignHCenter
@@ -157,11 +178,16 @@ Rectangle {
                         // Temperature
                         Label {
                             text: {
-                                if (weatherLoading) return "-"
-                                if (!modelData) return "?"
-                                if (modelData.temp) return modelData.temp + "°C"
-                                if (modelData.minTemp && modelData.maxTemp)
-                                    return modelData.minTemp + "°C / " + modelData.maxTemp + "°C"
+                                if (!forecastItem) return "?"
+                                
+                                if (forecastItem.temp !== undefined) {
+                                    return forecastItem.temp + "°C"
+                                }
+                                
+                                if (forecastItem.minTemp !== undefined && forecastItem.maxTemp !== undefined) {
+                                    return forecastItem.minTemp + "°C / " + forecastItem.maxTemp + "°C"
+                                }
+                                
                                 return "?"
                             }
                             font.pixelSize: 12

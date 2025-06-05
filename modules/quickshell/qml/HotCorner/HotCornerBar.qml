@@ -40,8 +40,8 @@ Item {
         // Position relative to the parent (hot corner window)
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: 12
-        anchors.rightMargin: 12
+        anchors.topMargin: 8
+        anchors.rightMargin: 8
         
         // Monitor visibility changes
         onVisibleChanged: {

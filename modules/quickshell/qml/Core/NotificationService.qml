@@ -1,11 +1,14 @@
 import QtQuick
 import Quickshell.Services.Notifications
+import "root:/Data/" as Data
 
 Item {
     id: service
     
     property var shell
     property alias notificationServer: notificationServer
+    
+    property int maxHistorySize: 50
     
     NotificationServer {
         id: notificationServer
@@ -20,19 +23,32 @@ Item {
         }
         
         onNotification: (notification) => {
+            // Early filtering to prevent unnecessary processing
             if (!notification.appName && !notification.summary && !notification.body) {
-                console.warn("Skipping empty notification")
+                // Immediately dismiss invalid notifications
+                if (typeof notification.dismiss === 'function') {
+                    notification.dismiss()
+                }
                 return
             }
-            console.log("[RAW NOTIFICATION] App:", notification.appName, 
-                    "Summary:", notification.summary,
-                    "Body:", notification.body)
             
-            // Add to history
-            shell.addToNotificationHistory(notification)
+            if (Data.Settings.ignoredApps.includes(notification.appName)) {
+                // Dismiss ignored notifications immediately
+                if (typeof notification.dismiss === 'function') {
+                    notification.dismiss()
+                }
+                return
+            }
             
-            // Show notification window
-            shell.notificationWindow.visible = true
+            if (Qt.application.arguments.includes("--debug")) {
+                console.log("[NOTIFICATION]", notification.appName, notification.summary)
+            }
+            
+            shell.addToNotificationHistory(notification, maxHistorySize)
+            
+            if (!shell.notificationWindow.visible) {
+                shell.notificationWindow.visible = true
+            }
         }
     }
 }

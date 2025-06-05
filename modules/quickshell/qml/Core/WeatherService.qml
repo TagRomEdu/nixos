@@ -4,63 +4,87 @@ Item {
     id: service
     
     property var shell
-
+    
+    property int activeRequests: 0
+    property int maxConcurrentRequests: 2
+    
+    property var cachedWeatherData: null
+    property var lastFetchTime: 0
+    property int cacheTimeoutMs: 600000 // 10 minutes
+    
     function mapWeatherCode(code) {
-        switch(code) {
-            case 0: return "Clear sky"
-            case 1: return "Mainly clear"
-            case 2: return "Partly cloudy"
-            case 3: return "Overcast"
-            case 45: return "Fog"
-            case 48: return "Depositing rime fog"
-            case 51: return "Light drizzle"
-            case 53: return "Moderate drizzle"
-            case 55: return "Dense drizzle"
-            case 56: return "Light freezing drizzle"
-            case 57: return "Dense freezing drizzle"
-            case 61: return "Slight rain"
-            case 63: return "Moderate rain"
-            case 65: return "Heavy rain"
-            case 66: return "Light freezing rain"
-            case 67: return "Heavy freezing rain"
-            case 71: return "Slight snow fall"
-            case 73: return "Moderate snow fall"
-            case 75: return "Heavy snow fall"
-            case 77: return "Snow grains"
-            case 80: return "Slight rain showers"
-            case 81: return "Moderate rain showers"
-            case 82: return "Violent rain showers"
-            case 85: return "Slight snow showers"
-            case 86: return "Heavy snow showers"
-            case 95: return "Thunderstorm"
-            case 96: return "Thunderstorm with slight hail"
-            case 99: return "Thunderstorm with heavy hail"
-            default: return "Unknown"
+        const weatherCodes = {
+            0: "Clear sky",
+            1: "Mainly clear", 
+            2: "Partly cloudy",
+            3: "Overcast",
+            45: "Fog", 
+            48: "Depositing rime fog",
+            51: "Light drizzle",
+            53: "Moderate drizzle",
+            55: "Dense drizzle",
+            56: "Light freezing drizzle",
+            57: "Dense freezing drizzle",
+            61: "Slight rain",
+            63: "Moderate rain",
+            65: "Heavy rain",
+            66: "Light freezing rain",
+            67: "Heavy freezing rain",
+            71: "Slight snow fall",
+            73: "Moderate snow fall",
+            75: "Heavy snow fall",
+            77: "Snow grains",
+            80: "Slight rain showers",
+            81: "Moderate rain showers",
+            82: "Violent rain showers",
+            85: "Slight snow showers",
+            86: "Heavy snow showers",
+            95: "Thunderstorm",
+            96: "Thunderstorm with slight hail",
+            99: "Thunderstorm with heavy hail"
         }
+        
+        return weatherCodes[code] || "Unknown"
     }
 
     function loadWeather() {
+        // Check cache first
+        const now = Date.now()
+        if (cachedWeatherData && (now - lastFetchTime) < cacheTimeoutMs) {
+            console.log("Using cached weather data")
+            shell.weatherData = cachedWeatherData
+            shell.weatherLoading = false
+            return
+        }
+        
+        // Prevent too many concurrent requests
+        if (activeRequests >= maxConcurrentRequests) {
+            console.log("Too many active weather requests, skipping")
+            return
+        }
+        
         shell.weatherLoading = true
+        activeRequests++
 
         const geocodeXhr = new XMLHttpRequest()
-        const geocodeUrl = "https://nominatim.openstreetmap.org/search?format=json&q=" + encodeURIComponent(shell.weatherLocation)
+        const geocodeUrl = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(shell.weatherLocation)
 
-        console.log("Starting geocoding for city:", shell.weatherLocation)
+        // Set timeout to prevent hanging requests
+        geocodeXhr.timeout = 10000 // 10 seconds
 
         geocodeXhr.onreadystatechange = function() {
             if (geocodeXhr.readyState === XMLHttpRequest.DONE) {
+                activeRequests--
+                
                 if (geocodeXhr.status === 200) {
                     try {
                         const geoData = JSON.parse(geocodeXhr.responseText)
-                        console.log("Geocode results:", geoData.length, "entries")
                         
                         if (geoData.length > 0) {
                             const latitude = parseFloat(geoData[0].lat)
                             const longitude = parseFloat(geoData[0].lon)
-                            console.log("Using coordinates:", latitude, longitude)
                             fetchWeather(latitude, longitude)
                         } else {
-                            console.error("Geocoding error: No results for city")
                             fallbackWeatherData("City not found")
                         }
                     } catch (e) {
@@ -68,10 +92,20 @@ Item {
                         fallbackWeatherData("Geocode parse error")
                     }
                 } else {
-                    console.error("Geocoding API error:", geocodeXhr.status, geocodeXhr.statusText)
+                    console.error("Geocoding API error:", geocodeXhr.status)
                     fallbackWeatherData("Geocode service unavailable")
                 }
             }
+        }
+
+        geocodeXhr.ontimeout = function() {
+            activeRequests--
+            fallbackWeatherData("Request timeout")
+        }
+
+        geocodeXhr.onerror = function() {
+            activeRequests--
+            fallbackWeatherData("Network error")
         }
 
         geocodeXhr.open("GET", geocodeUrl)
@@ -80,18 +114,27 @@ Item {
     }
 
     function fetchWeather(latitude, longitude) {
+        if (activeRequests >= maxConcurrentRequests) {
+            fallbackWeatherData("Too many requests")
+            return
+        }
+        
+        activeRequests++
+        
         const xhr = new XMLHttpRequest()
         const url = "https://api.open-meteo.com/v1/forecast?" +
                   "latitude=" + latitude +
                   "&longitude=" + longitude +
                   "&current_weather=true" +
                   "&daily=temperature_2m_max,temperature_2m_min,weathercode" +
+                  "&forecast_days=3" +
                   "&timezone=auto"
 
-        console.log("Fetching weather for lat:", latitude, "lon:", longitude)
+        xhr.timeout = 15000 // 15 seconds
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
+                activeRequests--
                 shell.weatherLoading = false
                 
                 if (xhr.status === 200) {
@@ -102,25 +145,31 @@ Item {
 
                         const currentTempFormatted = Math.round(parseFloat(current.temperature)) + "°C"
 
-                        const forecast = []
+                        // Pre-allocate array for better performance
+                        const forecast = new Array(3)
+                        const today = new Date()
+                        
                         for (let i = 0; i < 3; i++) {
-                            const dayName = (i === 0) ? "Today" : 
-                                          (i === 1) ? "Tomorrow" : 
-                                          Qt.formatDate(new Date(new Date().setDate(new Date().getDate() + i)), "ddd MMM d")
+                            let dayName
+                            if (i === 0) {
+                                dayName = "Today"
+                            } else if (i === 1) {
+                                dayName = "Tomorrow"  
+                            } else {
+                                const futureDate = new Date(today)
+                                futureDate.setDate(today.getDate() + i)
+                                dayName = Qt.formatDate(futureDate, "ddd MMM d")
+                            }
                             
-                            const condition = mapWeatherCode(daily.weathercode[i])
-                            const minTemp = Math.round(parseFloat(daily.temperature_2m_min[i]))
-                            const maxTemp = Math.round(parseFloat(daily.temperature_2m_max[i]))
-
-                            forecast.push({
+                            forecast[i] = {
                                 dayName: dayName,
-                                condition: condition,
-                                minTemp: minTemp,
-                                maxTemp: maxTemp
-                            })
+                                condition: mapWeatherCode(daily.weathercode[i]),
+                                minTemp: Math.round(parseFloat(daily.temperature_2m_min[i])),
+                                maxTemp: Math.round(parseFloat(daily.temperature_2m_max[i]))
+                            }
                         }
 
-                        shell.weatherData = {
+                        const weatherData = {
                             location: shell.weatherLocation || "Current Location",
                             currentTemp: currentTempFormatted,
                             currentCondition: mapWeatherCode(current.weathercode),
@@ -130,15 +179,33 @@ Item {
                             ],
                             forecast: forecast
                         }
+                        
+                        // Cache the data
+                        cachedWeatherData = weatherData
+                        lastFetchTime = Date.now()
+                        shell.weatherData = weatherData
+                        
                     } catch (e) {
                         console.error("Weather JSON parse error:", e)
                         fallbackWeatherData("Weather data error")
                     }
                 } else {
-                    console.error("Weather API error:", xhr.status, xhr.statusText)
+                    console.error("Weather API error:", xhr.status)
                     fallbackWeatherData("Weather service unavailable")
                 }
             }
+        }
+
+        xhr.ontimeout = function() {
+            activeRequests--
+            shell.weatherLoading = false
+            fallbackWeatherData("Request timeout")
+        }
+
+        xhr.onerror = function() {
+            activeRequests--
+            shell.weatherLoading = false
+            fallbackWeatherData("Network error")
         }
 
         xhr.open("GET", url)
@@ -148,7 +215,8 @@ Item {
 
     function fallbackWeatherData(message) {
         shell.weatherLoading = false
-        shell.weatherData = {
+        
+        const fallbackData = {
             location: message,
             currentTemp: "?",
             currentCondition: "?",
@@ -159,5 +227,12 @@ Item {
                 {dayName: "?", condition: "?", minTemp: "?", maxTemp: "?"}
             ]
         }
+        
+        shell.weatherData = fallbackData
+    }
+    
+    // Cleanup on destruction
+    Component.onDestruction: {
+        cachedWeatherData = null
     }
 }

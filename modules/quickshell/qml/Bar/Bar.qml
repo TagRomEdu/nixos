@@ -8,21 +8,29 @@ import Quickshell.Io
 import QtQuick.Shapes
 import "../Data" as Data
 import "./modules" as BarModules
-
 Item {
     id: root
     required property var shell
     required property var popup
     required property var bar
-    
-    width: 520
+    width: 260
     height: 42
-
-    Process {
-        id: pavucontrol
-        command: ["pavucontrol"]
+    property Process pavucontrol: null
+    
+    function createPavucontrol() {
+        if (!pavucontrol) {
+            pavucontrol = pavucontrolComponent.createObject(root)
+        }
+        return pavucontrol
     }
-
+    
+    Component {
+        id: pavucontrolComponent
+        Process {
+            command: ["pavucontrol"]
+        }
+    }
+    
     Rectangle {
         id: barRect
         anchors.fill: parent
@@ -30,56 +38,46 @@ Item {
         color: shell.bgColor
         bottomLeftRadius: 20
         bottomRightRadius: 20
-
-        // Subtle entrance animation
-        opacity: 0
-        Component.onCompleted: opacity = 1
+        opacity: 1
         
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 500
-                easing.type: Easing.OutCubic
-            }
-        }
-
         Item {
             anchors.fill: parent
             anchors.leftMargin: 16
             anchors.rightMargin: 16
-
+            
             RowLayout {
                 anchors.fill: parent
                 spacing: 12
-
-                BarModules.WorkspaceIndicator {
-                    shell: root.shell
-                }
-
+                
                 Item { Layout.fillWidth: true }
-
-                BarModules.VolumeControl {
-                    shell: root.shell
-                    pavucontrol: root.pavucontrol
-                }
-
-                BarModules.SystemTray {
-                    shell: root.shell
-                    bar: root.bar
-                }
-
+                
                 BarModules.DateTimeDisplay {
                     shell: root.shell
+                }
+                
+                Item { Layout.fillWidth: true }
+                
+                BarModules.SystemTray {
+                    id: systemTrayModule
+                    shell: root.shell
+                    bar: root.bar
+                    // Pass the tray menu reference
+                    trayMenu: externalTrayMenu
                 }
             }
         }
     }
-
+    
+    BarModules.CustomTrayMenu {
+        id: externalTrayMenu
+    }
+    
     BarModules.RightCornerShape {
         shell: root.shell
         popup: root.popup
         barRect: barRect
     }
-
+    
     BarModules.LeftCornerShape {
         shell: root.shell
         popup: root.popup

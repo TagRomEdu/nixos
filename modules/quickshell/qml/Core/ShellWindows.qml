@@ -7,18 +7,18 @@ import "root:/Core" as Core
 
 Item {
     id: shellWindows
-    
+
     property var shell
     property var notificationService
-    
+
     // Expose windows for external access
     readonly property alias hotCornerWindow: hotCornerWindow
     readonly property alias mainWindow: mainWindow
     readonly property alias notificationWindow: notificationWindow
     readonly property alias popupWindow: popupWindow
     readonly property alias cliphistWindow: cliphistWindow
-    
-    // Hot corner window - only covers the trigger area when SlideBar is hidden
+
+    // Hot corner window
     PanelWindow {
         id: hotCornerWindow
         anchors {
@@ -30,10 +30,9 @@ Item {
         implicitHeight: slideBarVisible ? 252 : 48
         color: "transparent"
         exclusiveZone: 0
-        
-        // Track SlideBar visibility
+
         property bool slideBarVisible: false
-        
+
         Item {
             anchors.fill: parent
             MouseArea {
@@ -45,37 +44,37 @@ Item {
                 onReleased: mouse.accepted = false
             }
         }
-        
+
         HotCorner.HotCornerBar {
             id: hotCornerContent
             shell: shellWindows.shell
             anchors.fill: parent
-            
-            // Connect SlideBar visibility changes
+
             onSlideBarVisibilityChanged: function(visible) {
                 hotCornerWindow.slideBarVisible = visible
             }
         }
     }
-    
+
     // Main status bar
     PanelWindow {
         id: mainWindow
-        implicitWidth: 640
-        implicitHeight: 42
+        implicitWidth: 400
+        implicitHeight: 250
         anchors.top: true
         color: "transparent"
         exclusiveZone: 36
+
         Bar.Bar {
+            id: bar
             shell: shellWindows.shell
             popup: popupWindow
             bar: mainWindow
             anchors.horizontalCenter: parent.horizontalCenter
-            width: 520
+            width: 260
         }
-        
     }
-    
+
     // Notification window
     PanelWindow {
         id: notificationWindow
@@ -89,12 +88,14 @@ Item {
         implicitHeight: notificationPopup.calculatedHeight
         color: "transparent"
         visible: false
+
         Popup.NotificationPopup {
             id: notificationPopup
             anchors.fill: parent
             shell: shellWindows.shell
             notificationServer: shellWindows.notificationService.notificationServer
         }
+
         Connections {
             target: notificationPopup
             function onNotificationQueueChanged() {
@@ -104,25 +105,27 @@ Item {
             }
         }
     }
-    
+
     // Main popup window
     PopupWindow {
         id: popupWindow
         anchor {
             window: mainWindow
             rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
-            rect.y: mainWindow.implicitHeight + 8
+            rect.y: mainWindow.exclusiveZone + 12  // Use exclusiveZone instead of bar height
         }
         implicitWidth: 500
         implicitHeight: 320
         visible: false
         color: "transparent"
+
         Rectangle {
             anchors.fill: parent
             border.color: shellWindows.shell.accentColor
             border.width: 3
             color: shellWindows.shell.bgColor
             radius: 20
+
             Popup.PopupContent {
                 shell: shellWindows.shell
                 anchors.fill: parent
@@ -130,19 +133,20 @@ Item {
             }
         }
     }
-    
+
     // Clipboard history window
     PopupWindow {
         id: cliphistWindow
         anchor {
             window: mainWindow
             rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
-            rect.y: mainWindow.implicitHeight + 8
+            rect.y: mainWindow.exclusiveZone + 12  // Use exclusiveZone instead of bar height
         }
         implicitWidth: 500
         implicitHeight: 320
         visible: false
         color: "transparent"
+
         function toggle() {
             if (visible) {
                 hide()
@@ -150,12 +154,14 @@ Item {
                 show()
             }
         }
+
         Rectangle {
             anchors.fill: parent
             border.color: shellWindows.shell.accentColor
             border.width: 3
             color: shellWindows.shell.bgColor
             radius: 20
+
             Popup.Cliphist {
                 shell: shellWindows.shell
                 anchors.fill: parent
@@ -163,18 +169,29 @@ Item {
             }
         }
     }
-Core.ScreenBorder {
-    id: screenborderWindow
-    visible: true
-    width: Screen.width
-    height: Screen.height
 
-    anchors {
-        top: true
+    // Screen border
+    Core.ScreenBorder {
+        id: screenborderWindow
+        visible: true
+        width: Screen.width
+        height: Screen.height
+
+        anchors {
+            top: true
+        }
+
+        margins.top: -36
+        exclusiveZone: 0
     }
 
-    margins.top: -36
-    exclusiveZone: 0
-}
+    // Volume OSD - appears when volume changes
+    Core.VolumeOSD {
+        shell: shellWindows.shell
+    }
 
+    // Workspace OSD - appears when workspace changes
+    Core.WorkspaceOSD {
+        shell: shellWindows.shell
+    }
 }

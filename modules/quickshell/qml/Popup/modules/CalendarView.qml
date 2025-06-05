@@ -4,23 +4,45 @@ import QtQuick.Controls
 import "root:/Data" as Data
 
 Rectangle {
-    required property var shell
+    property var shell
     
     radius: 20
     color: Qt.lighter(Data.Colors.bgColor, 1.2)
+
+    readonly property date currentDate: new Date()
+    readonly property int currentMonth: currentDate.getMonth()
+    readonly property int currentYear: currentDate.getFullYear()
+    readonly property int currentDay: currentDate.getDate()
 
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 12
         spacing: 12
 
-        // Month header with navigation
         RowLayout {
             Layout.fillWidth: true
             spacing: 8
 
-            Button {
-                text: "‹"
+            component NavButton: AbstractButton {
+                property alias buttonText: buttonLabel.text
+                implicitWidth: 30
+                implicitHeight: 30
+                
+                background: Rectangle {
+                    radius: 15
+                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
+                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
+                }
+                
+                Text {
+                    id: buttonLabel
+                    anchors.centerIn: parent
+                    color: Data.Colors.fgColor
+                }
+            }
+
+            NavButton {
+                buttonText: "‹"
                 onClicked: {
                     if (calendar.month === 0) {
                         calendar.month = 11
@@ -29,21 +51,9 @@ Rectangle {
                         calendar.month -= 1
                     }
                 }
-                implicitWidth: 30
-                background: Rectangle {
-                    radius: 20
-                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
-                }
-                contentItem: Label {
-                    text: parent.text
-                    color: Data.Colors.fgColor
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
 
-            Label {
+            Text {
                 text: Qt.locale("en_US").monthName(calendar.month) + " " + calendar.year
                 color: Data.Colors.accentColor
                 font.bold: true
@@ -51,8 +61,8 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
             }
 
-            Button {
-                text: "›"
+            NavButton {
+                buttonText: "›"
                 onClicked: {
                     if (calendar.month === 11) {
                         calendar.month = 0
@@ -61,102 +71,80 @@ Rectangle {
                         calendar.month += 1
                     }
                 }
-                implicitWidth: 30
-                background: Rectangle {
-                    radius: 20
-                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
-                }
-                contentItem: Label {
-                    text: parent.text
-                    color: Data.Colors.fgColor
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
         }
 
-        // Day names header - Monday to Sunday
-        GridLayout {
+        Grid {
             columns: 7
             rowSpacing: 4
             columnSpacing: 0
             Layout.leftMargin: 2
+            Layout.fillWidth: true
 
-            Repeater {
-                model: ["M", "T", "W", "T", "F", "S", "S"]
-                delegate: Label {
-                    text: modelData
-                    color: Data.Colors.fgColor
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    Layout.preferredWidth: 30
-                    Layout.fillWidth: true
-                }
-            }
+            Text { text: "M"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
+            Text { text: "T"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
+            Text { text: "W"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
+            Text { text: "T"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
+            Text { text: "F"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
+            Text { text: "S"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
+            Text { text: "S"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
         }
 
-        // Calendar grid
         MonthGrid {
             id: calendar
-            month: new Date().getMonth()
-            year: new Date().getFullYear()
+            month: currentMonth
+            year: currentYear
             Layout.fillWidth: true
             Layout.fillHeight: true
             spacing: 4
             leftPadding: 0
             rightPadding: 0
-            
-            // German locale starts with Monday by default
             locale: Qt.locale("de_DE")
-            
             implicitHeight: 400
 
             delegate: Rectangle {
                 width: 30
                 height: 30
-                radius: 30
+                radius: 15
                 
-                // Fixed: Only highlight today if it's in the current displayed month AND it's actually today
-                readonly property bool isToday: model.day === new Date().getDate()
-                                              && model.month === new Date().getMonth()
-                                              && calendar.year === new Date().getFullYear()
-                                              && model.month === calendar.month  // This was missing!
+                readonly property bool isCurrentMonth: model.month === calendar.month
+                readonly property bool isToday: model.day === currentDay
+                                              && model.month === currentMonth
+                                              && calendar.year === currentYear
+                                              && isCurrentMonth
                 
-                color: isToday
-                       ? Data.Colors.accentColor
-                       : model.month === calendar.month ? Data.Colors.highlightBg : Qt.darker(Data.Colors.highlightBg, 1.2)
+                color: isToday ? Data.Colors.accentColor :
+                      isCurrentMonth ? Data.Colors.highlightBg : Qt.darker(Data.Colors.highlightBg, 1.2)
 
-                Label {
+                Text {
                     text: model.day
                     anchors.centerIn: parent
-                    color: parent.isToday
-                           ? Data.Colors.bgColor
-                           : model.month === calendar.month ? Data.Colors.fgColor : Qt.darker(Data.Colors.fgColor, 1.5)
+                    color: parent.isToday ? Data.Colors.bgColor :
+                          parent.isCurrentMonth ? Data.Colors.fgColor : Qt.darker(Data.Colors.fgColor, 1.5)
                     font.bold: parent.isToday
                 }
             }
         }
 
-        // Today button
-        Button {
-            text: "Today"
-            onClicked: {
-                calendar.month = new Date().getMonth()
-                calendar.year = new Date().getFullYear()
-            }
+        AbstractButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: 36
+            
+            onClicked: {
+                calendar.month = currentMonth
+                calendar.year = currentYear
+            }
+            
             background: Rectangle {
-                radius: 20
+                radius: 18
                 color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
                       parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
             }
-            contentItem: Label {
-                text: parent.text
+            
+            Text {
+                text: "Today"
+                anchors.centerIn: parent
                 color: Data.Colors.fgColor
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
             }
         }
     }

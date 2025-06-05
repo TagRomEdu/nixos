@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "root:/Data/" as Data
 
 Item {
     id: root
@@ -28,10 +27,19 @@ Item {
         id: mainContainer
         anchors.fill: parent
         radius: 18
-        color: Data.Colors.bgColor
+        color: shell.bgColor
         border.width: 3
-        border.color: Data.Colors.accentColor
+        border.color: shell.accentColor
 
+        // Outer shadow simulation
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: -3
+            radius: parent.radius + 3
+            color: Qt.darker(shell.bgColor, 1.05)
+            z: -1
+            opacity: 0.3
+        }
     }
 
     // Track hover state across all components
@@ -92,7 +100,7 @@ Item {
         Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 1
-            color: Qt.darker(Data.Colors.bgColor, 1.15)
+            color: Qt.darker(shell.bgColor, 1.15)
             opacity: 0.5
             visible: !root.isRecording
         }
@@ -100,7 +108,7 @@ Item {
         Text {
             Layout.fillWidth: true
             text: "SYSTEM"
-            color: Data.Colors.accentColor
+            color: shell.accentColor
             font.pixelSize: 11
             font.weight: Font.DemiBold
             font.letterSpacing: 1.2
@@ -125,7 +133,7 @@ Item {
         Text {
             Layout.fillWidth: true
             text: "PERFORMANCE"
-            color: Data.Colors.accentColor
+            color: shell.accentColor
             font.pixelSize: 11
             font.weight: Font.DemiBold
             font.letterSpacing: 1.2

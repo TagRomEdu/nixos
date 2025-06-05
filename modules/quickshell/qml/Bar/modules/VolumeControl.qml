@@ -15,25 +15,34 @@ Rectangle {
     color: shell.accentColor
     Layout.alignment: Qt.AlignVCenter
     
-    property bool isHovered: volumeMouseArea.containsMouse
-
-    // Hover animation
-    scale: isHovered ? 1.05 : 1.0
-    Behavior on scale {
-        NumberAnimation {
-            duration: 150
-            easing.type: Easing.OutCubic
+    state: volumeMouseArea.containsMouse ? "hovered" : "normal"
+    
+    states: [
+        State {
+            name: "normal"
+            PropertyChanges { target: volumeRect; scale: 1.0 }
+        },
+        State {
+            name: "hovered"
+            PropertyChanges { target: volumeRect; scale: 1.05 }
         }
-    }
-
-    // Color animation on hover
-    Behavior on color {
-        ColorAnimation {
-            duration: 150
-            easing.type: Easing.OutCubic
+    ]
+    
+    transitions: [
+        Transition {
+            NumberAnimation {
+                properties: "scale"
+                duration: 150
+                easing.type: Easing.OutCubic
+            }
+            ColorAnimation {
+                properties: "color"
+                duration: 150
+                easing.type: Easing.OutCubic
+            }
         }
-    }
-
+    ]
+    
     Label {
         id: volumeLabel
         anchors.centerIn: parent
@@ -44,27 +53,34 @@ Rectangle {
         font.bold: true
         font.family: "FiraCode Nerd Font"
         
-        // Animate volume changes
-        Behavior on text {
-            SequentialAnimation {
-                NumberAnimation {
-                    target: volumeLabel
-                    property: "scale"
-                    to: 1.1
-                    duration: 100
-                    easing.type: Easing.OutCubic
-                }
-                NumberAnimation {
-                    target: volumeLabel
-                    property: "scale"
-                    to: 1.0
-                    duration: 100
-                    easing.type: Easing.OutCubic
-                }
+        property string lastVolumeText: ""
+        
+        onTextChanged: {
+            if (text !== lastVolumeText && lastVolumeText !== "") {
+                volumeChangeAnimation.start()
+            }
+            lastVolumeText = text
+        }
+        
+        SequentialAnimation {
+            id: volumeChangeAnimation
+            NumberAnimation {
+                target: volumeLabel
+                property: "scale"
+                to: 1.1
+                duration: 100
+                easing.type: Easing.OutCubic
+            }
+            NumberAnimation {
+                target: volumeLabel
+                property: "scale"
+                to: 1.0
+                duration: 100
+                easing.type: Easing.OutCubic
             }
         }
     }
-
+    
     MouseArea {
         id: volumeMouseArea
         anchors.fill: parent

@@ -2,8 +2,8 @@ import QtQuick
 
 Rectangle {
     id: root
-    width: 1
-    height: 1
+    width: 48
+    height: 48
     color: "transparent"
     anchors.right: parent.right
     anchors.top: parent.top

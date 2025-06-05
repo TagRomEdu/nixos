@@ -4,12 +4,9 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 
-// System info watermark component - Direct PanelWindow
+// System info watermark component
 PanelWindow {
     id: systemVersion
-
-    // You can set the screen property when instantiating this component
-    // screen: Quickshell.screens[0] // or whatever screen you want
 
     anchors {
         right: true
@@ -20,28 +17,22 @@ PanelWindow {
         right: 60
         bottom: 60
     }
-
-    // Start hidden, we'll show after delay
     visible: false
     
-    // Explicit window properties to ensure it shows up
     implicitWidth: systemInfoContent.width
     implicitHeight: systemInfoContent.height
 
     color: "transparent"
 
-    // Give the window an empty click mask so all clicks pass through it.
     mask: Region {}
 
-    // Use the background layer so it appears only on desktop/wallpaper
     WlrLayershell.layer: WlrLayer.Background
     WlrLayershell.exclusiveZone: 0
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
-    // Startup delay timer
     Timer {
         id: startupTimer
-        interval: 1500 // 1.5 second delay
+        interval: 1500
         running: true
         onTriggered: {
             visible = true
@@ -70,14 +61,12 @@ PanelWindow {
     // Component initialization
     Component.onCompleted: {
         console.log("SystemVersion component loaded");
-        // Force initial load
         osFile.reload();
         genProcess.running = true;
         wmProcess.running = true;
         hlProcess.running = true;
     }
 
-    // Simple timer like the singleton - starts immediately and repeats
     Timer {
         running: true
         interval: 60000
@@ -159,13 +148,13 @@ Process {
         onRead: (data) => {
             const output = data.trim();
             
-            // Extract version (e.g., "v0.49.0")
+            // Extract version
             const versionMatch = output.match(/Tag: (v\d+\.\d+\.\d+)/);
             if (versionMatch && versionMatch[1]) {
                 systemVersion.wm.details.version = versionMatch[1];
             }
             
-            // Extract commit hash (e.g., "9bf1b491440e")
+            // Extract commit hash
             const commitMatch = output.match(/at commit (\w+)/);
             if (commitMatch && commitMatch[1]) {
                 systemVersion.wm.details.commit = commitMatch[1].slice(0, 7).toUpperCase();
@@ -174,7 +163,6 @@ Process {
     }
 }
 
-    // Stylized content with horizontal layout
     ColumnLayout {
         id: systemInfoContent
         spacing: 6
@@ -222,7 +210,6 @@ Process {
                 }
             }
             
-            // Separator
             Text {
                 text: "│"
                 color: "#40ffffff"
