@@ -23,6 +23,7 @@ Rectangle {
             Layout.fillWidth: true
             spacing: 8
 
+            // Button component for navigation arrows
             component NavButton: AbstractButton {
                 property alias buttonText: buttonLabel.text
                 implicitWidth: 30
@@ -41,6 +42,7 @@ Rectangle {
                 }
             }
 
+            // Previous month button
             NavButton {
                 buttonText: "‹"
                 onClicked: {
@@ -53,6 +55,7 @@ Rectangle {
                 }
             }
 
+            // Display current month and year
             Text {
                 text: Qt.locale("en_US").monthName(calendar.month) + " " + calendar.year
                 color: Data.Colors.accentColor
@@ -61,6 +64,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
             }
 
+            // Next month button
             NavButton {
                 buttonText: "›"
                 onClicked: {
@@ -81,6 +85,7 @@ Rectangle {
             Layout.leftMargin: 2
             Layout.fillWidth: true
 
+            // Weekday headers
             Text { text: "M"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
             Text { text: "T"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
             Text { text: "W"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
@@ -90,6 +95,7 @@ Rectangle {
             Text { text: "S"; color: Data.Colors.fgColor; font.bold: true; horizontalAlignment: Text.AlignHCenter; width: parent.width / 7 }
         }
 
+        // Main calendar grid for days
         MonthGrid {
             id: calendar
             month: currentMonth
@@ -113,6 +119,7 @@ Rectangle {
                                               && calendar.year === currentYear
                                               && isCurrentMonth
                 
+                // Highlight today, current month, or muted for others
                 color: isToday ? Data.Colors.accentColor :
                       isCurrentMonth ? Data.Colors.highlightBg : Qt.darker(Data.Colors.highlightBg, 1.2)
 
@@ -126,6 +133,7 @@ Rectangle {
             }
         }
 
+        // Button to reset calendar to today
         AbstractButton {
             Layout.fillWidth: true
             Layout.preferredHeight: 36

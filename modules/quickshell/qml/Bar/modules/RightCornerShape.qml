@@ -10,7 +10,6 @@ Shape {
     width: 60
     height: barRect.height
     y: barRect.y
-    //x: barRect.x + barRect.width - 5
     x: barRect.x + barRect.width - 16
     preferredRendererType: Shape.CurveRenderer
 

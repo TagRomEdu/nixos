@@ -19,33 +19,38 @@ Item {
         persistenceSupported: true
         
         Component.onCompleted: {
-            console.log("Notification server initialized")
+            // Notify when the notification server is ready (debug only)
+            if (Qt.application.arguments.includes("--debug")) {
+                console.log("Notification server initialized")
+            }
         }
         
         onNotification: (notification) => {
-            // Early filtering to prevent unnecessary processing
+            // Filter out notifications with no meaningful content
             if (!notification.appName && !notification.summary && !notification.body) {
-                // Immediately dismiss invalid notifications
                 if (typeof notification.dismiss === 'function') {
                     notification.dismiss()
                 }
                 return
             }
             
+            // Ignore notifications from apps in ignoredApps list
             if (Data.Settings.ignoredApps.includes(notification.appName)) {
-                // Dismiss ignored notifications immediately
                 if (typeof notification.dismiss === 'function') {
                     notification.dismiss()
                 }
                 return
             }
             
+            // Log notification details in debug mode
             if (Qt.application.arguments.includes("--debug")) {
                 console.log("[NOTIFICATION]", notification.appName, notification.summary)
             }
             
+            // Add to shell notification history, capped at maxHistorySize
             shell.addToNotificationHistory(notification, maxHistorySize)
             
+            // Show notification window if hidden
             if (!shell.notificationWindow.visible) {
                 shell.notificationWindow.visible = true
             }

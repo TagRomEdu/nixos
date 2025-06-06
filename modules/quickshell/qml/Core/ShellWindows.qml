@@ -18,13 +18,11 @@ Item {
     readonly property alias popupWindow: popupWindow
     readonly property alias cliphistWindow: cliphistWindow
 
-    // Hot corner window
+    // Hot corner panel on top-right
     PanelWindow {
         id: hotCornerWindow
-        anchors {
-            top: true
-            right: true
-        }
+        anchors.top: true
+        anchors.right: true
         margins.top: -36
         implicitWidth: slideBarVisible ? 264 : 48
         implicitHeight: slideBarVisible ? 252 : 48
@@ -39,6 +37,7 @@ Item {
                 anchors.fill: parent
                 acceptedButtons: Qt.AllButtons
                 propagateComposedEvents: true
+                // Let events propagate, do not grab mouse
                 onPressed: mouse.accepted = false
                 onPositionChanged: mouse.accepted = false
                 onReleased: mouse.accepted = false
@@ -49,18 +48,17 @@ Item {
             id: hotCornerContent
             shell: shellWindows.shell
             anchors.fill: parent
-
             onSlideBarVisibilityChanged: function(visible) {
                 hotCornerWindow.slideBarVisible = visible
             }
         }
     }
 
-    // Main status bar
+    // Main status bar at top-center
     PanelWindow {
         id: mainWindow
-        implicitWidth: 400
-        implicitHeight: 250
+        implicitWidth: 390
+        implicitHeight: 100
         anchors.top: true
         color: "transparent"
         exclusiveZone: 36
@@ -71,17 +69,15 @@ Item {
             popup: popupWindow
             bar: mainWindow
             anchors.horizontalCenter: parent.horizontalCenter
-            width: 260
+            implicitWidth: 260
         }
     }
 
-    // Notification window
+    // Notification popup at top-right
     PanelWindow {
         id: notificationWindow
-        anchors {
-            top: true
-            right: true
-        }
+        anchors.top: true
+        anchors.right: true
         margins.right: 12
         margins.top: 14
         implicitWidth: 420
@@ -98,6 +94,7 @@ Item {
 
         Connections {
             target: notificationPopup
+            // Hide window when notification queue is empty
             function onNotificationQueueChanged() {
                 if (notificationPopup.notificationQueue.length === 0) {
                     notificationWindow.visible = false
@@ -106,18 +103,27 @@ Item {
         }
     }
 
-    // Main popup window
+    // Main popup window (centered below main bar)
     PopupWindow {
         id: popupWindow
-        anchor {
-            window: mainWindow
-            rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
-            rect.y: mainWindow.exclusiveZone + 12  // Use exclusiveZone instead of bar height
-        }
+        anchor.window: mainWindow
+        anchor.rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
+        anchor.rect.y: mainWindow.exclusiveZone + 12  // offset below bar
         implicitWidth: 500
-        implicitHeight: 320
+        implicitHeight: dynamicHeight
         visible: false
         color: "transparent"
+
+        property int dynamicHeight: 340
+        property int minHeight: 340
+        property int maxHeight: 600
+
+        Behavior on implicitHeight {
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        }
 
         Rectangle {
             anchors.fill: parent
@@ -127,32 +133,33 @@ Item {
             radius: 20
 
             Popup.PopupContent {
+                id: popupContent
                 shell: shellWindows.shell
                 anchors.fill: parent
                 anchors.margins: 12
+                // Adjust height dynamically, clamped to min/max
+                onContentHeightChanged: function(newHeight) {
+                    let clampedHeight = Math.max(popupWindow.minHeight, Math.min(popupWindow.maxHeight, newHeight))
+                    popupWindow.dynamicHeight = clampedHeight + 30
+                }
             }
         }
     }
 
-    // Clipboard history window
+    // Clipboard history popup (centered below main bar)
     PopupWindow {
         id: cliphistWindow
-        anchor {
-            window: mainWindow
-            rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
-            rect.y: mainWindow.exclusiveZone + 12  // Use exclusiveZone instead of bar height
-        }
+        anchor.window: mainWindow
+        anchor.rect.x: mainWindow.implicitWidth / 2 - implicitWidth / 2
+        anchor.rect.y: mainWindow.exclusiveZone + 12
         implicitWidth: 500
         implicitHeight: 320
         visible: false
         color: "transparent"
 
         function toggle() {
-            if (visible) {
-                hide()
-            } else {
-                show()
-            }
+            if (visible) hide()
+            else show()
         }
 
         Rectangle {
@@ -170,27 +177,23 @@ Item {
         }
     }
 
-    // Screen border
+    // Fullscreen screen border
     Core.ScreenBorder {
         id: screenborderWindow
         visible: true
-        width: Screen.width
-        height: Screen.height
-
-        anchors {
-            top: true
-        }
-
+        implicitWidth: Screen.width
+        implicitHeight: Screen.height
+        anchors.top: true
         margins.top: -36
         exclusiveZone: 0
     }
 
-    // Volume OSD - appears when volume changes
+    // Volume OSD shown on volume changes
     Core.VolumeOSD {
         shell: shellWindows.shell
     }
 
-    // Workspace OSD - appears when workspace changes
+    // Workspace OSD shown on workspace changes
     Core.WorkspaceOSD {
         shell: shellWindows.shell
     }

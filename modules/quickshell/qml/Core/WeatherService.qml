@@ -5,13 +5,16 @@ Item {
     
     property var shell
     
+    // Track active requests to limit concurrency
     property int activeRequests: 0
     property int maxConcurrentRequests: 2
     
+    // Cache weather data and track last fetch time
     property var cachedWeatherData: null
     property var lastFetchTime: 0
     property int cacheTimeoutMs: 600000 // 10 minutes
     
+    // Maps weather codes to human-readable strings
     function mapWeatherCode(code) {
         const weatherCodes = {
             0: "Clear sky",
@@ -43,43 +46,40 @@ Item {
             96: "Thunderstorm with slight hail",
             99: "Thunderstorm with heavy hail"
         }
-        
         return weatherCodes[code] || "Unknown"
     }
 
+    // Loads weather data; uses cache if valid, otherwise fetches fresh data
     function loadWeather() {
-        // Check cache first
         const now = Date.now()
+
+        // Use cached data if still valid
         if (cachedWeatherData && (now - lastFetchTime) < cacheTimeoutMs) {
-            console.log("Using cached weather data")
             shell.weatherData = cachedWeatherData
             shell.weatherLoading = false
             return
         }
         
-        // Prevent too many concurrent requests
+        // Prevent excessive concurrent requests
         if (activeRequests >= maxConcurrentRequests) {
-            console.log("Too many active weather requests, skipping")
             return
         }
         
         shell.weatherLoading = true
         activeRequests++
 
+        // Geocoding request to get lat/lon from location name
         const geocodeXhr = new XMLHttpRequest()
         const geocodeUrl = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(shell.weatherLocation)
 
-        // Set timeout to prevent hanging requests
-        geocodeXhr.timeout = 10000 // 10 seconds
+        geocodeXhr.timeout = 10000 // 10 seconds timeout
 
         geocodeXhr.onreadystatechange = function() {
             if (geocodeXhr.readyState === XMLHttpRequest.DONE) {
                 activeRequests--
-                
                 if (geocodeXhr.status === 200) {
                     try {
                         const geoData = JSON.parse(geocodeXhr.responseText)
-                        
                         if (geoData.length > 0) {
                             const latitude = parseFloat(geoData[0].lat)
                             const longitude = parseFloat(geoData[0].lon)
@@ -88,11 +88,9 @@ Item {
                             fallbackWeatherData("City not found")
                         }
                     } catch (e) {
-                        console.error("Geocoding JSON parse error:", e)
                         fallbackWeatherData("Geocode parse error")
                     }
                 } else {
-                    console.error("Geocoding API error:", geocodeXhr.status)
                     fallbackWeatherData("Geocode service unavailable")
                 }
             }
@@ -113,6 +111,7 @@ Item {
         geocodeXhr.send()
     }
 
+    // Fetch weather data given latitude and longitude
     function fetchWeather(latitude, longitude) {
         if (activeRequests >= maxConcurrentRequests) {
             fallbackWeatherData("Too many requests")
@@ -130,7 +129,7 @@ Item {
                   "&forecast_days=3" +
                   "&timezone=auto"
 
-        xhr.timeout = 15000 // 15 seconds
+        xhr.timeout = 15000 // 15 seconds timeout
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -145,7 +144,7 @@ Item {
 
                         const currentTempFormatted = Math.round(parseFloat(current.temperature)) + "°C"
 
-                        // Pre-allocate array for better performance
+                        // Prepare 3-day forecast
                         const forecast = new Array(3)
                         const today = new Date()
                         
@@ -169,6 +168,7 @@ Item {
                             }
                         }
 
+                        // Construct weather data object for UI binding
                         const weatherData = {
                             location: shell.weatherLocation || "Current Location",
                             currentTemp: currentTempFormatted,
@@ -180,17 +180,15 @@ Item {
                             forecast: forecast
                         }
                         
-                        // Cache the data
+                        // Cache and update shell property
                         cachedWeatherData = weatherData
                         lastFetchTime = Date.now()
                         shell.weatherData = weatherData
                         
                     } catch (e) {
-                        console.error("Weather JSON parse error:", e)
                         fallbackWeatherData("Weather data error")
                     }
                 } else {
-                    console.error("Weather API error:", xhr.status)
                     fallbackWeatherData("Weather service unavailable")
                 }
             }
@@ -213,6 +211,7 @@ Item {
         xhr.send()
     }
 
+    // Provide fallback weather data in case of errors
     function fallbackWeatherData(message) {
         shell.weatherLoading = false
         
@@ -231,7 +230,7 @@ Item {
         shell.weatherData = fallbackData
     }
     
-    // Cleanup on destruction
+    // Clear cache on component destruction
     Component.onDestruction: {
         cachedWeatherData = null
     }

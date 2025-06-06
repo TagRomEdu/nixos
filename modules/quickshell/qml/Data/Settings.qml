@@ -13,7 +13,7 @@ Singleton {
     // Notification blacklist
     readonly property var ignoredApps: ["some-app", "another-app"]
 
-    // Screen Boarder
+    // Screen Border
     property real borderWidth: 6
     property real cornerRadius: 20
 

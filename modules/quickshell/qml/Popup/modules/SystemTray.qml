@@ -11,7 +11,6 @@ Row {
     spacing: 8
     Layout.alignment: Qt.AlignVCenter
     
-    // Reference to SystemTray singleton
     property var systemTray: SystemTray
     
     Repeater {
@@ -19,11 +18,8 @@ Row {
         delegate: Item {
             width: 24
             height: 24
-            // Hide Spotify icon, or adjust to your liking
-            visible: modelData && modelData.id !== "spotify"
             property bool isHovered: trayMouseArea.containsMouse
             
-            // Hover scale animation
             scale: isHovered ? 1.15 : 1.0
             Behavior on scale {
                 NumberAnimation {
@@ -32,7 +28,6 @@ Row {
                 }
             }
             
-            // Subtle rotation on hover
             rotation: isHovered ? 5 : 0
             Behavior on rotation {
                 NumberAnimation {
@@ -45,7 +40,15 @@ Row {
                 anchors.centerIn: parent
                 width: 18
                 height: 18
-                source: modelData.icon
+                source: {
+                    let icon = modelData?.icon || "";
+                    if (icon.includes("?path=")) {
+                        const [name, path] = icon.split("?path=");
+                        const fileName = name.substring(name.lastIndexOf("/") + 1);
+                        return `file://${path}/${fileName}`;
+                    }
+                    return icon;
+                }
                 opacity: 0
                 Component.onCompleted: opacity = 1
                 Behavior on opacity {
@@ -65,53 +68,33 @@ Row {
                     if (!modelData) return;
                     
                     if (mouse.button === Qt.LeftButton) {
-                        // Close any open menu first
                         if (trayMenu && trayMenu.visible) {
                             trayMenu.hide()
                         }
-                        
                         if (!modelData.onlyMenu) {
                             modelData.activate()
                         }
                     } else if (mouse.button === Qt.MiddleButton) {
-                        // Close any open menu first
                         if (trayMenu && trayMenu.visible) {
                             trayMenu.hide()
                         }
-                        
                         modelData.secondaryActivate && modelData.secondaryActivate()
                     } else if (mouse.button === Qt.RightButton) {
-                        console.log("Right click on", modelData.id, "hasMenu:", modelData.hasMenu, "menu:", modelData.menu)
-                        
-                        // If menu is already visible, close it
                         if (trayMenu && trayMenu.visible) {
                             trayMenu.hide()
                             return
                         }
-                        
                         if (modelData.hasMenu && modelData.menu && trayMenu) {
-                            
-                            // Find the bar's root element (traverse up to avoid animations)
-                            let barRoot = parent
-                            while (barRoot.parent && barRoot.parent.parent) {
-                                barRoot = barRoot.parent
-                            }
-                            
-                            // Get this icon's position relative to the bar root
-                            const iconPos = mapToItem(barRoot, 0, 0)
-                            
-                            // Position the menu relative to the bar root
-                            const menuX = iconPos.x - (trayMenu.width / 2) + (width / 2) // Center under icon
-                            const menuY = iconPos.y + height + 15 // 15px below icon
-                            
-                            console.log("Using bar root as parent")
-                            console.log("Icon position in bar root:", iconPos.x, iconPos.y)
-                            console.log("Setting menu position:", menuX, menuY)
-                            
                             trayMenu.menu = modelData.menu
-                            trayMenu.show(Qt.point(menuX, menuY), barRoot) // Use bar root as parent
-                        } else {
-                            console.log("No menu available for", modelData.id, "or trayMenu not set")
+                            if (parent.parent.parent.showTrayMenu) {
+                                const iconCenter = Qt.point(width / 2, height)
+                                parent.parent.parent.showTrayMenu(iconCenter, this)
+                            } else {
+                                const iconPos = mapToItem(trayMenu.parent, 0, 0)
+                                const menuX = iconPos.x - (trayMenu.width / 2) + (width / 2)
+                                const menuY = iconPos.y + height + 15
+                                trayMenu.show(Qt.point(menuX, menuY), trayMenu.parent)
+                            }
                         }
                     }
                 }

@@ -22,7 +22,7 @@ Item {
     signal systemActionRequested(string action)
     signal performanceActionRequested(string action)
 
-    // Main container with accent border
+    // Main container with border and background
     Rectangle {
         id: mainContainer
         anchors.fill: parent
@@ -31,7 +31,7 @@ Item {
         border.width: 3
         border.color: shell.accentColor
 
-        // Outer shadow simulation
+        // Outer shadow effect
         Rectangle {
             anchors.fill: parent
             anchors.margins: -3
@@ -42,21 +42,17 @@ Item {
         }
     }
 
-    // Track hover state across all components
+    // Track hover over any key controls
     property bool isHovered: slideBarMouseArea.containsMouse || 
                             recordingButton.containsMouse || 
                             systemControls.containsMouse || 
                             performanceControls.containsMouse
 
     onIsHoveredChanged: {
-        if (isHovered) {
-            hideTimer.stop()
-        } else {
-            hideTimer.start()
-        }
+        if (isHovered) hideTimer.stop()
+        else hideTimer.start()
     }
 
-    // MouseArea to catch hover interactions
     MouseArea {
         id: slideBarMouseArea
         anchors.fill: parent
@@ -64,27 +60,21 @@ Item {
         propagateComposedEvents: true
     }
 
-    // Hide delay timer
     Timer {
         id: hideTimer
         interval: 300
         repeat: false
         onTriggered: {
-            if (root.x !== width) {
-                slideOutAnimation.start()
-            } else {
-                root.visible = false
-            }
+            if (root.x !== width) slideOutAnimation.start()
+            else root.visible = false
         }
     }
 
-    // Layout with controls
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 18
         spacing: 14
 
-        // Recording control
         RecordingButton {
             id: recordingButton
             Layout.fillWidth: true
@@ -125,9 +115,7 @@ Item {
             shell: root.shell
             visible: !root.isRecording
 
-            onSystemActionRequested: function(action) {
-                root.systemActionRequested(action)
-            }
+            onSystemActionRequested: action => root.systemActionRequested(action)
         }
 
         Text {
@@ -151,29 +139,24 @@ Item {
             shell: root.shell
             visible: !root.isRecording
 
-            onPerformanceActionRequested: function(action) {
-                root.performanceActionRequested(action)
-            }
+            onPerformanceActionRequested: action => root.performanceActionRequested(action)
         }
     }
 
-    // Show the slidebar
+    // Show slidebar with animation
     function show() {
-        x = width      // reset for animation
-        opacity = 1    // ensure visibility
+        x = width
+        opacity = 1
         visible = true
         slideInAnimation.start()
         hideTimer.stop()
     }
 
-    // Hide the slidebar with animation
+    // Hide slidebar with animation
     function hide() {
-        if (visible && x === 0) {
-            slideOutAnimation.start()
-        }
+        if (visible && x === 0) slideOutAnimation.start()
     }
 
-    // Slide in animation
     PropertyAnimation {
         id: slideInAnimation
         target: root
@@ -185,7 +168,6 @@ Item {
         onStarted: root.opacity = 1
     }
 
-    // Slide out with fade animation
     ParallelAnimation {
         id: slideOutAnimation
 
@@ -207,7 +189,7 @@ Item {
 
         onFinished: {
             root.visible = false
-            root.opacity = 1  // reset for next time
+            root.opacity = 1
         }
     }
 }

@@ -15,18 +15,15 @@ Rectangle {
     border.width: 3
     radius: 20
     visible: false
-    z: 9999
 
+    // Only accept mouse events when visible, disables interaction when hidden
     enabled: visible
-    scale: 1.0
-    rotation: 0
-    transform: []
-    parent: null
 
     property QsMenuHandle menu
     property point triggerPoint: Qt.point(0, 0)
     property Item originalParent
 
+    // Toggle visibility of the menu
     function toggle() {
         if (visible) {
             hide()
@@ -35,13 +32,38 @@ Rectangle {
         }
     }
 
+    // Hide menu on right-click outside
     function closeOnRightClick() {
-        if (visible) hide()
+        if (visible) {
+            hide()
+        }
     }
 
     QsMenuOpener {
         id: opener
         menu: trayMenu.menu
+    }
+
+    // Overlay covers entire screen, catches clicks outside menu to close it
+    // Only active when menu is visible to avoid unnecessary event capturing
+    Rectangle {
+        id: overlay
+        x: -trayMenu.x
+        y: -trayMenu.y
+        width: Screen.width
+        height: Screen.height
+        color: "transparent"
+        visible: trayMenu.visible  // Overlay visible only when menu is visible
+        z: -1  // Behind menu
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: trayMenu.visible  // Only enabled when menu is visible
+            acceptedButtons: Qt.AllButtons
+            onPressed: {
+                trayMenu.hide()  // Close menu on any click outside
+            }
+        }
     }
 
     ListView {
@@ -50,7 +72,7 @@ Rectangle {
         anchors.margins: 6
         spacing: 2
         interactive: false
-        enabled: trayMenu.enabled
+        enabled: trayMenu.visible  // Enable interaction only when menu is visible
 
         model: ScriptModel {
             values: opener.children ? [...opener.children.values] : []
@@ -65,6 +87,7 @@ Rectangle {
             color: "transparent"
             radius: 4
 
+            // Separator line if needed
             Rectangle {
                 anchors.centerIn: parent
                 width: parent.width - 20
@@ -73,6 +96,7 @@ Rectangle {
                 visible: modelData?.isSeparator ?? false
             }
 
+            // Background highlight on hover for non-separators
             Rectangle {
                 anchors.fill: parent
                 color: mouseArea.containsMouse ? Data.Colors.highlightBg : "transparent"
@@ -107,7 +131,7 @@ Rectangle {
                     id: mouseArea
                     anchors.fill: parent
                     hoverEnabled: true
-                    enabled: (modelData?.enabled ?? true) && !(modelData?.isSeparator ?? false) && trayMenu.enabled
+                    enabled: (modelData?.enabled ?? true) && !(modelData?.isSeparator ?? false) && trayMenu.visible
 
                     onClicked: {
                         if (modelData && !modelData.isSeparator) {
@@ -120,18 +144,23 @@ Rectangle {
         }
     }
 
+    // Show menu at given point and reparent if needed, with boundary correction
     function show(point, parentItem) {
+
         if (parentItem) {
             originalParent = parent
             parent = parentItem
             x = point.x
             y = point.y
 
+            // Adjust position to keep menu fully visible on screen
             const globalPos = mapToGlobal(0, 0)
-            if (globalPos.x + width > Screen.width)
+            if (globalPos.x + width > Screen.width) {
                 x = point.x - width + 24
-            if (globalPos.y + height > Screen.height)
+            }
+            if (globalPos.y + height > Screen.height) {
                 y = point.y - height - 5
+            }
         } else {
             parent = null
             x = point.x
@@ -139,26 +168,23 @@ Rectangle {
         }
 
         visible = true
-        enabled = true
     }
 
+    // Hide menu
     function hide() {
         visible = false
-        enabled = false
     }
 
     Keys.onEscapePressed: hide()
 
+    // When menu becomes visible, grab focus for keyboard events
     onVisibleChanged: {
         if (visible) {
             forceActiveFocus()
-            enabled = true
-            Qt.callLater(() => forceActiveFocus())
-        } else {
-            enabled = false
         }
     }
 
+    // Restore original parent on destruction if reparented
     Component.onDestruction: {
         if (originalParent) parent = originalParent
     }

@@ -6,8 +6,8 @@ import "root:/Data/" as Data
 
 PanelWindow {
     id: borderWindow
-    width: Screen.width
-    height: Screen.height
+    implicitWidth: Screen.width
+    implicitHeight: Screen.height
     visible: true
     color: "transparent"
     mask: Region{}

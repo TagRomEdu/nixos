@@ -157,7 +157,8 @@ Item {
                                     clickScale.start()
                                 }
                             }
-                            onDoubleClicked: console.log("Full content:", model.content)
+                            // double-click to show full content (commented out logging)
+                            // onDoubleClicked: console.log("Full content:", model.content)
                         }
                     }
                     
@@ -178,12 +179,11 @@ Item {
     SequentialAnimation {
         id: clickScale
         property var target
-       
     }
     
     ListModel { id: cliphistModel }
 
-    // Store the current state to compare for changes
+    // Current clipboard entries stored to check for changes
     property var currentEntries: []
 
     Process {
@@ -197,7 +197,7 @@ Item {
             if (running) {
                 tempEntries = []
             } else {
-                // Process completed, now update the model intelligently
+                // Update model if clipboard changed
                 updateModelIfChanged(tempEntries)
             }
         }
@@ -206,32 +206,22 @@ Item {
             onRead: data => {
                 try {
                     const line = data.toString().trim()
-                    
-                    // Skip empty lines
                     if (line === "") return
+                    if (line.includes("ERROR") || line.includes("WARN") || line.includes("error:") || line.includes("warning:")) return
                     
-                    // Skip error messages and warnings that might appear in stdout
-                    if (line.includes("ERROR") || line.includes("WARN") || line.includes("error:") || line.includes("warning:")) {
-                        return
-                    }
-                    
-                    // Parse the line: ID + spaces + content
                     const match = line.match(/^(\d+)\s+(.+)$/)
                     if (match) {
                         const id = match[1]
                         const content = match[2]
                         
-                        // Add to temporary array instead of directly to model
                         cliphistProcess.tempEntries.push({
                             id: id,
                             content: content,
                             type: detectContentType(content),
                         })
-                    } else {
-                        console.log("Failed to parse line:", line)
                     }
                 } catch (e) {
-                    console.error("Error parsing cliphist line:", e)
+                    // parsing error ignored
                 }
             }
         }
@@ -244,16 +234,14 @@ Item {
         
         onRunningChanged: {
             if (!running) {
-                // Clear completed, update our model and state
                 cliphistModel.clear()
                 currentEntries = []
-                console.log("Clipboard history cleared")
             }
         }
         
         stderr: SplitParser {
             onRead: data => {
-                console.error("Clear clipboard error:", data.toString())
+                // ignore clear errors
             }
         }
     }
@@ -266,23 +254,20 @@ Item {
         
         onRunningChanged: {
             if (!running && entryId !== "") {
-                // Delete completed, remove from model
                 for (let i = 0; i < cliphistModel.count; i++) {
                     if (cliphistModel.get(i).id === entryId) {
                         cliphistModel.remove(i)
-                        // Also remove from currentEntries
                         currentEntries = currentEntries.filter(entry => entry.id !== entryId)
                         break
                     }
                 }
-                console.log("Deleted entry:", entryId)
                 entryId = ""
             }
         }
         
         stderr: SplitParser {
             onRead: data => {
-                console.error("Delete entry error:", data.toString())
+                // ignore delete errors
             }
         }
     }
@@ -295,7 +280,7 @@ Item {
         
         stderr: SplitParser {
             onRead: data => {
-                console.error("wl-copy error:", data.toString())
+                // ignore copy errors
             }
         }
     }
@@ -308,7 +293,7 @@ Item {
         
         stderr: SplitParser {
             onRead: data => {
-                console.error("Copy history error:", data.toString())
+                // ignore copy history errors
             }
         }
     }
@@ -319,7 +304,6 @@ Item {
         running: root.isVisible
         repeat: true
         onTriggered: {
-            // Only refresh if not currently processing
             if (!cliphistProcess.running) {
                 refreshClipboardHistory()
             }
@@ -342,10 +326,7 @@ Item {
             }
         }
         
-        // Only update if there are actual changes
-        if (hasChanges) {
-            updateModel(newEntries)
-        }
+        if (hasChanges) updateModel(newEntries)
     }
     
     function updateModel(newEntries) {
@@ -354,58 +335,36 @@ Item {
         for (let i = cliphistModel.count - 1; i >= 0; i--) {
             const modelItem = cliphistModel.get(i)
             const found = newEntries.some(entry => entry.id === modelItem.id)
-            if (!found) {
-                cliphistModel.remove(i)
-            }
+            if (!found) cliphistModel.remove(i)
         }
         
-        // Add or update items
         for (let i = 0; i < newEntries.length; i++) {
             const newEntry = newEntries[i]
             let found = false
             
-            // Check if item already exists in model
             for (let j = 0; j < cliphistModel.count; j++) {
                 const modelItem = cliphistModel.get(j)
                 if (modelItem.id === newEntry.id) {
-                    // Update if content changed
-                    if (modelItem.content !== newEntry.content) {
-                        cliphistModel.set(j, newEntry)
-                    }
-                    // Move to correct position if needed
-                    if (j !== i && i < cliphistModel.count) {
-                        cliphistModel.move(j, i, 1)
-                    }
+                    if (modelItem.content !== newEntry.content) cliphistModel.set(j, newEntry)
+                    if (j !== i && i < cliphistModel.count) cliphistModel.move(j, i, 1)
                     found = true
                     break
                 }
             }
             
-            // Add new item if not found
             if (!found) {
-                if (i < cliphistModel.count) {
-                    cliphistModel.insert(i, newEntry)
-                } else {
-                    cliphistModel.append(newEntry)
-                }
+                if (i < cliphistModel.count) cliphistModel.insert(i, newEntry)
+                else cliphistModel.append(newEntry)
             }
         }
         
-        // Restore scroll position
         cliphistList.contentY = scrollPos
-        
-        // Update our reference
         currentEntries = newEntries.slice()
     }
 
     function detectContentType(content) {
-        // Check for binary/image data patterns
-        if (content.includes('\x00') || content.startsWith('\x89PNG') || content.startsWith('\xFF\xD8\xFF')) {
-            return "image"
-        }
-        if (content.includes('[[ binary data ') || content.includes('<selection>')) {
-            return "image"
-        }
+        if (content.includes('\x00') || content.startsWith('\x89PNG') || content.startsWith('\xFF\xD8\xFF')) return "image"
+        if (content.includes('[[ binary data ') || content.includes('<selection>')) return "image"
         if (/^https?:\/\/\S+$/.test(content.trim())) return "url"
         if (content.includes('\n') && (content.includes('{') || content.includes('function') || content.includes('=>'))) return "code"
         if (content.startsWith('sudo ') || content.startsWith('pacman ') || content.startsWith('apt ')) return "command"
@@ -415,7 +374,7 @@ Item {
     function formatTimestamp(timestamp) {
         const now = new Date()
         const entryDate = new Date(parseInt(timestamp))
-        const diff = (now - entryDate) / 1000 // difference in seconds
+        const diff = (now - entryDate) / 1000
         
         if (diff < 60) return "Just now"
         if (diff < 3600) return Math.floor(diff / 60) + " min ago"
@@ -433,23 +392,19 @@ Item {
     }
 
     function refreshClipboardHistory() {
-        // Don't clear the model immediately - let the smart update handle it
         cliphistProcess.running = true
     }
 
     function copyToClipboard(entryIdOrText, contentType) {
-        if (contentType === "image" || typeof entryIdOrText === "string" && entryIdOrText.match(/^\d+$/)) {
-            // This is an entry ID from clipboard history - use cliphist decode
+        if (contentType === "image" || (typeof entryIdOrText === "string" && entryIdOrText.match(/^\d+$/))) {
             copyHistoryProcess.entryId = entryIdOrText
             copyHistoryProcess.running = true
         } else {
-            // This is plain text content
             copyTextProcess.textToCopy = entryIdOrText
             copyTextProcess.running = true
         }
     }
 
-    // Cleanup function
     Component.onDestruction: {
         cliphistProcess.running = false
         clearCliphistProcess.running = false

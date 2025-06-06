@@ -15,6 +15,7 @@ Rectangle {
     color: shell.accentColor
     Layout.alignment: Qt.AlignVCenter
     
+    // Scale up on hover
     state: volumeMouseArea.containsMouse ? "hovered" : "normal"
     
     states: [
@@ -55,6 +56,7 @@ Rectangle {
         
         property string lastVolumeText: ""
         
+        // Animate label scale when volume changes
         onTextChanged: {
             if (text !== lastVolumeText && lastVolumeText !== "") {
                 volumeChangeAnimation.start()
@@ -85,6 +87,7 @@ Rectangle {
         id: volumeMouseArea
         anchors.fill: parent
         hoverEnabled: true
+        // Open volume control on click
         onClicked: Data.ProcessManager.openPavuControl()
     }
 }
