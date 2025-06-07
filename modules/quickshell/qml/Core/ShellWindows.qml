@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Services.Mpris
 import "root:/Bar" as Bar
 import "root:/HotCorner" as HotCorner
 import "root:/Popup" as Popup
@@ -24,8 +25,8 @@ Item {
         anchors.top: true
         anchors.right: true
         margins.top: -36
-        implicitWidth: slideBarVisible ? 264 : 48
-        implicitHeight: slideBarVisible ? 252 : 48
+        implicitWidth: slideBarVisible ? 370 : 48
+        implicitHeight: slideBarVisible ? Screen.height / 2 + 10: 48
         color: "transparent"
         exclusiveZone: 0
 
@@ -58,7 +59,7 @@ Item {
     PanelWindow {
         id: mainWindow
         implicitWidth: 390
-        implicitHeight: 100
+        implicitHeight: 46
         anchors.top: true
         color: "transparent"
         exclusiveZone: 36

@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
 
 Item {
@@ -7,8 +6,8 @@ Item {
     required property var shell
     required property bool isRecording
 
-    width: 250
-    height: isRecording ? 80 : 240
+    width: 360
+    height: isRecording ? (userProfile.height + recordingButton.height + 36) : Screen.height / 2
     visible: false
 
     anchors.top: parent.top
@@ -22,7 +21,6 @@ Item {
     signal systemActionRequested(string action)
     signal performanceActionRequested(string action)
 
-    // Main container with border and background
     Rectangle {
         id: mainContainer
         anchors.fill: parent
@@ -31,7 +29,6 @@ Item {
         border.width: 3
         border.color: shell.accentColor
 
-        // Outer shadow effect
         Rectangle {
             anchors.fill: parent
             anchors.margins: -3
@@ -42,15 +39,18 @@ Item {
         }
     }
 
-    // Track hover over any key controls
     property bool isHovered: slideBarMouseArea.containsMouse || 
                             recordingButton.containsMouse || 
                             systemControls.containsMouse || 
-                            performanceControls.containsMouse
+                            performanceControls.containsMouse ||
+                            userProfile.isHovered
 
     onIsHoveredChanged: {
-        if (isHovered) hideTimer.stop()
-        else hideTimer.start()
+        if (isHovered) {
+            hideTimer.stop()
+        } else {
+            hideTimer.start()
+        }
     }
 
     MouseArea {
@@ -65,21 +65,31 @@ Item {
         interval: 300
         repeat: false
         onTriggered: {
-            if (root.x !== width) slideOutAnimation.start()
-            else root.visible = false
+            if (root.x !== width) {
+                slideOutAnimation.start()
+            } else {
+                root.visible = false
+            }
         }
     }
 
-    ColumnLayout {
+    // Using regular Column here for more precise control
+    Column {
         anchors.fill: parent
         anchors.margins: 18
-        spacing: 14
+        spacing: root.isRecording ? 0 : 28  // Adjust spacing as needed
+
+        UserProfile {
+            id: userProfile
+            width: parent.width
+            height: 80
+            shell: root.shell
+        }
 
         RecordingButton {
             id: recordingButton
-            Layout.fillWidth: true
-            Layout.preferredHeight: 48
-
+            width: parent.width
+            height: 48
             shell: root.shell
             isRecording: root.isRecording
 
@@ -87,16 +97,30 @@ Item {
             onStopRecordingRequested: root.stopRecordingRequested()
         }
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 1
-            color: Qt.darker(shell.bgColor, 1.15)
-            opacity: 0.5
+        Text {
+            id: performanceLabel
+            width: parent.width
+            text: "PERFORMANCE"
+            color: shell.accentColor
+            font.pixelSize: 11
+            font.weight: Font.DemiBold
+            font.letterSpacing: 1.2
+            horizontalAlignment: Text.AlignCenter
             visible: !root.isRecording
         }
 
+        PerformanceControls {
+            id: performanceControls
+            width: parent.width
+            height: 52
+            visible: !root.isRecording
+            shell: root.shell
+            onPerformanceActionRequested: function(action) { root.performanceActionRequested(action) }
+        }
+
         Text {
-            Layout.fillWidth: true
+            id: systemLabel
+            width: parent.width
             text: "SYSTEM"
             color: shell.accentColor
             font.pixelSize: 11
@@ -108,42 +132,14 @@ Item {
 
         SystemControls {
             id: systemControls
-            Layout.fillWidth: true
-            Layout.preferredHeight: 92
-            Layout.topMargin: 2
-
+            width: parent.width
+            height: 52
+            visible: !root.isRecording
             shell: root.shell
-            visible: !root.isRecording
-
-            onSystemActionRequested: action => root.systemActionRequested(action)
-        }
-
-        Text {
-            Layout.fillWidth: true
-            text: "PERFORMANCE"
-            color: shell.accentColor
-            font.pixelSize: 11
-            font.weight: Font.DemiBold
-            font.letterSpacing: 1.2
-            horizontalAlignment: Text.AlignCenter
-            visible: !root.isRecording
-            Layout.topMargin: 8
-        }
-
-        PerformanceControls {
-            id: performanceControls
-            Layout.fillWidth: true
-            Layout.preferredHeight: 92
-            Layout.topMargin: 2
-
-            shell: root.shell
-            visible: !root.isRecording
-
-            onPerformanceActionRequested: action => root.performanceActionRequested(action)
+            onSystemActionRequested: function(action) { root.systemActionRequested(action) }
         }
     }
 
-    // Show slidebar with animation
     function show() {
         x = width
         opacity = 1
@@ -152,9 +148,10 @@ Item {
         hideTimer.stop()
     }
 
-    // Hide slidebar with animation
     function hide() {
-        if (visible && x === 0) slideOutAnimation.start()
+        if (visible && x === 0) {
+            slideOutAnimation.start()
+        }
     }
 
     PropertyAnimation {

@@ -6,14 +6,16 @@ import Quickshell.Hyprland
 import Quickshell.Wayland
 import Quickshell.Io
 import QtQuick.Shapes
-import "../Data" as Data
+import "root:/Data" as Data
 import "./modules" as BarModules
+import "root:/Core/" as Core
 Item {
     id: root
     required property var shell
     required property var popup
     required property var bar
-    width: 260
+    readonly property alias barRect: barRect
+    width: 120
     height: 42
     property Process pavucontrol: null
 
@@ -72,6 +74,18 @@ Item {
     }
 
     BarModules.LeftCornerShape {
+        shell: root.shell
+        popup: root.popup
+        barRect: barRect
+    }
+
+    BarModules.TopLeftCorner {
+        shell: root.shell
+        popup: root.popup
+        barRect: barRect
+    }
+
+    BarModules.TopRightCorner {
         shell: root.shell
         popup: root.popup
         barRect: barRect

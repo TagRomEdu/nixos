@@ -7,7 +7,6 @@ import "./modules" as PopupModules
 Item {
     required property var shell
     property string selectedWidget: "calendar"
-
     signal contentHeightChanged(int newHeight)
 
     // Tracks current height of the system view
@@ -30,14 +29,15 @@ Item {
         }
     }
 
-    // Notify parent when content height changes
+    // Bind root height to calculated content height + margins
+    implicitHeight: calculatedContentHeight + 100
+
     onCalculatedContentHeightChanged: {
         var height = calculatedContentHeight + 100
         if (selectedWidget === "system") height += 40
         contentHeightChanged(height)
     }
 
-    // Notify parent when view changes
     onSelectedWidgetChanged: {
         contentHeightChanged(calculatedContentHeight + 60)
     }
@@ -53,7 +53,6 @@ Item {
             StackLayout {
                 anchors.fill: parent
 
-                // Select visible view
                 currentIndex: {
                     switch(selectedWidget) {
                     case "calendar": return 0
@@ -66,11 +65,13 @@ Item {
                 // Calendar
                 PopupModules.CalendarView {
                     readonly property var shell: parent.shell
+                    // Make sure CalendarView has implicit sizes inside its QML file
                 }
 
                 // Weather
                 PopupModules.WeatherView {
                     readonly property var shell: parent.shell
+                    // Make sure WeatherView has implicit sizes inside its QML file
                 }
 
                 // System monitor
@@ -78,11 +79,9 @@ Item {
                     id: systemView
                     readonly property var shell: parent.shell
 
-                    // Track height changes
                     onHeightChanged: systemViewHeight = height
                     onContentHeightChanged: systemViewHeight = contentHeight
 
-                    // Set initial height
                     Component.onCompleted: {
                         systemViewHeight = contentHeight !== undefined ? contentHeight : height
                     }
@@ -90,7 +89,6 @@ Item {
             }
         }
 
-        // Bottom navigation
         RowLayout {
             Layout.fillWidth: true
             spacing: 10

@@ -12,40 +12,42 @@ Item {
 
     anchors.fill: parent
 
-    // Recording state and process handle
+    // Recording state management
     property bool isRecording: false
     property var recordingProcess: null
     property string lastError: ""
     
-    // Signal emitted when SlideBar visibility changes
+    // Signal to communicate SlideBar visibility changes
     signal slideBarVisibilityChanged(bool visible)
     
-    // Show slideBar when hot corner triggered externally
+    // Function to trigger hot corner (can be called externally)
     function triggerHotCorner() {
         slideBar.show()
     }
 
-    // Hot corner trigger area at screen corner
+    // Hot corner trigger - always in the corner
     Modules.HotCornerTrigger {
         id: hotCorner
         onTriggered: triggerHotCorner()
     }
 
-    // Sliding control bar anchored to top-right
+    // The main sliding bar - positioned relative to screen edge, not parent
     Modules.SlideBar {
         id: slideBar
         shell: parent.shell
         isRecording: parent.isRecording
         
+        // Position relative to the parent (hot corner window)
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: 8
         anchors.rightMargin: 8
         
-        // Notify when visibility changes
-        onVisibleChanged: slideBarVisibilityChanged(visible)
+        // Monitor visibility changes
+        onVisibleChanged: {
+            slideBarVisibilityChanged(visible)
+        }
         
-        // Start/stop recording and handle system/performance actions
         onRecordingRequested: startRecording()
         onStopRecordingRequested: {
             stopRecording()
@@ -61,7 +63,7 @@ Item {
         }
     }
 
-    // Start video recording process with timestamped filename
+    // Recording management functions
     function startRecording() {
         var currentDate = new Date()
         var hours = String(currentDate.getHours()).padStart(2, '0')
@@ -80,7 +82,6 @@ Item {
         isRecording = true
     }
     
-    // Stop recording by sending SIGINT, then clean up process
     function stopRecording() {
         if (recordingProcess && isRecording) {
             console.log("Stopping recording")
@@ -89,7 +90,6 @@ Item {
             
             var stopProcess = Qt.createQmlObject(stopQmlString, parent)
             
-            // Delay cleanup to ensure recording stops gracefully
             var cleanupTimer = Qt.createQmlObject('import QtQuick; Timer { interval: 3000; running: true; repeat: false }', parent)
             cleanupTimer.triggered.connect(function() {
                 console.log("Cleaning up recording process")
@@ -99,7 +99,6 @@ Item {
                     recordingProcess = null
                 }
                 
-                // Force kill any remaining recorder processes just in case
                 var forceKillQml = 'import Quickshell.Io; Process { command: ["sh", "-c", "pkill -9 -f \'gpu-screen-recorder.*portal\' 2>/dev/null || true"]; running: true; onExited: function() { destroy() } }'
                 var forceKillProcess = Qt.createQmlObject(forceKillQml, parent)
                 
@@ -109,7 +108,6 @@ Item {
         isRecording = false
     }
 
-    // Perform system control actions (lock, reboot, shutdown)
     function performSystemAction(action) {
         switch(action) {
             case "lock":
@@ -124,8 +122,8 @@ Item {
         }
     }
     
-    // Placeholder for performance actions
     function performPerformanceAction(action) {
+        // Add performance action handling here if needed
         console.log("Performance action requested:", action)
     }
 }

@@ -16,36 +16,36 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: -8
         hoverEnabled: true
-
+        
         property bool isHovered: containsMouse
-
+        
         onIsHoveredChanged: {
             if (isHovered) {
-                showTimer.start()  // Start the show delay timer when hovered
-                hideTimer.stop()   // Stop any hide delay timer to keep visible
+                showTimer.start()
+                hideTimer.stop()
             } else {
-                hideTimer.start()  // Start the hide delay timer when no longer hovered
-                showTimer.stop()   // Stop the show timer to prevent duplicate triggers
+                hideTimer.start()
+                showTimer.stop()
             }
         }
-
-        onEntered: hideTimer.stop()  // Cancel hide timer immediately on re-entry
+        
+        onEntered: hideTimer.stop()
     }
 
-    // Timer to delay the triggering of the action after hover
+    // Smooth show/hide timers
     Timer {
         id: showTimer
         interval: 200
         onTriggered: root.triggered()
     }
 
-    // Timer to delay hiding, controlled externally
     Timer {
         id: hideTimer
         interval: 500
+        // Note: This timer is managed by the parent SlideBar component
     }
 
-    // Expose useful properties and control functions to parent
+    // Expose properties and functions for parent components
     readonly property alias containsMouse: mouseArea.containsMouse
     function stopHideTimer() { hideTimer.stop() }
     function startHideTimer() { hideTimer.start() }

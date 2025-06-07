@@ -130,14 +130,6 @@ PanelWindow {
         slideOutAnimation.start()
     }
 
-    // Hover area to trigger showing OSD after delay
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        onEntered: hoverTimer.start()
-        onExited: hoverTimer.stop()
-    }
-
     // Slide-in animation for OSD content
     NumberAnimation {
         id: slideInAnimation
