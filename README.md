@@ -3,6 +3,10 @@
 > ⚠️ **Important:** This repository includes my personal `hardware-configuration.nix`, which is specific to my hardware setup.  
 > You **must replace it** with one generated for your system using `nixos-generate-config` to avoid compatibility issues.
 
+# Showcase
+
+![Showcase Gif](https://i.imgur.com/alBK2pa.gif)
+
 # NixOS Configuration
 
 This repository contains my personal NixOS configuration for a customized desktop and development environment. 🎨💻
