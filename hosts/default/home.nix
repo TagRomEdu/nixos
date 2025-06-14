@@ -17,6 +17,7 @@ in
     ../../modules/desktop/hyprland.nix
     ../../modules/quickshell/quickshell.nix
     ../../modules/desktop/hyprlock.nix
+    ../../modules/desktop/hypridle.nix
     ../../modules/desktop/walker.nix
 
     ../../modules/editors/vscode.nix

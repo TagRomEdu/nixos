@@ -91,7 +91,7 @@
         gaps_in = 5;
         gaps_out = 14;
         border_size = 3;
-        "col.active_border" = "rgb(eb6f92)";
+        "col.active_border" = "rgb(c488ec)";
         "col.inactive_border" = "rgb(6e6a86)";
       };
 
@@ -173,7 +173,7 @@
 
       # Monitor starts
       monitor = [
-        "DP-1, 3440x1440@144, auto, auto"
+        "DP-1, 2560x1440@359.98, auto, auto"
       ];
       # Monitor ends
 

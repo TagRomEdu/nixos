@@ -47,10 +47,15 @@ with pkgs;
   gowall
   gruvbox-gtk-theme
   papirus-icon-theme
-  qt6Packages.qt5compat
   grimblast
   gpu-screen-recorder
   mpv
   slop
+code-cursor
+  # Quickshell stuff
+  qt6Packages.qt5compat
+  libsForQt5.qt5.qtgraphicaleffects
+  kdePackages.qtbase
+  kdePackages.qtdeclarative
 ]
 

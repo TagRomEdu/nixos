@@ -3,8 +3,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import "root:/Data" as Data
 
-// System info watermark component
+// System version and info watermark
 PanelWindow {
     id: systemVersion
 
@@ -36,11 +37,10 @@ PanelWindow {
         running: true
         onTriggered: {
             visible = true
-            console.log("SystemVersion window now visible after delay")
         }
     }
 
-    // System Info Data
+    // Data models
     component Details: QtObject {
         property string version
         property string commit
@@ -58,9 +58,7 @@ PanelWindow {
         property Details details: Details {}
     }
 
-    // Component initialization
     Component.onCompleted: {
-        console.log("SystemVersion component loaded");
         osFile.reload();
         genProcess.running = true;
         wmProcess.running = true;
@@ -138,48 +136,45 @@ PanelWindow {
         }
     }
 
-Process {
-    id: hlProcess
-    running: true
-    command: ["sh", "-c", "hyprctl version"]
+    Process {
+        id: hlProcess
+        running: true
+        command: ["sh", "-c", "hyprctl version"]
 
-    stdout: SplitParser {
-        splitMarker: ""
-        onRead: (data) => {
-            const output = data.trim();
-            
-            // Extract version
-            const versionMatch = output.match(/Tag: (v\d+\.\d+\.\d+)/);
-            if (versionMatch && versionMatch[1]) {
-                systemVersion.wm.details.version = versionMatch[1];
-            }
-            
-            // Extract commit hash
-            const commitMatch = output.match(/at commit (\w+)/);
-            if (commitMatch && commitMatch[1]) {
-                systemVersion.wm.details.commit = commitMatch[1].slice(0, 7).toUpperCase();
+        stdout: SplitParser {
+            splitMarker: ""
+            onRead: (data) => {
+                const output = data.trim();
+                
+                const versionMatch = output.match(/Tag: (v\d+\.\d+\.\d+)/);
+                if (versionMatch && versionMatch[1]) {
+                    systemVersion.wm.details.version = versionMatch[1];
+                }
+                
+                const commitMatch = output.match(/at commit (\w+)/);
+                if (commitMatch && commitMatch[1]) {
+                    systemVersion.wm.details.commit = commitMatch[1].slice(0, 7).toUpperCase();
+                }
             }
         }
     }
-}
 
     ColumnLayout {
         id: systemInfoContent
         spacing: 6
         
-        // Main system info row
         RowLayout {
             spacing: 16
             Layout.alignment: Qt.AlignRight
             
-            // OS Section
+            // OS info
             ColumnLayout {
                 spacing: 2
                 Layout.alignment: Qt.AlignRight
                 
                 Text {
                     text: systemVersion.os.name
-                    color: "#70ffffff"
+                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -201,7 +196,7 @@ Process {
                         }
                         return details.join(" ");
                     }
-                    color: "#50ffffff"
+                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium
@@ -212,21 +207,21 @@ Process {
             
             Text {
                 text: "│"
-                color: "#40ffffff"
+                color: Data.Colors.isDarkTheme ? "#20ffffff" : "#20000000"  // 13% white/black
                 font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                 font.pointSize: 14
                 font.weight: Font.Light
                 Layout.alignment: Qt.AlignCenter
             }
             
-            // WM Section
+            // WM info
             ColumnLayout {
                 spacing: 2
                 Layout.alignment: Qt.AlignRight
                 
                 Text {
                     text: systemVersion.wm.name
-                    color: "#70ffffff"
+                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -245,7 +240,7 @@ Process {
                         }
                         return details.join(" ");
                     }
-                    color: "#50ffffff"
+                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium

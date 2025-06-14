@@ -9,7 +9,7 @@
     terminal_title_flag = ""
     locale = ""
     close_when_open = false
-    theme = "rose-pine"
+    theme = "noktis"
     monitor = ""
     hotreload_theme = true
     as_window = false
@@ -239,31 +239,29 @@
     placeholder = "Dmenu"
     switcher_only = true
   '';
-  home.file.".config/walker/themes/rose-pine.css".text = ''
-    @define-color foreground        #e0def4;  /* text */
-    @define-color foreground-light #f6c177;  /* accent text */
-    @define-color background        #191724;  /* base */
-    @define-color cursor            #524f67;  /* subtle gray */
+  home.file.".config/walker/themes/noktis.css".text = ''
+    @define-color foreground        #e2e4ef;  /* base05 */
+    @define-color foreground-light #c488ec;  /* base0D */
+    @define-color background        #141414;  /* base00 */
+    @define-color cursor            #2a2a32;  /* base02 */
 
-    @define-color color0  #191724;  /* base */
-    @define-color color1  #eb6f92;  /* love */
-    @define-color color2  #9ccfd8;  /* foam */
-    @define-color color3  #f6c177;  /* gold */
-    @define-color color4  #31748f;  /* iris */
-    @define-color color5  #c4a7e7;  /* highlight */
-    @define-color color6  #ebbcba;  /* rose */
-    @define-color color7  #e0def4;  /* text */
+    @define-color color0  #141414;  /* base00 */
+    @define-color color1  #f0707e;  /* base08 */
+    @define-color color2  #8ccf7e;  /* base0B */
+    @define-color color3  #f5d767;  /* base0A */
+    @define-color color4  #c488ec;  /* base0D */
+    @define-color color5  #c488ec;  /* base0E */
+    @define-color color6  #79dac8;  /* base0C */
+    @define-color color7  #e2e4ef;  /* base05 */
 
-    @define-color color8  #6e6a86;  /* surface2 */
-    @define-color color9  #eb6f92;  /* love */
-    @define-color color10 #9ccfd8;  /* foam */
-    @define-color color11 #f6c177;  /* gold */
-    @define-color color12 #31748f;  /* iris */
-    @define-color color13 #c4a7e7;  /* highlight */
-    @define-color color14 #ebbcba;  /* rose */
-    @define-color color15 #e0def4;  /* text */
-
-
+    @define-color color8  #1e1e24;  /* base01 */
+    @define-color color9  #f0707e;  /* base08 */
+    @define-color color10 #8ccf7e;  /* base0B */
+    @define-color color11 #f5d767;  /* base0A */
+    @define-color color12 #c488ec;  /* base0D */
+    @define-color color13 #c488ec;  /* base0E */
+    @define-color color14 #79dac8;  /* base0C */
+    @define-color color15 #f7f9ff;  /* base07 */
 
     #window,
     #box,
@@ -300,13 +298,13 @@
     }
 
     #box {
-        border-radius: 20px;
+        border-radius: 12px;
         background: @background;
-        padding: 32px;
-        border: 3px solid @color1;
+        padding: 24px;
+        border: 2px solid @color4;
         box-shadow:
-          0 19px 38px rgba(0, 0, 0, 0.3),
-          0 15px 12px rgba(0, 0, 0, 0.22);
+          0 10px 20px rgba(0, 0, 0, 0.3),
+          0 6px 6px rgba(0, 0, 0, 0.22);
       }
       
 
@@ -314,7 +312,7 @@
       box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.1),
         0 1px 2px rgba(0, 0, 0, 0.22);
-      background: lighter(@background);
+      background: @color8;
       color: @foreground-light;
       padding: 8px;
     }
@@ -369,7 +367,7 @@
     child:selected,
     child:hover {
         color: @foreground;
-        background: @color1;
+        background: @color4;
     }
 
     #item {
@@ -422,12 +420,10 @@
     }
 
     .aiItem.assistant {
-      background: lighter(@background);
+      background: @color8;
     }
-
   '';
-  home.file.".config/walker/themes/rose-pine.toml".text = ''
-
+  home.file.".config/walker/themes/noktis.toml".text = ''
     [ui.anchors]
     bottom = true
     left = true
@@ -528,7 +524,5 @@
 
     [ui.window.box.search.spinner]
     hide = true
-
-
   '';
 }

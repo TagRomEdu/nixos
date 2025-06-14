@@ -1,93 +1,152 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Wayland
-import Quickshell.Io
-import QtQuick.Shapes
 import "root:/Data" as Data
-import "./modules" as BarModules
-import "root:/Core/" as Core
+import "root:/Widgets" as Widgets
+import "." as Bar
+
 Item {
-    id: root
-    required property var shell
+    id: bar
+    width: 42
+    height: parent.height
+
     required property var popup
-    required property var bar
-    readonly property alias barRect: barRect
-    width: 120
-    height: 42
-    property Process pavucontrol: null
+    required property var shell
 
-    function createPavucontrol() {
-        if (!pavucontrol) {
-            pavucontrol = pavucontrolComponent.createObject(root)
-        }
-        return pavucontrol
-    }
-
-    Component {
-        id: pavucontrolComponent
-        Process {
-            command: ["pavucontrol"]
-        }
-    }
+    property bool clockHovered: false
+    property bool calendarHovered: false
+    property bool keepCalendarVisible: false
 
     Rectangle {
-        id: barRect
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 42
-        color: shell.bgColor
-        bottomLeftRadius: 20
-        bottomRightRadius: 20
-        opacity: 1
+        anchors.fill: parent
+        color: Data.Colors.bgColor
 
-        Item {
+        ColumnLayout {
             anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            spacing: 16
+            anchors {
+                topMargin: 18
+                bottomMargin: 18
+                leftMargin: 2
+            }
 
-            RowLayout {
-                anchors.fill: parent
-                spacing: 12
+            Loader {
+                id: workspaceLoader
+                Layout.alignment: Qt.AlignHCenter
+                active: true
+                asynchronous: true
+                sourceComponent: Widgets.Workspace {
+                    shell: bar.shell
+                }
+            }
 
-                Item { Layout.fillWidth: true }
+            Item {
+                Layout.fillHeight: true
+            }
 
-                BarModules.DateTimeDisplay {
-                    shell: root.shell
+            Item {
+                id: clockContainer
+                Layout.alignment: Qt.AlignHCenter
+                width: clockRoot.width
+                height: clockRoot.height
+
+                Widgets.Clock {
+                    id: clockRoot
+                    anchors.fill: parent
+                    onShowCalendar: {
+                        if (!calendarLoader.active) {
+                            calendarLoader.active = true
+                            calendarLoader.onStatusChanged = function() {
+                                if (calendarLoader.status === Loader.Ready) {
+                                    var globalPos = clockContainer.mapToGlobal(Qt.point(clockContainer.width, 0))
+                                    calendarLoader.item.targetX = globalPos.x
+                                    calendarLoader.item.setHovered(true)
+                                    calendarLoader.onStatusChanged = null
+                                }
+                            }
+                        } else if (calendarLoader.item) {
+                            var globalPos = clockContainer.mapToGlobal(Qt.point(clockContainer.width, 0))
+                            calendarLoader.item.targetX = globalPos.x
+                            calendarLoader.item.setHovered(true)
+                        }
+                        keepCalendarVisible = true
+                    }
+                    onHideCalendar: {
+                        if (calendarLoader.item) {
+                            calendarLoader.item.setHovered(false)
+                            keepCalendarVisible = false
+                            unloadTimer.restart()
+                        }
+                    }
                 }
 
-                Item { Layout.fillWidth: true }
-
-
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: {
+                        bar.clockHovered = true
+                        if (!calendarLoader.active) {
+                            calendarLoader.active = true
+                            calendarLoader.onStatusChanged = function() {
+                                if (calendarLoader.status === Loader.Ready) {
+                                    var globalPos = clockContainer.mapToGlobal(Qt.point(clockContainer.width, 0))
+                                    calendarLoader.item.targetX = globalPos.x
+                                    calendarLoader.item.setHovered(true)
+                                    calendarLoader.onStatusChanged = null
+                                }
+                            }
+                        } else if (calendarLoader.item) {
+                            var globalPos = clockContainer.mapToGlobal(Qt.point(clockContainer.width, 0))
+                            calendarLoader.item.targetX = globalPos.x
+                            calendarLoader.item.setHovered(true)
+                        }
+                    }
+                    onExited: {
+                        bar.clockHovered = false
+                        bar.scheduleHide()
+                    }
+                }
             }
         }
     }
 
-
-    BarModules.RightCornerShape {
-        shell: root.shell
-        popup: root.popup
-        barRect: barRect
+    Loader {
+        id: calendarLoader
+        active: false
+        asynchronous: true
+        sourceComponent: Widgets.CalendarPopup {
+            shell: bar.shell
+        }
     }
 
-    BarModules.LeftCornerShape {
-        shell: root.shell
-        popup: root.popup
-        barRect: barRect
+    Timer {
+        id: unloadTimer
+        interval: 5000  // Unload after 5 seconds of being hidden
+        onTriggered: {
+            if (calendarLoader.item && !calendarLoader.item._visible && !keepCalendarVisible) {
+                calendarLoader.active = false
+            }
+        }
     }
 
-    BarModules.TopLeftCorner {
-        shell: root.shell
-        popup: root.popup
-        barRect: barRect
+    Timer {
+        id: hideTimer
+        interval: 200
+        onTriggered: {
+            if (!clockHovered && !calendarHovered) {
+                keepCalendarVisible = false
+                if (calendarLoader.item) {
+                    calendarLoader.item.setHovered(false)
+                    unloadTimer.restart()
+                }
+            }
+        }
     }
 
-    BarModules.TopRightCorner {
-        shell: root.shell
-        popup: root.popup
-        barRect: barRect
+    function scheduleHide() {
+        hideTimer.start()
     }
 }

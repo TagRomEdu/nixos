@@ -5,7 +5,7 @@
     # BACKGROUND
     background {
         monitor =
-        path = ${config.home.homeDirectory}/nixos/assets/wallpapers/girl.jpg
+        path = ${config.home.homeDirectory}/nixos/assets/wallpapers/frieren.png
         #color = $background"
         blur_passes = 2
         contrast = 1

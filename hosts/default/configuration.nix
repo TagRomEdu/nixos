@@ -59,6 +59,8 @@
     noto-fonts-emoji
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
+    material-symbols
+    material-icons
   ];
 
   # Bootloader
@@ -96,6 +98,7 @@
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
   };
+
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

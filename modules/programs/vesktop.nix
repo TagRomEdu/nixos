@@ -4,173 +4,240 @@
   home.packages = with pkgs; [
     vesktop
   ];
-  home.file.".config/vesktop/themes/system24-rosepine.theme.css".text = ''
-    /**
-    * @name system24 (rosé pine edit)
-    * @description a tui-like discord theme with Rosé Pine colors.
-    * @author refact0r
-    */
 
-    @import url("https://refact0r.github.io/system24/build/system24.css");
+  home.file.".config/vesktop/themes/system24-oled.theme.css".text = ''
+  /**
+  * @name system24 (OLED Dark, Base16)
+  * @description Base16-aligned OLED-optimized TUI-style theme for Discord via Vesktop.
+  * @author refact0r
+  */
 
-    body {
-      --font: "JetBrains Mono";
-      --code-font: "JetBrains Mono";
-      font-weight: 300;
-      letter-spacing: -0.05ch;
+  @import url("https://refact0r.github.io/system24/build/system24.css");
 
-      --gap: 12px;
-      --divider-thickness: 4px;
-      --border-thickness: 2px;
-      --border-hover-transition: 0.2s ease;
+  .containerDefault-3GGEv_ .unread-36eUEm .name-3Uvkvr,
+  .containerDefault-3GGEv_ .unread-36eUEm .icon-3AqZ2e {
+    color: var(--base06) !important;
+  }
 
-      --animations: on;
-      --list-item-transition: 0.2s ease;
-      --dms-icon-svg-transition: 0.4s ease;
+  /* Unread channel styling */
+  .containerDefault-3GGEv_ .unread-36eUEm {
+    background-color: var(--base0E) !important;
+    opacity: 0.3;
+  }
 
-      --top-bar-height: var(--gap);
-      --top-bar-button-position: titlebar;
-      --top-bar-title-position: off;
-      --subtle-top-bar-title: off;
+  .containerDefault-3GGEv_ .unread-36eUEm .name-3Uvkvr {
+    color: var(--base05) !important;
+    font-weight: 500;
+  }
 
-      --custom-window-controls: off;
-      --window-control-size: 14px;
+  .containerDefault-3GGEv_ .unread-36eUEm .icon-3AqZ2e {
+    color: var(--base05) !important;
+  }
 
-      --custom-dms-icon: off;
-      --dms-icon-svg-url: url("");
-      --dms-icon-svg-size: 90%;
-      --dms-icon-color-before: var(--icon-secondary);
-      --dms-icon-color-after: var(--text-1);
-      --custom-dms-background: off;
-      --dms-background-image-url: url("");
-      --dms-background-image-size: cover;
-      --dms-background-color: linear-gradient(
-        70deg,
-        var(--rose),
-        var(--iris),
-        var(--love)
-      );
+  /* Unread mentions styling */
+  .containerDefault-3GGEv_ .unread-36eUEm .mentionsBadge-3HnHJv {
+    background-color: var(--base0E) !important;
+    color: var(--base05) !important;
+  }
 
-      --background-image: off;
-      --background-image-url: url("");
+  /* Force OLED background everywhere */
+  .theme-dark,
+  .theme-light,
+  :root {
+    --background-primary: #141414 !important;
+    --background-secondary: #141414 !important;
+    --background-secondary-alt: #141414 !important;
+    --background-tertiary: #141414 !important;
+    --background-mobile-primary: #141414 !important;
+    --background-mobile-secondary: #141414 !important;
+    --deprecated-card-bg: #141414 !important;
+    --deprecated-store-bg: #141414 !important;
+    --background-floating: #141414 !important;
+    --bg-overlay-1: #141414 !important;
+    --bg-overlay-2: #141414 !important;
+    --bg-overlay-3: #141414 !important;
+    --bg-overlay-4: #141414 !important;
+    --bg-overlay-5: #141414 !important;
+    --bg-overlay-6: #141414 !important;
+    --bg-base: #141414 !important;
+    --bg-primary: #141414 !important;
+    --bg-secondary: #141414 !important;
+  }
 
-      --transparency-tweaks: off;
-      --remove-bg-layer: off;
-      --panel-blur: off;
-      --blur-amount: 12px;
-      --bg-floating: var(--bg-3);
+  /* Force background color on specific elements */
+  .appMount-2yBXZl,
+  .app-2CXKsg,
+  .bg-1QIAus,
+  .container-1eFtFS,
+  .wrapper-3HVHpV,
+  .scroller-3X7KbA,
+  .layer-86YKbF,
+  .container-2cd8Mz,
+  .chat-2ZfjoI,
+  .container-2o3qEW,
+  .applicationStore-2nk7Lo,
+  .pageWrapper-2PwDoS,
+  .standardSidebarView-E9Pc3j,
+  .contentRegion-3HkfJJ {
+    background-color: #141414 !important;
+  }
 
-      --small-user-panel: on;
-      --unrounding: on;
+  body {
+    --font: "JetBrains Mono";
+    --code-font: "JetBrains Mono";
+    font-weight: 300;
+    letter-spacing: -0.05ch;
 
-      --custom-spotify-bar: on;
-      --ascii-titles: on;
-      --ascii-loader: system24;
+    --gap: 12px;
+    --divider-thickness: 4px;
+    --border-thickness: 2px;
+    --border-hover-transition: 0.2s ease;
 
-      --panel-labels: on;
-      --label-color: var(--text-muted);
-      --label-font-weight: 500;
-    }
+    --animations: on;
+    --list-item-transition: 0.2s ease;
+    --dms-icon-svg-transition: 0.4s ease;
 
-    :root {
-  --colors: on;
+    --top-bar-height: var(--gap);
+    --top-bar-button-position: titlebar;
+    --top-bar-title-position: off;
+    --subtle-top-bar-title: off;
 
-  /* Rosé Pine Palette */
-  --base: #191724;
-  --surface: #1f1d2e;
-  --overlay: #26233a;
-  --muted: #7e7a94; /* slightly brighter for better contrast */
-  --subtle: #a8a4c2; /* more readable than original */
-  --text: #f6f3ff;   /* brighter than #e0def4 */
-  --love: #eb6f92;
-  --gold: #f6c177;
-  --rose: #ebbcba;
-  --pine: #31748f;
-  --foam: #9ccfd8;
-  --iris: #c4a7e7;
-  --highlight-low: #21202e;
-  --highlight-med: #403d52;
-  --highlight-high: #524f67;
+    --custom-window-controls: off;
+    --window-control-size: 14px;
 
-  /* Text colors */
-  --text-0: #000000;
-  --text-1: var(--text);
-  --text-2: var(--subtle);
-  --text-3: var(--muted);
-  --text-4: #5e5a70;
-  --text-5: #4a4658;
+    --custom-dms-icon: off;
+    --dms-icon-svg-url: url("");
+    --dms-icon-svg-size: 90%;
+    --dms-icon-color-before: var(--base03);
+    --dms-icon-color-after: var(--base05);
+    --custom-dms-background: off;
 
-  /* Backgrounds */
-  --bg-1: var(--overlay);
-  --bg-2: var(--surface);
-  --bg-3: var(--base);
-  --bg-4: var(--highlight-low);
-  --hover: rgba(235, 111, 146, 0.08);
-  --active: rgba(235, 111, 146, 0.15);
-  --active-2: rgba(235, 111, 146, 0.2);
-  --message-hover: var(--hover);
+    --background-image: off;
+    --background-image-url: url("");
+    --transparency-tweaks: off;
+    --remove-bg-layer: off;
+    --panel-blur: off;
+    --blur-amount: 12px;
 
+    --bg-floating: var(--base01);
+    --small-user-panel: on;
+    --unrounding: on;
+    --custom-spotify-bar: on;
+    --ascii-titles: on;
+    --ascii-loader: system24;
 
-  /* Accent colors */
-  --accent-1: var(--foam);
-  --accent-2: var(--pine);
-  --accent-3: var(--iris);
-  --accent-4: var(--rose);
-  --accent-5: var(--gold);
+    --panel-labels: on;
+    --label-color: var(--base04);
+    --label-font-weight: 500;
 
-  --mention: linear-gradient(to right, rgba(246, 193, 119, 0.1) 40%, transparent);
-  --mention-hover: linear-gradient(to right, rgba(246, 193, 119, 0.2) 40%, transparent);
-  --reply: linear-gradient(to right, rgba(235, 111, 146, 0.08) 40%, transparent);
-  --reply-hover: linear-gradient(to right, rgba(235, 111, 146, 0.15) 40%, transparent);
+    background-color: var(--base00) !important;
+  }
 
-  /* Status indicators */
-  --online: #9ccfd8;
-  --dnd: #eb6f92;
-  --idle: #f6c177;
-  --streaming: #c4a7e7;
-  --offline: #6e6a86;
+  :root {
+    /* Base16 OLED Theme - Matched from Colors.qml with reduced saturation */
+    --base00: #141414; /* Background */
+    --base01: #141414; /* Panels */
+    --base02: #1a1a1a; /* Selections / overlays */
+    --base03: #4a4a4a; /* Comments / borders */
+    --base04: #808080; /* Secondary text */
+    --base05: #b0b0b0; /* Primary text - adjusted to be less bright */
+    --base06: #e0e0e0; /* Bright text */
+    --base07: #f0f0f0; /* Brightest text */
+    --base08: #d0606e; /* Red / errors */
+    --base09: #d5896f; /* Orange / warnings */
+    --base0A: #d5b767; /* Yellow / highlights */
+    --base0B: #7cbf6e; /* Green / success */
+    --base0C: #69cac8; /* Cyan / info */
+    --base0D: #7696dc; /* Blue / primary */
+    --base0E: #a478dc; /* Purple / accents */
+    --base0F: #a478dc; /* Pink / special */
 
-  /* Borders (now using Rosé Pine `love`) */
-  --border-light: #eb6f92;
-  --border: #eb6f92;
-  --border-hover: #eb6f92;
-  --button-border: #eb6f92;
+    /* Text mappings */
+    --text-1: var(--base04);
+    --text-2: var(--base04);
+    --text-3: var(--base05);
+    --text-muted: var(--base04);
 
-  /* Red (from love) */
-  --red-1: #f08399;
-  --red-2: #eb6f92;
-  --red-3: #d45b7a;
-  --red-4: #be4966;
-  --red-5: #a93552;
+    /* Backgrounds - Updated for consistent base00 usage */
+    --bg-1: var(--base01);
+    --bg-2: var(--base01);
+    --bg-3: var(--base00);
+    --bg-4: var(--base01);
+    --bg-overlay: var(--base00);
+    --bg-app: var(--base00);
+    --bg-base: var(--base00);
+    --bg-primary: var(--base00);
+    --background-primary: var(--base00);
+    --background-secondary: var(--base01);
+    --background-secondary-alt: var(--base01);
+    --background-tertiary: var(--base00);
+    --background-accent: var(--base0E);
+    --background-modifier-hover: var(--base01);
+    --background-modifier-active: var(--base02);
+    --background-modifier-selected: var(--base02);
+    --background-floating: var(--base01);
 
-  /* Green (from foam) */
-  --green-1: #b1e3ed;
-  --green-2: #9ccfd8;
-  --green-3: #85bac3;
-  --green-4: #6ea5ae;
-  --green-5: #598f99;
+    /* UI states - Reduced opacity for OLED */
+    --hover: rgba(164, 120, 220, 0.06);
+    --active: rgba(164, 120, 220, 0.12);
+    --active-2: rgba(164, 120, 220, 0.15);
+    --message-hover: var(--hover);
 
-  /* Blue (from pine) */
-  --blue-1: #5c93ab;
-  --blue-2: #4d8198;
-  --blue-3: #3e6f85;
-  --blue-4: #2f5d72;
-  --blue-5: #204b5f;
+    /* Accents */
+    --accent-1: var(--base0C);
+    --accent-2: var(--base0B);
+    --accent-3: var(--base0E);
+    --accent-4: var(--base0E);
+    --accent-5: var(--base0F);
 
-  /* Purple (from iris) */
-  --purple-1: #d9c2f0;
-  --purple-2: #c4a7e7;
-  --purple-3: #ae8cd3;
-  --purple-4: #9971be;
-  --purple-5: #8356aa;
+    /* Mentions & replies - Reduced opacity */
+    --mention: linear-gradient(to right, rgba(213, 137, 111, 0.08) 40%, transparent);
+    --mention-hover: linear-gradient(to right, rgba(213, 137, 111, 0.12) 40%, transparent);
+    --reply: linear-gradient(to right, rgba(208, 96, 110, 0.06) 40%, transparent);
+    --reply-hover: linear-gradient(to right, rgba(208, 96, 110, 0.1) 40%, transparent);
 
-  /* Yellow (from gold) */
-  --yellow-1: #f8d3a6;
-  --yellow-2: #f6c177;
-  --yellow-3: #d6a05f;
-  --yellow-4: #b68047;
-  --yellow-5: #965f2f;
-}
+    /* Presence indicators */
+    --online: var(--base0C);
+    --dnd: var(--base08);
+    --idle: var(--base09);
+    --streaming: var(--base0E);
+    --offline: var(--base03);
 
-  '';
+    /* Borders */
+    --border: var(--base0E);
+    --border-hover: var(--base0E);
+    --button-border: var(--base0E);
+
+    /* Color variants - Toned down for OLED */
+    --red-1: #d6a0ad;
+    --red-2: var(--base08);
+    --red-3: #bc5a68;
+    --red-4: #a64452;
+    --red-5: #8a2e3c;
+
+    --green-1: #96cf9b;
+    --green-2: var(--base0B);
+    --green-3: #63a962;
+    --green-4: #4a9346;
+    --green-5: #317d2a;
+
+    --blue-1: #94bef3;
+    --blue-2: var(--base0D);
+    --blue-3: #5a81d3;
+    --blue-4: #3e68bb;
+    --blue-5: #224fa2;
+
+    --purple-1: var(--base0E);
+    --purple-2: var(--base0E);
+    --purple-3: #956bd2;
+    --purple-4: #7741b9;
+    --purple-5: #5927a0;
+
+    --yellow-1: #dae59a;
+    --yellow-2: var(--base0A);
+    --yellow-3: #b8ba4f;
+    --yellow-4: #9b8d37;
+    --yellow-5: #7e701f;
+  }
+'';
 }

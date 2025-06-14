@@ -20,6 +20,11 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    moonlight = {
+      url = "github:moonlight-mod/moonlight"; # Add `/develop` to the flake URL to use nightly.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, quickshell, ... }@inputs: {
@@ -38,9 +43,14 @@
         ({pkgs, ...}: {
           environment.systemPackages = [
             (quickshell.packages.${pkgs.system}.default.override {
-              withWayland = true;
-              withHyprland = true;
+              withJemalloc = true;
               withQtSvg = true;
+              withWayland = true;
+              withX11 = false;
+              withPipewire = true;
+              withPam = true;
+              withHyprland = true;
+              withI3 = false;
             })
           ];
         })
