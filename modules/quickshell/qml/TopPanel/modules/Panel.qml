@@ -17,7 +17,7 @@ Item {
     z: 2
 
     anchors.top: parent.top
-    anchors.right: parent.right
+    anchors.horizontalCenter: parent.horizontalCenter
     anchors.topMargin: 8
 
     // State management
@@ -45,7 +45,8 @@ Item {
         anchors.fill: mainContainer
         color: "transparent"
         visible: false
-        radius: 20
+        bottomLeftRadius: 20
+        bottomRightRadius: 20
     }
 
     DropShadow {
@@ -59,17 +60,17 @@ Item {
         z: 1
     }
 
-    // Background container with content
+    // Background container with content - now centered
     Rectangle {
         id: mainContainer
-        width: 560
+        width: parent.width - 40 // Equal 20px margins on both sides
         height: mainColumn.height + (mainColumn.anchors.margins * 2)
         color: Data.Colors.bgColor
         bottomLeftRadius: 20
         bottomRightRadius: 20
+        anchors.horizontalCenter: parent.horizontalCenter
         z: 2
 
-        // Add background MouseArea to catch all hover events
         MouseArea {
             id: backgroundMouseArea
             anchors.fill: parent
@@ -77,11 +78,11 @@ Item {
             propagateComposedEvents: true
         }
 
-        // Main content column
+        // Main content column with centered content
         Column {
             id: mainColumn
-            anchors.left: parent.left
-            anchors.right: parent.right
+            width: parent.width - 36 // Equal 18px margins on both sides
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.margins: 18
             spacing: 28
@@ -105,7 +106,7 @@ Item {
 
                 WeatherDisplay {
                     id: weatherDisplay
-                    width: parent.width * 0.15
+                    width: parent.width * 0.18
                     height: userProfile.height
                     shell: root.shell
                     onEntered: hideTimer.stop()
@@ -116,7 +117,7 @@ Item {
             }
 
             Row {
-                width: parent.width * 0.96
+                width: parent.width
                 spacing: 18
 
                 Column {
@@ -146,20 +147,8 @@ Item {
                         onMouseChanged: function(containsMouse) {
                             if (containsMouse) {
                                 hideTimer.stop()
-                            } else {
-                                // Only restart hide timer if no other elements are hovered
-                                let otherElementsHovered = backgroundMouseArea.containsMouse ||
-                                                         recordingButton.containsMouse ||
-                                                         userProfile.isHovered ||
-                                                         systemTraySection.containsMouse ||
-                                                         inlineTrayMenu.containsMouse ||
-                                                         weatherDisplay.containsMouse ||
-                                                         (notificationHistoryLoader.item && notificationHistoryLoader.item.containsMouse) ||
-                                                         (clipboardHistoryLoader.item && clipboardHistoryLoader.item.containsMouse) ||
-                                                         notificationBar.containsMouse;
-                                if (!otherElementsHovered && !inlineTrayMenu.visible && !trayBackground.isActive) {
-                                    hideTimer.restart()
-                                }
+                            } else if (!root.isHovered) {
+                                hideTimer.restart()
                             }
                         }
                     }
@@ -192,7 +181,7 @@ Item {
 
             Column {
                 id: systemTraySection
-                width: parent.width * 0.96
+                width: parent.width
                 spacing: 8
                 visible: !root.isRecording
                 height: visible ? implicitHeight : 0
@@ -242,7 +231,7 @@ Item {
                 id: inlineTrayMenu
                 parent: mainContainer
                 width: parent.width
-                menu: null  // Will be set by SystemTray
+                menu: null
                 systemTrayY: systemTraySection.y
                 systemTrayHeight: systemTraySection.height
                 onHideRequested: trayBackground.isActive = false
@@ -276,8 +265,6 @@ Item {
                 x: 0
                 y: -mainContainer.y + 8
                 z: 0
-
-                layer.enabled: false
 
                 property bool containsMouse: notifHistoryMouseArea.containsMouse
                 property bool menuJustOpened: false
@@ -319,13 +306,12 @@ Item {
                 function hide() {
                     visible = false
                     menuJustOpened = false
-                    // Unload after a delay if not needed
                     unloadTimer.restart()
                 }
 
                 Timer {
                     id: unloadTimer
-                    interval: 2000  // Unload after 2 seconds of being hidden
+                    interval: 2000
                     onTriggered: {
                         if (!parent.visible) {
                             notificationHistoryLoader.active = false
@@ -370,8 +356,6 @@ Item {
                 y: -mainContainer.y + 8
                 z: 0
 
-                layer.enabled: false
-
                 property bool containsMouse: clipHistoryMouseArea.containsMouse
                 property bool menuJustOpened: false
 
@@ -412,13 +396,12 @@ Item {
                 function hide() {
                     visible = false
                     menuJustOpened = false
-                    // Unload after a delay if not needed
                     unloadTimer.restart()
                 }
 
                 Timer {
                     id: unloadTimer
-                    interval: 2000  // Unload after 2 seconds of being hidden
+                    interval: 2000
                     onTriggered: {
                         if (!parent.visible) {
                             clipboardHistoryLoader.active = false
@@ -437,7 +420,6 @@ Item {
     }
 
     property bool isHovered: {
-        // Cache menu states to avoid frequent recalculation
         const menuStates = {
             inlineMenuActive: inlineTrayMenu.menuJustOpened || inlineTrayMenu.visible,
             trayActive: trayBackground.isActive,
@@ -452,7 +434,6 @@ Item {
             menuStates.notifActive || menuStates.clipboardActive ||
             menuStates.weatherActive) return true
 
-        // Cache mouse states
         const mouseStates = {
             backgroundHovered: backgroundMouseArea.containsMouse,
             recordingHovered: recordingButton.containsMouse,
@@ -469,7 +450,6 @@ Item {
             weatherHovered: weatherDisplay.containsMouse
         }
 
-        // Check if any mouse state is true
         return Object.values(mouseStates).some(state => state)
     }
 
@@ -493,7 +473,7 @@ Item {
         isShown = true
         hideTimer.stop()
         opacity = 1
-        x = 0
+        x: 0
     }
 
     function hide() {
@@ -510,7 +490,6 @@ Item {
         })
     }
 
-    // Add unload timers for history components
     Timer {
         id: notificationUnloadTimer
         interval: 2000
@@ -531,7 +510,6 @@ Item {
         }
     }
 
-    // Add visibility change handlers
     Connections {
         target: notificationHistoryLoader.item
         function onVisibleChanged() {
