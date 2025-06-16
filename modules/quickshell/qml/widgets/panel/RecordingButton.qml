@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Rectangle {
     id: root
@@ -13,7 +13,7 @@ Rectangle {
     signal stopRecordingRequested()
     signal mouseChanged(bool containsMouse)
     
-    color: Data.Colors.accentColor
+    color: Settings.Colors.accentColor
     
     property bool isHovered: mouseArea.containsMouse
     readonly property alias containsMouse: mouseArea.containsMouse

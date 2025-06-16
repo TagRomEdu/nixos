@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 import QtQuick.Shapes
-import "root:/Data/" as Data
+import "root:/settings/" as Settings
 
 PanelWindow {
     id: volumeOsd
@@ -88,7 +88,7 @@ PanelWindow {
         id: osdContent
         width: parent.width
         height: parent.height
-        color: Data.Colors.bgColor
+        color: Settings.Colors.bgColor
         topLeftRadius: 20
         bottomLeftRadius: 20
         
@@ -102,7 +102,7 @@ PanelWindow {
                 id: volumeIcon
                 font.family: "JetBrainsMono Nerd Font"
                 font.pixelSize: 16
-                color: Data.Colors.fgColor
+                color: Settings.Colors.fgColor
                 text: {
                     if (!shell || shell.volume === undefined) return "󰝟"
                     var vol = shell.volume
@@ -126,8 +126,8 @@ PanelWindow {
                 width: 10
                 height: parent.height - volumeIcon.height - volumeLabel.height - 36
                 radius: 5
-                color: Qt.darker(Data.Colors.accentColor, 1.5)
-                border.color: Qt.darker(Data.Colors.accentColor, 2.0)
+                color: Qt.darker(Settings.Colors.accentColor, 1.5)
+                border.color: Qt.darker(Settings.Colors.accentColor, 2.0)
                 border.width: 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 
@@ -137,7 +137,7 @@ PanelWindow {
                     width: parent.width - 2
                     radius: parent.radius - 1
                     x: 1
-                    color: Data.Colors.accentColor
+                    color: Settings.Colors.accentColor
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 1
                     height: {
@@ -157,7 +157,7 @@ PanelWindow {
                 text: (shell && shell.volume !== undefined ? shell.volume + "%" : "0%")
                 font.pixelSize: 10
                 font.weight: Font.Bold
-                color: Data.Colors.fgColor
+                color: Settings.Colors.fgColor
                 anchors.horizontalCenter: parent.horizontalCenter
                 
                 Behavior on text {
@@ -166,4 +166,4 @@ PanelWindow {
             }
         }
     }
-}
+} 

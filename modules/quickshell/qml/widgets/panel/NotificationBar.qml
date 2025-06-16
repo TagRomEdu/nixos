@@ -1,12 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Rectangle {
     id: root
     width: 42
-    color: Qt.darker(Data.Colors.bgColor, 1.15)
+    color: Qt.darker(Settings.Colors.bgColor, 1.15)
     radius: 12
     z: 2  // Keep it above notification history
 
@@ -39,9 +39,9 @@ Rectangle {
             }
             radius: 12
             color: notifButtonMouseArea.containsMouse || root.notificationHistoryVisible ? 
-                   Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : 
-                   Qt.rgba(Data.Colors.fgColor.r, Data.Colors.fgColor.g, Data.Colors.fgColor.b, 0.05)
-            border.color: notifButtonMouseArea.containsMouse || root.notificationHistoryVisible ? Data.Colors.accentColor : "transparent"
+                   Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.2) : 
+                   Qt.rgba(Settings.Colors.fgColor.r, Settings.Colors.fgColor.g, Settings.Colors.fgColor.b, 0.05)
+            border.color: notifButtonMouseArea.containsMouse || root.notificationHistoryVisible ? Settings.Colors.accentColor : "transparent"
             border.width: 1
 
             MouseArea {
@@ -57,7 +57,7 @@ Rectangle {
                 font.family: "Material Symbols Outlined"
                 font.pixelSize: 16
                 color: notifButtonMouseArea.containsMouse || root.notificationHistoryVisible ? 
-                       Data.Colors.accentColor : Data.Colors.fgColor
+                       Settings.Colors.accentColor : Settings.Colors.fgColor
             }
         }
 
@@ -73,9 +73,9 @@ Rectangle {
             }
             radius: 12
             color: clipButtonMouseArea.containsMouse || root.clipboardHistoryVisible ? 
-                   Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : 
-                   Qt.rgba(Data.Colors.fgColor.r, Data.Colors.fgColor.g, Data.Colors.fgColor.b, 0.05)
-            border.color: clipButtonMouseArea.containsMouse || root.clipboardHistoryVisible ? Data.Colors.accentColor : "transparent"
+                   Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.2) : 
+                   Qt.rgba(Settings.Colors.fgColor.r, Settings.Colors.fgColor.g, Settings.Colors.fgColor.b, 0.05)
+            border.color: clipButtonMouseArea.containsMouse || root.clipboardHistoryVisible ? Settings.Colors.accentColor : "transparent"
             border.width: 1
 
             MouseArea {
@@ -91,7 +91,7 @@ Rectangle {
                 font.family: "Material Symbols Outlined"
                 font.pixelSize: 16
                 color: clipButtonMouseArea.containsMouse || root.clipboardHistoryVisible ? 
-                       Data.Colors.accentColor : Data.Colors.fgColor
+                       Settings.Colors.accentColor : Settings.Colors.fgColor
             }
         }
     }

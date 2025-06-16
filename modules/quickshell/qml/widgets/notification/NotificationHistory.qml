@@ -2,11 +2,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Rectangle {
     id: root
-    color: Data.Colors.bgColor
+    color: Settings.Colors.bgColor
     radius: 12
     implicitHeight: 400
 
@@ -29,7 +29,7 @@ Rectangle {
 
             Text {
                 text: "Notification History"
-                color: Data.Colors.accentColor
+                color: Settings.Colors.accentColor
                 font.pixelSize: 18
                 font.bold: true
                 font.family: "FiraCode Nerd Font"
@@ -37,7 +37,7 @@ Rectangle {
 
             Text {
                 text: "(" + (shell.notificationHistory ? shell.notificationHistory.count : 0) + ")"
-                color: Data.Colors.fgColor
+                color: Settings.Colors.fgColor
                 font.pixelSize: 12
                 opacity: 0.7
             }
@@ -49,15 +49,15 @@ Rectangle {
                 width: clearText.implicitWidth + 16
                 height: 24
                 radius: 12
-                color: clearMouseArea.containsMouse ? Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : "transparent"
-                border.color: Data.Colors.accentColor
+                color: clearMouseArea.containsMouse ? Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.2) : "transparent"
+                border.color: Settings.Colors.accentColor
                 border.width: 1
 
                 Text {
                     id: clearText
                     anchors.centerIn: parent
                     text: "Clear All"
-                    color: Data.Colors.accentColor
+                    color: Settings.Colors.accentColor
                     font.pixelSize: 11
                 }
 
@@ -73,14 +73,14 @@ Rectangle {
                 width: 24
                 height: 24
                 radius: 12
-                color: closeMouseArea.containsMouse ? Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : "transparent"
-                border.color: Data.Colors.accentColor
+                color: closeMouseArea.containsMouse ? Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.2) : "transparent"
+                border.color: Settings.Colors.accentColor
                 border.width: 1
 
                 Text {
                     anchors.centerIn: parent
                     text: "×"
-                    color: Data.Colors.accentColor
+                    color: Settings.Colors.accentColor
                     font.pixelSize: 16
                 }
 
@@ -109,9 +109,9 @@ Rectangle {
                     contentItem: Rectangle {
                         implicitWidth: 6
                         radius: width / 2
-                        color: parent.pressed ? Data.Colors.accentColor 
-                             : parent.hovered ? Qt.lighter(Data.Colors.accentColor, 1.2)
-                             : Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.7)
+                        color: parent.pressed ? Settings.Colors.accentColor 
+                             : parent.hovered ? Qt.lighter(Settings.Colors.accentColor, 1.2)
+                             : Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.7)
                     }
                 }
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -146,7 +146,7 @@ Rectangle {
                     delegate: Rectangle {
                         width: notificationListView.width
                         height: contentLayout.implicitHeight + 24
-                        color: Qt.darker(Data.Colors.bgColor, 1.15)
+                        color: Qt.darker(Settings.Colors.bgColor, 1.15)
                         radius: 12
 
                         // Performance optimization
@@ -173,7 +173,7 @@ Rectangle {
                                 Text {
                                     Layout.fillWidth: true
                                     text: model.appName || "Unknown"
-                                    color: Data.Colors.accentColor
+                                    color: Settings.Colors.accentColor
                                     font.pixelSize: 13
                                     font.bold: true
                                 }
@@ -181,7 +181,7 @@ Rectangle {
                                 Text {
                                     Layout.rightMargin: 32
                                     text: Qt.formatDateTime(model.timestamp, "hh:mm")
-                                    color: Data.Colors.fgColor
+                                    color: Settings.Colors.fgColor
                                     font.pixelSize: 10
                                     opacity: 0.7
                                 }
@@ -191,7 +191,7 @@ Rectangle {
                                 Layout.fillWidth: true
                                 visible: model.summary && model.summary.length > 0
                                 text: model.summary || ""
-                                color: Data.Colors.fgColor
+                                color: Settings.Colors.fgColor
                                 font.pixelSize: 13
                                 font.bold: true
                                 wrapMode: Text.WordWrap
@@ -202,7 +202,7 @@ Rectangle {
                                 Layout.fillWidth: true
                                 visible: model.body && model.body.length > 0
                                 text: model.body || ""
-                                color: Data.Colors.fgColor
+                                color: Settings.Colors.fgColor
                                 font.pixelSize: 12
                                 opacity: 0.9
                                 wrapMode: Text.WordWrap
@@ -220,14 +220,14 @@ Rectangle {
                             anchors.top: parent.top
                             anchors.margins: 8
                             color: deleteArea.containsMouse ? Qt.rgba(255, 0, 0, 0.2) : "transparent"
-                            border.color: deleteArea.containsMouse ? "#ff4444" : Data.Colors.fgColor
+                            border.color: deleteArea.containsMouse ? "#ff4444" : Settings.Colors.fgColor
                             border.width: 1
                             opacity: deleteArea.containsMouse ? 1 : 0.5
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "×"
-                                color: deleteArea.containsMouse ? "#ff4444" : Data.Colors.fgColor
+                                color: deleteArea.containsMouse ? "#ff4444" : Settings.Colors.fgColor
                                 font.pixelSize: 16
                             }
 
@@ -246,7 +246,7 @@ Rectangle {
                 anchors.centerIn: parent
                 visible: !notificationListView.count
                 text: "No notifications"
-                color: Data.Colors.fgColor
+                color: Settings.Colors.fgColor
                 font.pixelSize: 14
                 opacity: 0.7
             }

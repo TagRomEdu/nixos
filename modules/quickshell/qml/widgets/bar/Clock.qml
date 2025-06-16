@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Item {
     id: clockRoot
@@ -18,7 +18,7 @@ Item {
         font.family: "JetBrains Mono"
         font.pixelSize: 16
         font.bold: true
-        color: hovered ? Qt.lighter(Data.Colors.accentColor, 1.5) : Data.Colors.accentColor
+        color: hovered ? Qt.lighter(Settings.Colors.accentColor, 1.5) : Settings.Colors.accentColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         text: Qt.formatTime(new Date(), "HH\nmm")
@@ -45,4 +45,4 @@ Item {
         }
         cursorShape: Qt.PointingHandCursor
     }
-}
+} 

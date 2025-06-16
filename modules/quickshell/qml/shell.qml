@@ -4,20 +4,21 @@ import Quickshell.Services.Notifications
 import Quickshell.Services.Pipewire
 import QtQuick
 
-import "root:/Data" as Data
+import "root:/settings" as Settings
 import "Core" as Core
+import "root:/widgets/notification" as Notification
 
 ShellRoot {
     id: root
 
-    property var shellInstance: Quickshell.shell
-    property var notificationService
+    property QtObject shellInstance: Quickshell.shell
+    property QtObject notificationService
 
-    property var defaultAudioSink: Pipewire.defaultAudioSink
+    property QtObject defaultAudioSink: Pipewire.defaultAudioSink
     property int volume: defaultAudioSink && defaultAudioSink.audio ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
     property alias notificationWindow: shellWindows.notificationWindow
-    property var notificationServer: shellWindows.notificationService
+    property QtObject notificationServer: shellWindows.notificationService
     ? shellWindows.notificationService.notificationServer
     : null
 
@@ -25,11 +26,11 @@ ShellRoot {
     property ListModel notificationHistory: ListModel {
         Component.onDestruction: clear()
     }
-    property int maxHistoryItems: 50
-    property int cleanupThreshold: maxHistoryItems + 10
+    property int maxHistoryItems: 30
+    property int cleanupThreshold: maxHistoryItems + 5
 
     // Weather state
-    property string weatherLocation: Data.Settings.weatherLocation
+    property string weatherLocation: Settings.Config.weatherLocation
     property var weatherData: null
     property bool weatherLoading: false
     property alias weatherService: weatherService
@@ -40,7 +41,7 @@ ShellRoot {
         notificationService: notificationService
     }
 
-    Core.NotificationService {
+    Notification.NotificationService {
         id: notificationService
         shell: root
     }
@@ -50,11 +51,24 @@ ShellRoot {
         shell: root
     }
 
+    // Consolidated timer for periodic tasks
     Timer {
-        interval: 600000
+        id: periodicTimer
+        interval: 180000
         running: true
         repeat: true
-        onTriggered: weatherService.loadWeather()
+        onTriggered: {
+            // Weather update (if needed)
+            if (Date.now() - weatherService.lastFetchTime >= weatherService.cacheTimeoutMs) {
+                weatherService.loadWeather()
+            }
+            
+            // Notification cleanup
+            if (notificationHistory.count > maxHistoryItems) {
+                const removeCount = notificationHistory.count - maxHistoryItems
+                notificationHistory.remove(maxHistoryItems, removeCount)
+            }
+        }
     }
 
     Component.onCompleted: {
@@ -66,10 +80,16 @@ ShellRoot {
     }
 
     function addToNotificationHistory(notification) {
+        // Trim notification content before adding
+        const summary = notification.summary ? 
+            (notification.summary.length > 100 ? notification.summary.substring(0, 100) + "..." : notification.summary) : ""
+        const body = notification.body ? 
+            (notification.body.length > 500 ? notification.body.substring(0, 500) + "..." : notification.body) : ""
+            
         notificationHistory.insert(0, {
-            appName: notification.appName,
-            summary: notification.summary,
-            body: notification.body,
+            appName: notification.appName || "",
+            summary: summary,
+            body: body,
             timestamp: new Date(),
             icon: notification.appIcon ? String(notification.appIcon) : ""
         })
@@ -77,19 +97,6 @@ ShellRoot {
         if (notificationHistory.count > cleanupThreshold) {
             const removeCount = notificationHistory.count - maxHistoryItems
             notificationHistory.remove(maxHistoryItems, removeCount)
-        }
-    }
-
-    // Auto-cleanup old notifications
-    Timer {
-        interval: 1800000
-        running: true
-        repeat: true
-        onTriggered: {
-            if (notificationHistory.count > maxHistoryItems) {
-                const removeCount = notificationHistory.count - maxHistoryItems
-                notificationHistory.remove(maxHistoryItems, removeCount)
-            }
         }
     }
 }

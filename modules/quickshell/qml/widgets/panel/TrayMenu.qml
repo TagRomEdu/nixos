@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Rectangle {
     id: root
@@ -11,7 +11,7 @@ Rectangle {
     visible: false
     enabled: visible
     clip: true
-    color: Data.Colors.bgColor
+    color: Settings.Colors.bgColor
     radius: 20
 
     required property var menu
@@ -141,7 +141,7 @@ Rectangle {
                     anchors.centerIn: parent
                     width: parent.width * 0.8
                     height: 1
-                    color: Qt.darker(Data.Colors.accentColor, 1.5)
+                    color: Qt.darker(Settings.Colors.accentColor, 1.5)
                     opacity: 0.6
                 }
             }
@@ -170,7 +170,7 @@ Rectangle {
 
                     Text {
                         Layout.fillWidth: true
-                        color: mouseArea.containsMouse ? Data.Colors.accentColor : Data.Colors.fgColor
+                        color: mouseArea.containsMouse ? Settings.Colors.accentColor : Settings.Colors.fgColor
                         text: modelData?.text ?? ""
                         font.pixelSize: 11
                         font.family: "FiraCode Nerd Font"
@@ -186,7 +186,7 @@ Rectangle {
                     hoverEnabled: true
                     enabled: (modelData?.enabled ?? true) && root.visible && !modelData.isSeparator
 
-                    onEntered: itemBackground.color = Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.15)
+                    onEntered: itemBackground.color = Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.15)
                     onExited: itemBackground.color = "transparent"
                     onClicked: {
                         modelData.triggered()
@@ -204,7 +204,7 @@ Rectangle {
         Label {
             anchors.centerIn: parent
             text: "No tray items available"
-            color: Qt.darker(Data.Colors.fgColor, 2)
+            color: Qt.darker(Settings.Colors.fgColor, 2)
             font.pixelSize: 14
             font.family: "FiraCode Nerd Font"
         }

@@ -1,12 +1,12 @@
 import QtQuick
 import QtQuick.Controls
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Rectangle {
     id: root
     required property var shell
     required property string iconText
-    required property string labelText
+    property string labelText: ""
     
     // Add active state property
     property bool isActive: false
@@ -17,17 +17,17 @@ Rectangle {
     color: {
         if (isActive) {
             return mouseArea.containsMouse ? 
-                   Qt.lighter(Data.Colors.accentColor, 1.1) : 
-                   Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.3)
+                   Qt.lighter(Settings.Colors.accentColor, 1.1) : 
+                   Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.3)
         } else {
             return mouseArea.containsMouse ? 
-                   Qt.lighter(Data.Colors.accentColor, 1.2) : 
-                   Qt.lighter(Data.Colors.bgColor, 1.15)
+                   Qt.lighter(Settings.Colors.accentColor, 1.2) : 
+                   Qt.lighter(Settings.Colors.bgColor, 1.15)
         }
     }
     
     border.width: isActive ? 2 : 1
-    border.color: isActive ? Data.Colors.accentColor : Qt.lighter(Data.Colors.bgColor, 1.3)
+    border.color: isActive ? Settings.Colors.accentColor : Qt.lighter(Settings.Colors.bgColor, 1.3)
     
     signal clicked()
     signal mouseChanged(bool containsMouse)
@@ -67,9 +67,9 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             color: {
                 if (root.isActive) {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Settings.Colors.accentColor
                 } else {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Settings.Colors.accentColor
                 }
             }
             
@@ -86,13 +86,14 @@ Rectangle {
             font.pixelSize: 8
             color: {
                 if (root.isActive) {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Settings.Colors.accentColor
                 } else {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Settings.Colors.accentColor
                 }
             }
             anchors.horizontalCenter: parent.horizontalCenter
             font.weight: root.isActive ? Font.Bold : Font.Medium
+            visible: root.labelText !== ""
             
             Behavior on color {
                 ColorAnimation {

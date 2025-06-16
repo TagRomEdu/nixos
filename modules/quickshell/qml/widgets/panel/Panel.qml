@@ -4,9 +4,9 @@ import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Services.SystemTray
-import "root:/Data" as Data
-import "root:/Widgets" as Widgets
-import "root:/Bar" as Bar
+import "root:/settings" as Settings
+import "root:/widgets" as Widgets
+import "root:/widgets/notification" as Notification
 
 Item {
     id: root
@@ -65,7 +65,7 @@ Item {
         id: mainContainer
         width: parent.width - 40 // Equal 20px margins on both sides
         height: mainColumn.height + (mainColumn.anchors.margins * 2)
-        color: Data.Colors.bgColor
+        color: Settings.Colors.bgColor
         bottomLeftRadius: 20
         bottomRightRadius: 20
         anchors.horizontalCenter: parent.horizontalCenter
@@ -194,7 +194,7 @@ Item {
                     width: parent.width
                     height: 40
                     radius: 20
-                    color: Qt.darker(Data.Colors.bgColor, 1.15)
+                    color: Qt.darker(Settings.Colors.bgColor, 1.15)
 
                     property bool isActive: false
 
@@ -260,7 +260,7 @@ Item {
                 visible: false
                 enabled: visible
                 clip: true
-                color: Data.Colors.bgColor
+                color: Settings.Colors.bgColor
                 radius: 20
                 x: 0
                 y: -mainContainer.y + 8
@@ -319,7 +319,7 @@ Item {
                     }
                 }
 
-                Widgets.NotificationHistory {
+                Notification.NotificationHistory {
                     anchors.fill: parent
                     anchors.margins: 20
                     shell: root.shell
@@ -350,7 +350,7 @@ Item {
                 visible: false
                 enabled: visible
                 clip: true
-                color: Data.Colors.bgColor
+                color: Settings.Colors.bgColor
                 radius: 20
                 x: 0
                 y: -mainContainer.y + 8

@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Services.Notifications
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Item {
     id: root
@@ -48,7 +48,7 @@ Item {
         id: expiryTimerComponent
         Timer {
             property var targetNotification
-            interval: Data.Settings.displayTime
+            interval: Settings.Config.displayTime
             running: true
             onTriggered: {
                 if (targetNotification?.tracked)
@@ -82,9 +82,6 @@ Item {
                     removeFromQueue(notification.id)
                 })
             }
-
-            if (root.parent?.visible !== undefined)
-                root.parent.visible = true
         }
     }
 
@@ -101,9 +98,6 @@ Item {
                 break
             }
         }
-
-        if (notificationQueue.length === 0 && root.parent?.visible !== undefined)
-            root.parent.visible = false
     }
 
     function dismissNotification(notification) {
@@ -162,7 +156,7 @@ Item {
                     topRightRadius: 0
                     bottomRightRadius: 0
                     bottomLeftRadius: isLastVisible ? 20 : 0
-                    color: Data.Colors.bgColor
+                    color: Settings.Colors.bgColor
 
                     Rectangle {
                         anchors.fill: parent
@@ -172,7 +166,7 @@ Item {
                         topRightRadius: parent.topRightRadius - parent.border.width
                         bottomRightRadius: parent.bottomRightRadius - parent.border.width
                         bottomLeftRadius: parent.bottomLeftRadius - parent.border.width
-                        color: Data.Colors.bgColor
+                        color: Settings.Colors.bgColor
                     }
 
                     opacity: isNewest ? 0 : 1
@@ -222,7 +216,7 @@ Item {
                                 Rectangle {
                                     width: 28; height: 28; radius: 14
                                     color: Qt.rgba(255, 255, 255, 0.05)
-                                    border.width: 1; border.color: Data.Colors.accentColor
+                                    border.width: 1; border.color: Settings.Colors.accentColor
                                     Layout.alignment: Qt.AlignTop; Layout.topMargin: 6
 
                                     Image {
@@ -237,7 +231,7 @@ Item {
                                     Text {
                                         anchors.centerIn: parent
                                         text: notification?.appName?.charAt(0).toUpperCase() || "!"
-                                        color: Data.Colors.accentColor
+                                        color: Settings.Colors.accentColor
                                         font.pixelSize: 12
                                         font.bold: true
                                         visible: !appImage.visible
@@ -253,7 +247,7 @@ Item {
 
                                         Text {
                                             text: notification?.appName || "Notification"
-                                            color: Data.Colors.accentColor
+                                            color: Settings.Colors.accentColor
                                             font.bold: true
                                             font.pixelSize: 13
                                             elide: Text.ElideRight
@@ -262,7 +256,7 @@ Item {
 
                                         Text {
                                             text: Qt.formatDateTime(new Date(), "hh:mm")
-                                            color: Qt.lighter(Data.Colors.fgColor, 1.6)
+                                            color: Qt.lighter(Settings.Colors.fgColor, 1.6)
                                             font.pixelSize: 10
                                             opacity: 0.8
                                         }
@@ -280,7 +274,7 @@ Item {
                                             }
                                             contentItem: Text {
                                                 text: "×"
-                                                color: Data.Colors.fgColor
+                                                color: Settings.Colors.fgColor
                                                 font.pixelSize: 11
                                                 horizontalAlignment: Text.AlignHCenter
                                                 verticalAlignment: Text.AlignVCenter
@@ -291,7 +285,7 @@ Item {
 
                                     Text {
                                         text: notification?.summary || ""
-                                        color: Data.Colors.fgColor
+                                        color: Settings.Colors.fgColor
                                         font.bold: true
                                         font.pixelSize: 12
                                         wrapMode: Text.Wrap
@@ -305,7 +299,7 @@ Item {
 
                             Text {
                                 text: notification?.body || ""
-                                color: Qt.lighter(Data.Colors.fgColor, 1.2)
+                                color: Qt.lighter(Settings.Colors.fgColor, 1.2)
                                 font.pixelSize: 14
                                 wrapMode: Text.Wrap
                                 Layout.fillWidth: true
@@ -328,23 +322,23 @@ Item {
                         width: 70
                         height: 28
                         radius: 20
-                        color: Data.Colors.bgColor
+                        color: Settings.Colors.bgColor
                         border.width: 1
-                        border.color: Data.Colors.accentColor
+                        border.color: Settings.Colors.accentColor
                         opacity: 0.92
                         z: 10
 
         Rectangle {
             anchors.fill: parent
             radius: parent.radius
-            color: Data.Colors.accentColor
+            color: Settings.Colors.accentColor
                             opacity: 0.2
         }
 
         Text {
             anchors.centerIn: parent
             text: "+" + (notificationQueue.length - maxNotifications)
-                            color: Data.Colors.accentColor
+                            color: Settings.Colors.accentColor
             font.pixelSize: 12
             font.bold: true
                         }

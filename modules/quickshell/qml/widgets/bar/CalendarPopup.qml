@@ -1,14 +1,20 @@
 import QtQuick
 import QtQuick.Controls
-import "root:/Data" as Data
-import "root:/Widgets" as Widgets
+import "root:/settings" as Settings
+import "root:/widgets/bar" as Modules
 
 Popup {
-    id: calendarPopup
+    id: root
     property bool hovered: false
-    property var shell
     property int targetX: 0
-    readonly property int targetY: Screen.height - height
+    readonly property int targetY: {
+        // Safely get screen height, fallback to Screen.height if parent not available
+        if (parent && parent.screen) {
+            return parent.screen.height - height
+        } else {
+            return Screen.height - height
+        }
+    }
 
     width: 280
     height: 280
@@ -63,29 +69,25 @@ Popup {
 
         onEntered: {
             setHovered(true)
-            if (bar) bar.calendarHovered = true
         }
         onExited: {
             // Delay exit check to avoid flicker
             Qt.callLater(() => {
                 if (!hoverArea.containsMouse) {
                     setHovered(false)
-                    if (bar) {
-                        bar.calendarHovered = false
-                        bar.scheduleHide()
-                    }
                 }
             })
         }
     }
 
-    Widgets.Calendar {
-        anchors.fill: parent
-        shell: calendarPopup.shell
+    background: Rectangle {
+        color: Settings.Theme.background
+        radius: Settings.Theme.cornerRadius
+        border.color: Settings.Theme.accent
+        border.width: 1
     }
 
-    background: Rectangle {
-        color: Data.Colors.bgColor
-        topRightRadius: 20
+    Modules.Calendar {
+        anchors.fill: parent
     }
-}
+} 

@@ -1,12 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Rectangle {
     id: root
-    required property var shell
-    color: Qt.darker(Data.Colors.bgColor, 1.15)
+    property var shell: null
+    color: Qt.darker(Settings.Colors.bgColor, 1.15)
     radius: 20
 
     property bool containsMouse: themeMouseArea.containsMouse
@@ -28,7 +28,7 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         onClicked: {
-            Data.Colors.toggleTheme()
+            Settings.Colors.toggleTheme()
         }
     }
 
@@ -37,6 +37,6 @@ Rectangle {
         text: "contrast"
         font.pixelSize: 24
         font.family: "Material Symbols Outlined"
-        color: containsMouse ? Data.Colors.accentColor : Data.Colors.fgColor
+        color: containsMouse ? Settings.Colors.accentColor : Settings.Colors.fgColor
     }
 } 

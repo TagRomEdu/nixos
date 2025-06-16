@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.SystemTray
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Row {
     property var bar
@@ -163,4 +163,4 @@ Row {
             }
         }
     }
-}
+} 

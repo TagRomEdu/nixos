@@ -2,12 +2,12 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
-import "root:/Data/" as Data
+import "root:/settings/" as Settings
 
 Rectangle {
     id: root
     required property var shell
-    required property url avatarSource
+    property url avatarSource: Settings.Config.avatarSource
     property string userName: ""        // will be set by process output
     property string userInfo: ""        // will hold uptime string
 
@@ -21,17 +21,17 @@ Rectangle {
     color: {
         if (isActive) {
             return isHovered ?
-                   Qt.lighter(Data.Colors.accentColor, 1.1) :
-                   Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.3)
+                   Qt.lighter(Settings.Colors.accentColor, 1.1) :
+                   Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.3)
         } else {
             return isHovered ?
-                   Qt.lighter(Data.Colors.accentColor, 1.2) :
-                   Qt.lighter(Data.Colors.bgColor, 1.15)
+                   Qt.lighter(Settings.Colors.accentColor, 1.2) :
+                   Qt.lighter(Settings.Colors.bgColor, 1.15)
         }
     }
 
     border.width: isActive ? 2 : 1
-    border.color: isActive ? Data.Colors.accentColor : Qt.lighter(Data.Colors.bgColor, 1.3)
+    border.color: isActive ? Settings.Colors.accentColor : Qt.lighter(Settings.Colors.bgColor, 1.3)
 
     Behavior on color { ColorAnimation { duration: 200; easing.type: Easing.OutCubic } }
     Behavior on border.color { ColorAnimation { duration: 200; easing.type: Easing.OutCubic } }
@@ -50,7 +50,7 @@ Rectangle {
             height: 52
             radius: 20
             clip: true
-            border.color: Data.Colors.accentColor
+            border.color: Settings.Colors.accentColor
             border.width: 3
             color: "transparent"
 
@@ -58,7 +58,7 @@ Rectangle {
                 id: avatarImage
                 anchors.fill: parent
                 anchors.margins: 2
-                source: Data.Settings.avatarSource
+                source: Settings.Config.avatarSource
                 fillMode: Image.PreserveAspectCrop
                 cache: false
                 visible: false  // Hide the original image
@@ -86,7 +86,7 @@ Rectangle {
                 text: root.userName === "" ? "Loading..." : root.userName
                 font.pixelSize: 16
                 font.bold: true
-                color: isHovered || root.isActive ? "#ffffff" : Data.Colors.accentColor
+                color: isHovered || root.isActive ? "#ffffff" : Settings.Colors.accentColor
                 elide: Text.ElideRight
                 maximumLineCount: 1
             }
@@ -96,7 +96,7 @@ Rectangle {
                 text: root.userInfo === "" ? "Loading uptime..." : root.userInfo
                 font.pixelSize: 11
                 font.bold: true
-                color: isHovered || root.isActive ? "#cccccc" : Qt.lighter(Data.Colors.accentColor, 1.6)
+                color: isHovered || root.isActive ? "#cccccc" : Qt.lighter(Settings.Colors.accentColor, 1.6)
                 elide: Text.ElideRight
                 maximumLineCount: 1
             }

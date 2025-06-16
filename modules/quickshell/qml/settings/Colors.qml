@@ -85,7 +85,7 @@ Singleton {
     // Settings file handling
     FileView {
         id: settingsFile
-        path: "root:/Data/settings.json"
+        path: "root:/Settings/settings.json"
         blockWrites: true  // Make writes synchronous
         atomicWrites: true // Ensure file writes are atomic
         watchChanges: false // Disable file watching since we manage state directly

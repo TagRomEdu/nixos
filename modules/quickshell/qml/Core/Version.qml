@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 // System version and info watermark
 PanelWindow {
@@ -174,7 +174,7 @@ PanelWindow {
                 
                 Text {
                     text: systemVersion.os.name
-                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
+                    color: Settings.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -196,7 +196,7 @@ PanelWindow {
                         }
                         return details.join(" ");
                     }
-                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
+                    color: Settings.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium
@@ -207,7 +207,7 @@ PanelWindow {
             
             Text {
                 text: "│"
-                color: Data.Colors.isDarkTheme ? "#20ffffff" : "#20000000"  // 13% white/black
+                color: Settings.Colors.isDarkTheme ? "#20ffffff" : "#20000000"  // 13% white/black
                 font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                 font.pointSize: 14
                 font.weight: Font.Light
@@ -221,7 +221,7 @@ PanelWindow {
                 
                 Text {
                     text: systemVersion.wm.name
-                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
+                    color: Settings.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -240,7 +240,7 @@ PanelWindow {
                         }
                         return details.join(" ");
                     }
-                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
+                    color: Settings.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium

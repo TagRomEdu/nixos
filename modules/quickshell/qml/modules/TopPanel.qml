@@ -4,9 +4,9 @@ import QtQuick.Controls
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
-import "root:/Data" as Data
+import "root:/settings" as Settings
 import "root:/Core/" as Core
-import "root:/TopPanel/modules" as Modules
+import "root:/widgets/panel" as Modules
 
 Item {
     id: topPanelRoot
@@ -66,7 +66,7 @@ Item {
         var year = currentDate.getFullYear()
 
         var filename = hours + "-" + minutes + "-" + day + "-" + month + "-" + year + ".mp4"
-        var outputPath = Data.Settings.videoPath + filename
+        var outputPath = Settings.Config.videoPath + filename
         var command = "gpu-screen-recorder -w portal -f 60 -a default_output -o " + outputPath
 
         var qmlString = 'import Quickshell.Io; Process { command: ["sh", "-c", "' + command + '"]; running: true }'

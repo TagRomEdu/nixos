@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Row {
     id: root
@@ -24,7 +24,7 @@ Row {
         width: (parent.width - parent.spacing) / 2
         height: parent.visible ? parent.height : 0
         radius: 20
-        color: Qt.darker(Data.Colors.bgColor, 1.15)
+        color: Qt.darker(Settings.Colors.bgColor, 1.15)
         visible: parent.visible
 
         // Add hover tracking for performance section
@@ -65,7 +65,7 @@ Row {
         width: (parent.width - parent.spacing) / 2
         height: parent.visible ? parent.height : 0
         radius: 20
-        color: Qt.darker(Data.Colors.bgColor, 1.15)
+        color: Qt.darker(Settings.Colors.bgColor, 1.15)
         visible: parent.visible
 
         // Add hover tracking for system section

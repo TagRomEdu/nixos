@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell.Services.Notifications
-import "root:/settings/" as Data
+import "root:/settings/" as Settings
 
 Item {
     id: service
@@ -8,29 +8,38 @@ Item {
     property var shell
     property alias notificationServer: notificationServer
     
-    property int maxHistorySize: 50
-    property int cleanupThreshold: maxHistorySize + 10
+    property int maxHistorySize: 30
+    property int cleanupThreshold: maxHistorySize + 5
     
-    // Periodic cleanup of old notifications
+    // More frequent cleanup of old notifications
     Timer {
-        interval: 300000
+        interval: 180000
         running: true
         repeat: true
         onTriggered: cleanupNotifications()
     }
     
     function cleanupNotifications() {
-        if (shell.notificationHistory && shell.notificationHistory.count > cleanupThreshold) {
-            const removeCount = shell.notificationHistory.count - maxHistorySize
-            shell.notificationHistory.remove(maxHistorySize, removeCount)
+        if (!shell.notificationHistory) return
+        
+        // More aggressive cleanup
+        if (shell.notificationHistory.count > maxHistorySize) {
+            const removeCount = shell.notificationHistory.count - (maxHistorySize - 5)
+            shell.notificationHistory.remove(maxHistorySize - 5, removeCount)
         }
         
-        // Remove invalid entries
-        if (shell.notificationHistory) {
-            for (let i = shell.notificationHistory.count - 1; i >= 0; i--) {
-                const item = shell.notificationHistory.get(i)
-                if (!item || !item.appName) {
-                    shell.notificationHistory.remove(i)
+        // Remove invalid entries and trim content
+        for (let i = shell.notificationHistory.count - 1; i >= 0; i--) {
+            const item = shell.notificationHistory.get(i)
+            if (!item || !item.appName) {
+                shell.notificationHistory.remove(i)
+            } else {
+                // Trim long content to save memory
+                if (item.body && item.body.length > 500) {
+                    item.body = item.body.substring(0, 500) + "..."
+                }
+                if (item.summary && item.summary.length > 100) {
+                    item.summary = item.summary.substring(0, 100) + "..."
                 }
             }
         }

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Shapes
 import Qt5Compat.GraphicalEffects
-import "root:/settings/" as Data
+import "root:/settings/" as Settings
 
 Item {
     id: border

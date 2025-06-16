@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Io
-import "root:/Data" as Data
+import "root:/settings" as Settings
 
 Item {
     id: root
@@ -46,7 +46,7 @@ Item {
                 text: "Clipboard History"
                 font.pixelSize: 16
                 font.weight: Font.Medium
-                color: Data.Colors.fgColor
+                color: Settings.Colors.fgColor
                 Layout.fillWidth: true
             }
             
@@ -57,14 +57,14 @@ Item {
                 implicitHeight: 25
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(Data.Colors.accentColor, 1.1) : 
-                           Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.8)
+                    color: parent.down ? Qt.darker(Settings.Colors.accentColor, 1.2) :
+                           parent.hovered ? Qt.lighter(Settings.Colors.accentColor, 1.1) : 
+                           Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.8)
                 }
                 contentItem: Label {
                     text: parent.text
                     font.pixelSize: 11
-                    color: Data.Colors.fgColor
+                    color: Settings.Colors.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -79,14 +79,14 @@ Item {
                 width: 24
                 height: 24
                 radius: 12
-                color: closeMouseArea.containsMouse ? Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : "transparent"
-                border.color: Data.Colors.accentColor
+                color: closeMouseArea.containsMouse ? Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.2) : "transparent"
+                border.color: Settings.Colors.accentColor
                 border.width: 1
 
                 Text {
                     anchors.centerIn: parent
                     text: "×"
-                    color: Data.Colors.accentColor
+                    color: Settings.Colors.accentColor
                     font.pixelSize: 16
                 }
 
@@ -114,9 +114,9 @@ Item {
                     contentItem: Rectangle {
                         implicitWidth: 6
                         radius: width / 2
-                        color: parent.pressed ? Data.Colors.accentColor 
-                             : parent.hovered ? Qt.lighter(Data.Colors.accentColor, 1.2)
-                             : Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.7)
+                        color: parent.pressed ? Settings.Colors.accentColor 
+                             : parent.hovered ? Qt.lighter(Settings.Colors.accentColor, 1.2)
+                             : Qt.rgba(Settings.Colors.accentColor.r, Settings.Colors.accentColor.g, Settings.Colors.accentColor.b, 0.7)
                     }
                 }
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -150,8 +150,8 @@ Item {
                         width: cliphistList.width
                         height: Math.max(50, contentText.contentHeight + 20)
                         radius: 8
-                        color: mouseArea.containsMouse ? Qt.darker(Data.Colors.bgColor, 1.15) : Qt.darker(Data.Colors.bgColor, 1.1)
-                        border.color: Data.Colors.accentColor
+                        color: mouseArea.containsMouse ? Qt.darker(Settings.Colors.bgColor, 1.15) : Qt.darker(Settings.Colors.bgColor, 1.1)
+                        border.color: Settings.Colors.accentColor
                         border.width: 1
                         
                         // View optimization
@@ -179,7 +179,7 @@ Item {
                                     text: model.type === "image" ? "[Image Data]" : 
                                           (model.content.length > 100 ? model.content.substring(0, 100) + "..." : model.content)
                                     font.pixelSize: 12
-                                    color: Data.Colors.fgColor
+                                    color: Settings.Colors.fgColor
                                     wrapMode: Text.WordWrap
                                     Layout.fillWidth: true
                                     Layout.fillHeight: true
@@ -193,7 +193,7 @@ Item {
                                     Label {
                                         text: model.type === "image" ? "Image" : (model.content.length + " chars")
                                         font.pixelSize: 10
-                                        color: Qt.darker(Data.Colors.fgColor, 1.5)
+                                        color: Qt.darker(Settings.Colors.fgColor, 1.5)
                                     }
                                 }
                             }
@@ -217,7 +217,7 @@ Item {
                         anchors.centerIn: parent
                         text: "No clipboard history\nCopy something to get started"
                         font.pixelSize: 14
-                        color: Qt.darker(Data.Colors.fgColor, 1.5)
+                        color: Qt.darker(Settings.Colors.fgColor, 1.5)
                         horizontalAlignment: Text.AlignHCenter
                         visible: cliphistList.count === 0
                         opacity: 0.7
@@ -524,4 +524,4 @@ Item {
     Component.onCompleted: {
         refreshClipboardHistory()
     }
-}
+} 
