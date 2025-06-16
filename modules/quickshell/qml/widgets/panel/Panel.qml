@@ -8,6 +8,7 @@ import "root:/settings" as Settings
 import "root:/widgets" as Widgets
 import "root:/widgets/notification" as Notification
 
+// Top panel with system controls and notifications
 Item {
     id: root
     required property var shell
@@ -20,12 +21,13 @@ Item {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.topMargin: 8
 
-    // State management
+    // Panel visibility state
     property bool isShown: false
     visible: opacity > 0
     opacity: 0
     x: width
 
+    // Smooth animations for show/hide
     Behavior on opacity {
         NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
     }
@@ -34,12 +36,13 @@ Item {
         NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
     }
 
+    // Panel action signals
     signal recordingRequested()
     signal stopRecordingRequested()
     signal systemActionRequested(string action)
     signal performanceActionRequested(string action)
 
-    // Shadow
+    // Panel shadow effect
     Rectangle {
         id: shadowSource
         anchors.fill: mainContainer

@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Io
 import "root:/settings" as Settings
 
+// Clipboard history widget with smooth animations
 Item {
     id: root
     required property var shell
@@ -15,10 +16,12 @@ Item {
     
     signal closeRequested()
     
+    // Show/hide animations
     function show() { showAnimation.start() }
     function hide() { hideAnimation.start() }
     function toggle() { isVisible ? hide() : show() }
 
+    // Show animation with scale and fade
     ParallelAnimation {
         id: showAnimation
         PropertyAction { target: root; property: "isVisible"; value: true }
@@ -26,6 +29,7 @@ Item {
         PropertyAnimation { target: root; property: "scale"; from: 0.9; to: 1.0; duration: 200; easing.type: Easing.OutCubic }
     }
     
+    // Hide animation with scale and fade
     ParallelAnimation {
         id: hideAnimation
         PropertyAnimation { target: root; property: "opacity"; to: 0.0; duration: 150; easing.type: Easing.InCubic }

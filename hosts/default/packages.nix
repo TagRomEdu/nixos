@@ -51,11 +51,19 @@ with pkgs;
   gpu-screen-recorder
   mpv
   slop
-code-cursor
+
+  code-cursor
+  
   # Quickshell stuff
   qt6Packages.qt5compat
   libsForQt5.qt5.qtgraphicaleffects
   kdePackages.qtbase
   kdePackages.qtdeclarative
+
+  # Niri
+  xwayland-satellite
+  grim
+  slurp
+  wl-clipboard
 ]
 

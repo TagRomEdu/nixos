@@ -1,5 +1,6 @@
 import QtQuick
 
+// Trigger area for showing top panel on hover
 Rectangle {
     id: root
     width: 360
@@ -9,6 +10,7 @@ Rectangle {
 
     signal triggered()
 
+    // Hover detection area
     MouseArea {
         id: mouseArea
         anchors.fill: parent
@@ -29,7 +31,7 @@ Rectangle {
         onEntered: hideTimer.stop()
     }
 
-    // Smooth show/hide timers
+    // Delayed show/hide timers
     Timer {
         id: showTimer
         interval: 200
@@ -41,7 +43,6 @@ Rectangle {
         interval: 500
     }
 
-    // Expose properties and functions for parent components
     readonly property alias containsMouse: mouseArea.containsMouse
     function stopHideTimer() { hideTimer.stop() }
     function startHideTimer() { hideTimer.start() }

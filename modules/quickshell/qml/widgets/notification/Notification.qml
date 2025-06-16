@@ -5,12 +5,13 @@ import QtQuick.Layouts
 import Quickshell.Services.Notifications
 import "root:/settings" as Settings
 
+// Notification manager and display component
 Item {
     id: root
     required property var shell
     required property var notificationServer
 
-    // State management
+    // Notification queue and state
     property var notificationQueue: []
     property var activeTimers: ({})
     property int lastNotificationTime: 0
@@ -19,7 +20,7 @@ Item {
     property int notificationSpacing: 0
     property int baseNotificationHeight: 62
 
-    // Calculate total height of visible notifications
+    // Dynamic height calculation
     property int calculatedHeight: {
         let total = 0;
         let count = Math.min(notificationQueue.length, maxNotifications);
@@ -43,7 +44,7 @@ Item {
         return h;
     }
 
-    // Auto-dismiss timer
+    // Auto-dismiss timer component
     Component {
         id: expiryTimerComponent
         Timer {
@@ -308,12 +309,12 @@ Item {
                                 visible: text.trim() !== ""
                                 lineHeight: 1.2
                                 Layout.preferredHeight: visible ? implicitHeight : 0
-            }
-        }
-    }
+                            }
+                        }
+                    }
 
                     // Overflow counter
-    Rectangle {
+                    Rectangle {
                         id: counterIndicator
                         visible: parent.isLastVisible && notificationQueue.length > maxNotifications
                         anchors.right: parent.right
@@ -328,19 +329,19 @@ Item {
                         opacity: 0.92
                         z: 10
 
-        Rectangle {
-            anchors.fill: parent
-            radius: parent.radius
-            color: Settings.Colors.accentColor
-                            opacity: 0.2
-        }
-
-        Text {
-            anchors.centerIn: parent
-            text: "+" + (notificationQueue.length - maxNotifications)
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: parent.radius
                             color: Settings.Colors.accentColor
-            font.pixelSize: 12
-            font.bold: true
+                            opacity: 0.2
+                        }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "+" + (notificationQueue.length - maxNotifications)
+                            color: Settings.Colors.accentColor
+                            font.pixelSize: 12
+                            font.bold: true
                         }
 
                         MouseArea {

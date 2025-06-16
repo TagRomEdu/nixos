@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+// System control buttons (lock, reboot, shutdown)
 RowLayout {
     id: root
     required property var shell
@@ -10,14 +11,15 @@ RowLayout {
     signal systemActionRequested(string action)
     signal mouseChanged(bool containsMouse)
     
+    // Track hover state across all buttons
     readonly property bool containsMouse: lockButton.containsMouse || 
                                         rebootButton.containsMouse || 
                                         shutdownButton.containsMouse
     
     onContainsMouseChanged: root.mouseChanged(containsMouse)
     
+    // Fade animation
     opacity: visible ? 1 : 0
-    
     Behavior on opacity {
         NumberAnimation {
             duration: 300

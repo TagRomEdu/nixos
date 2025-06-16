@@ -8,6 +8,7 @@ import "root:/settings" as Settings
 import "root:/Core/" as Core
 import "root:/widgets/panel" as Modules
 
+// Top panel with recording and system controls
 Item {
     id: topPanelRoot
     required property var shell
@@ -15,6 +16,7 @@ Item {
     anchors.fill: parent
     visible: true
 
+    // Recording state
     property bool isRecording: false
     property var recordingProcess: null
     property string lastError: ""
@@ -25,11 +27,13 @@ Item {
         panel.show()
     }
 
+    // Panel trigger area
     Modules.TopPanelTrigger {
         id: topPanelTrigger
         onTriggered: triggerTopPanel()
     }
 
+    // Main panel content
     Modules.Panel {
         id: panel
         shell: topPanelRoot.shell
@@ -42,6 +46,7 @@ Item {
 
         onVisibleChanged: slideBarVisibilityChanged(visible)
 
+        // Panel action handlers
         onRecordingRequested: startRecording()
         onStopRecordingRequested: {
             stopRecording()
@@ -57,6 +62,7 @@ Item {
         }
     }
 
+    // Start screen recording
     function startRecording() {
         var currentDate = new Date()
         var hours = String(currentDate.getHours()).padStart(2, '0')
@@ -75,12 +81,14 @@ Item {
         isRecording = true
     }
 
+    // Stop recording with cleanup
     function stopRecording() {
         if (recordingProcess && isRecording) {
+            // Send SIGINT to gracefully stop recording
             var stopQmlString = 'import Quickshell.Io; Process { command: ["sh", "-c", "pkill -SIGINT -f \'gpu-screen-recorder.*portal\'"]; running: true; onExited: function() { destroy() } }'
-
             var stopProcess = Qt.createQmlObject(stopQmlString, topPanelRoot)
 
+            // Cleanup after delay
             var cleanupTimer = Qt.createQmlObject('import QtQuick; Timer { interval: 3000; running: true; repeat: false }', topPanelRoot)
             cleanupTimer.triggered.connect(function() {
                 if (recordingProcess) {
@@ -89,6 +97,7 @@ Item {
                     recordingProcess = null
                 }
 
+                // Force kill if still running
                 var forceKillQml = 'import Quickshell.Io; Process { command: ["sh", "-c", "pkill -9 -f \'gpu-screen-recorder.*portal\' 2>/dev/null || true"]; running: true; onExited: function() { destroy() } }'
                 var forceKillProcess = Qt.createQmlObject(forceKillQml, topPanelRoot)
 
@@ -98,6 +107,7 @@ Item {
         isRecording = false
     }
 
+    // System action handlers
     function performSystemAction(action) {
         switch(action) {
             case "lock":
@@ -113,6 +123,5 @@ Item {
     }
 
     function performPerformanceAction(action) {
-        // Performance actions handled silently
     }
 }

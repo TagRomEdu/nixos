@@ -21,15 +21,14 @@ Row {
     
     // Clean up icon cache periodically
     Timer {
-        interval: 30000  // Every 30 seconds
+        interval: 60000  // Every 60 seconds
         repeat: true
         running: true
         onTriggered: {
             // Remove icons that haven't been used in a while
             for (let icon in iconCacheCount) {
-                if (iconCacheCount[icon] > 0) {
-                    iconCacheCount[icon]--
-                } else {
+                iconCacheCount[icon]--
+                if (iconCacheCount[icon] <= 0) {
                     delete iconCache[icon]
                     delete iconCacheCount[icon]
                 }

@@ -4,6 +4,7 @@ import Qt5Compat.GraphicalEffects
 import Quickshell
 import "root:/settings" as Settings
 
+// Screen border with workspace management and visual effects
 Scope {
     id: root
 
@@ -16,12 +17,12 @@ Scope {
             width: parent.width
             height: parent.height
 
-            // Main container for visual elements
+            // Visual container for border elements
             Item {
                 id: visualContainer
                 anchors.fill: parent
                 
-                // Background shape
+                // Border shape with rounded corners
                 Shape {
                     id: borderShape
                     anchors.fill: parent
@@ -35,12 +36,14 @@ Scope {
                         strokeWidth: 0
                         fillRule: ShapePath.OddEvenFill
 
+                        // Main border outline
                         PathMove { x: 0; y: 0 }
                         PathLine { x: borderShape.width; y: 0 }
                         PathLine { x: borderShape.width; y: borderShape.height }
                         PathLine { x: 0; y: borderShape.height }
                         PathLine { x: 0; y: 0 }
 
+                        // Inner corner radius
                         PathMove {
                             x: Settings.Theme.borderWidth
                             y: Settings.Theme.borderWidth + Settings.Theme.cornerRadius

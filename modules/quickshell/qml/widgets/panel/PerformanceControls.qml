@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.UPower
 
+// Performance mode controls using UPower profiles
 Column {
     id: root
     required property var shell
@@ -10,18 +11,19 @@ Column {
     signal performanceActionRequested(string action)
     signal mouseChanged(bool containsMouse)
     
+    // Track hover state across all buttons
     readonly property bool containsMouse: performanceButton.containsMouse || 
                                          balancedButton.containsMouse || 
                                          powerSaverButton.containsMouse
     
-    // Safe property access with fallbacks
+    // UPower profile state
     readonly property bool upowerReady: typeof PowerProfiles !== 'undefined' && PowerProfiles
     readonly property int currentProfile: upowerReady ? PowerProfiles.profile : 0
     
     onContainsMouseChanged: root.mouseChanged(containsMouse)
     
+    // Fade animation
     opacity: visible ? 1 : 0
-    
     Behavior on opacity {
         NumberAnimation {
             duration: 300

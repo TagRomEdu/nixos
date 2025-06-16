@@ -1,7 +1,8 @@
 import QtQuick
-import QtQuick.Shapes
+import QtQuick.Controls
+import QtQuick.Layouts
 import Quickshell
-
+import Quickshell.Wayland
 import "root:/Core" as Core
 import "root:/settings" as Settings
 import "root:/modules" as Modules
@@ -9,29 +10,28 @@ import "root:/widgets/panel" as Panel
 import "root:/widgets/notification" as Notification
 import "root:/widgets" as Widgets
 
-// Multi-monitor shell container
-Scope {
+// Manages shell windows across multiple monitors
+Item {
     id: shellWindows
-
-    property var shell
-    property var notificationService
+    required property var shell
+    required property var notificationService
 
     // Expose properties for compatibility with main shell - use primary screen instance
     readonly property var notificationWindow: primaryShellWindow ? primaryShellWindow.notificationWindow : null
     readonly property var topPanelWindow: primaryShellWindow ? primaryShellWindow.topPanelWindow : null
 
+    // Track primary screen for system-wide features
     property var primaryShellWindow: null
 
-    // Use persistent multi-monitor bars (these handle reconnection properly)
+    // Use persistent multi-monitor bars
     Modules.Bar {
         id: persistentBars
     }
 
-    // Create shell instances for each monitor with screen borders
+    // Create shell windows for each screen
     Variants {
         model: Quickshell.screens
 
-        // Shell window with Core.ScreenBorder (designed for this purpose)
         PanelWindow {
             id: shellWindow
             required property var modelData
@@ -52,14 +52,14 @@ Scope {
                 right: true
             }
 
-            // Track primary screen instance
+            // Set primary shell window for system-wide features
             Component.onCompleted: {
                 if (modelData === Quickshell.primaryScreen && !shellWindows.primaryShellWindow) {
                     shellWindows.primaryShellWindow = this
                 }
             }
 
-            // Use the existing ScreenBorder component
+            // Screen border with workspace management
             Modules.ScreenBorder {
                 anchors {
                     left: parent.left
@@ -120,7 +120,7 @@ Scope {
                     }
                 }
 
-                // System overlays (only on primary screen)
+                // Primary screen only components
                 Widgets.VolumeOSD {
                     shell: shellWindows.shell
                     visible: shellWindow.screen === Quickshell.primaryScreen

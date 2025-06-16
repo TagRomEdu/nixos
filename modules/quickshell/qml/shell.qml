@@ -8,33 +8,37 @@ import "root:/settings" as Settings
 import "Core" as Core
 import "root:/widgets/notification" as Notification
 
+// Main shell component managing system-wide state and services
 ShellRoot {
     id: root
 
     property QtObject shellInstance: Quickshell.shell
     property QtObject notificationService
 
+    // Audio handling
     property QtObject defaultAudioSink: Pipewire.defaultAudioSink
     property int volume: defaultAudioSink && defaultAudioSink.audio ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
+    // Notification system
     property alias notificationWindow: shellWindows.notificationWindow
     property QtObject notificationServer: shellWindows.notificationService
     ? shellWindows.notificationService.notificationServer
     : null
 
-    // Notification history with auto-cleanup
+    // Auto-cleanup notification history
     property ListModel notificationHistory: ListModel {
         Component.onDestruction: clear()
     }
     property int maxHistoryItems: 30
     property int cleanupThreshold: maxHistoryItems + 5
 
-    // Weather state
+    // Weather service state
     property string weatherLocation: Settings.Config.weatherLocation
     property var weatherData: null
     property bool weatherLoading: false
     property alias weatherService: weatherService
 
+    // Core components
     Core.ShellWindows {
         id: shellWindows
         shell: root
@@ -51,22 +55,22 @@ ShellRoot {
         shell: root
     }
 
-    // Consolidated timer for periodic tasks
+    // Periodic updates for weather and notification cleanup
     Timer {
         id: periodicTimer
-        interval: 180000
+        interval: 60000
         running: true
         repeat: true
         onTriggered: {
-            // Weather update (if needed)
             if (Date.now() - weatherService.lastFetchTime >= weatherService.cacheTimeoutMs) {
                 weatherService.loadWeather()
             }
             
-            // Notification cleanup
             if (notificationHistory.count > maxHistoryItems) {
                 const removeCount = notificationHistory.count - maxHistoryItems
-                notificationHistory.remove(maxHistoryItems, removeCount)
+                for (let i = 0; i < removeCount; i++) {
+                    notificationHistory.remove(0)
+                }
             }
         }
     }
@@ -80,7 +84,6 @@ ShellRoot {
     }
 
     function addToNotificationHistory(notification) {
-        // Trim notification content before adding
         const summary = notification.summary ? 
             (notification.summary.length > 100 ? notification.summary.substring(0, 100) + "..." : notification.summary) : ""
         const body = notification.body ? 

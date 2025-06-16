@@ -12,18 +12,18 @@ Item {
         anchors.fill: parent
         
         // Background shape
-        Shape {
-            id: borderShape
-            anchors.fill: parent
-            layer.enabled: true
-            layer.samples: 8
-            smooth: true
-            antialiasing: true
+                    Shape {
+                id: borderShape
+                anchors.fill: parent
+                layer.enabled: true
+                layer.samples: 8
+                smooth: true
+                antialiasing: true
 
-            ShapePath {
-                fillColor: Settings.Colors.bgColor
-                strokeWidth: 0
-                fillRule: ShapePath.OddEvenFill
+                ShapePath {
+                    fillColor: Settings.Colors.bgColor
+                    strokeWidth: 0
+                    fillRule: ShapePath.OddEvenFill
 
                 PathMove { x: 0; y: 0 }
                 PathLine { x: width; y: 0 }

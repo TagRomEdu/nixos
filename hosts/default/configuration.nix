@@ -3,7 +3,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-
     "${self}/system/greeter/greetd.nix"
     "${self}/system/programs/steam.nix"
     "${self}/system/programs/lact.nix"

@@ -2,7 +2,19 @@
 
 {
   home.packages = with pkgs; [
-    vesktop
+    (writeShellApplication {
+      name = "vesktop";
+
+      runtimeInputs = [ vesktop ]; # depend on the real vesktop binary
+
+      text = ''
+        if [ "$XDG_CURRENT_DESKTOP" = "niri" ]; then
+          exec vesktop --ozone-platform=x11 "$@"
+        else
+          exec vesktop "$@"
+        fi
+      '';
+    })
   ];
 
   home.file.".config/vesktop/themes/system24-oled.theme.css".text = ''

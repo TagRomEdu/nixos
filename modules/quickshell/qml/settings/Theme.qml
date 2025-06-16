@@ -2,8 +2,9 @@ pragma Singleton
 
 import QtQuick
 
+// Global theme colors and visual properties
 QtObject {
-    // Base colors
+    // Base colors for UI elements
     readonly property color base00: "#141414"    // Near-black background, OLED friendly
     readonly property color base01: "#1e1e24"    // Slightly lighter background for panels
     readonly property color base02: "#2a2a32"    // Subtle contrast for selections
@@ -13,7 +14,7 @@ QtObject {
     readonly property color base06: "#eceef7"    // Bright text, still gentle
     readonly property color base07: "#f7f9ff"    // Brightest text, used sparingly
 
-    // Accent colors
+    // Accent colors for status and actions
     readonly property color base08: "#f0707e"    // Soft red for errors
     readonly property color base09: "#f5a97f"    // Warm orange for warnings
     readonly property color base0A: "#f5d767"    // Soft yellow for highlights

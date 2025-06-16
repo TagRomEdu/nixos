@@ -11,6 +11,8 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nixvim.url = "github:nix-community/nixvim";
 
+    niri.url = "github:sodiboo/niri-flake";
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +29,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, quickshell, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, chaotic, nur, nixvim, niri, quickshell, ... }@inputs: {
 
     # Expose NixOS configuration
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {

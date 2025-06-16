@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import "root:/settings/" as Settings
 
+// Volume overlay display with auto-hide
 PanelWindow {
     id: volumeOsd
     property var shell
@@ -24,6 +25,7 @@ PanelWindow {
         onTriggered: hideOsd()
     }
     
+    // Volume state tracking
     property int lastVolume: -1
     
     // React to volume changes from the shell

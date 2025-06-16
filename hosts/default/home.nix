@@ -14,6 +14,7 @@ in
   home.homeDirectory = "/home/lysec";
 
   imports = [
+    ../../modules/niri/default.nix
     ../../modules/desktop/hyprland.nix
     ../../modules/quickshell/quickshell.nix
     ../../modules/desktop/hyprlock.nix
