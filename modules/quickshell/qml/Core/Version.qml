@@ -3,9 +3,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
-import "root:/settings" as Settings
+import "root:/Data" as Data
 
-// System version and info watermark
+// System version watermark
 PanelWindow {
     id: systemVersion
 
@@ -30,7 +30,9 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Background
     WlrLayershell.exclusiveZone: 0
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+    WlrLayershell.namespace: "quickshell-version"
 
+    // Delayed startup
     Timer {
         id: startupTimer
         interval: 1500
@@ -40,7 +42,7 @@ PanelWindow {
         }
     }
 
-    // Data models
+    // Data structures for system information
     component Details: QtObject {
         property string version
         property string commit
@@ -62,21 +64,23 @@ PanelWindow {
         osFile.reload();
         genProcess.running = true;
         wmProcess.running = true;
-        hlProcess.running = true;
+        niriProcess.running = true;
     }
 
+    // Periodic refresh disabled to save memory - version info rarely changes
     Timer {
-        running: true
-        interval: 60000
+        running: false
+        interval: 300000
         repeat: true
         onTriggered: {
             osFile.reload();
             genProcess.running = true;
             wmProcess.running = true;
-            hlProcess.running = true;
+            niriProcess.running = true;
         }
     }
 
+    // Parse OS information from /etc/os-release
     FileView {
         id: osFile
         path: "/etc/os-release"
@@ -103,6 +107,7 @@ PanelWindow {
         }
     }
 
+    // Get current NixOS generation number
     Process {
         id: genProcess
         running: true
@@ -120,6 +125,7 @@ PanelWindow {
         }
     }
 
+    // Detect current desktop environment
     Process {
         id: wmProcess
         running: true
@@ -136,29 +142,31 @@ PanelWindow {
         }
     }
 
+    // Get Niri compositor version information
     Process {
-        id: hlProcess
+        id: niriProcess
         running: true
-        command: ["sh", "-c", "hyprctl version"]
+        command: ["sh", "-c", "niri msg version"]
 
         stdout: SplitParser {
             splitMarker: ""
             onRead: (data) => {
                 const output = data.trim();
                 
-                const versionMatch = output.match(/Tag: (v\d+\.\d+\.\d+)/);
-                if (versionMatch && versionMatch[1]) {
-                    systemVersion.wm.details.version = versionMatch[1];
+                const compositorMatch = output.match(/Compositor version: (\S+)/);
+                if (compositorMatch && compositorMatch[1]) {
+                    systemVersion.wm.details.version = compositorMatch[1];
                 }
                 
-                const commitMatch = output.match(/at commit (\w+)/);
+                const commitMatch = output.match(/\((\S+)\)/);
                 if (commitMatch && commitMatch[1]) {
-                    systemVersion.wm.details.commit = commitMatch[1].slice(0, 7).toUpperCase();
+                    systemVersion.wm.details.commit = commitMatch[1].toUpperCase();
                 }
             }
         }
     }
 
+    // Version display layout with macOS-inspired typography
     ColumnLayout {
         id: systemInfoContent
         spacing: 6
@@ -167,14 +175,14 @@ PanelWindow {
             spacing: 16
             Layout.alignment: Qt.AlignRight
             
-            // OS info
+            // Operating system information
             ColumnLayout {
                 spacing: 2
                 Layout.alignment: Qt.AlignRight
                 
                 Text {
                     text: systemVersion.os.name
-                    color: Settings.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
+                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -196,7 +204,7 @@ PanelWindow {
                         }
                         return details.join(" ");
                     }
-                    color: Settings.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
+                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium
@@ -207,21 +215,21 @@ PanelWindow {
             
             Text {
                 text: "│"
-                color: Settings.Colors.isDarkTheme ? "#20ffffff" : "#20000000"  // 13% white/black
+                color: Data.Colors.isDarkTheme ? "#20ffffff" : "#20000000"
                 font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                 font.pointSize: 14
                 font.weight: Font.Light
                 Layout.alignment: Qt.AlignCenter
             }
             
-            // WM info
+            // Window manager information
             ColumnLayout {
                 spacing: 2
                 Layout.alignment: Qt.AlignRight
                 
                 Text {
                     text: systemVersion.wm.name
-                    color: Settings.Colors.isDarkTheme ? "#40ffffff" : "#40000000"  // 25% white/black
+                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -240,7 +248,7 @@ PanelWindow {
                         }
                         return details.join(" ");
                     }
-                    color: Settings.Colors.isDarkTheme ? "#30ffffff" : "#30000000"  // 19% white/black
+                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium
@@ -249,5 +257,12 @@ PanelWindow {
                 }
             }
         }
+    }
+    
+    // Clean up processes on destruction
+    Component.onDestruction: {
+        if (genProcess.running) genProcess.running = false
+        if (wmProcess.running) wmProcess.running = false
+        if (niriProcess.running) niriProcess.running = false
     }
 }

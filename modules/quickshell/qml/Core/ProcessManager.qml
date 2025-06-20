@@ -2,10 +2,11 @@ pragma Singleton
 import QtQuick
 import Quickshell.Io
 
+// Process and resource monitor
 QtObject {
     id: root
     
-    // System resource monitoring
+    // Current system resource metrics
     property real cpuUsage: 0
     property real ramUsage: 0
     property real totalRam: 0
@@ -32,7 +33,7 @@ QtObject {
         command: ["pavucontrol"]
     }
     
-    // Resource monitoring processes
+    // Performance monitoring processes with shell commands
     property Process cpuProcess: Process {
         command: ["sh", "-c", "grep '^cpu ' /proc/stat | awk '{usage=($2+$3+$4)*100/($2+$3+$4+$5)} END {print usage}'"]
         stdout: SplitParser {
@@ -56,10 +57,10 @@ QtObject {
         }
     }
     
-    // Resource monitoring timers
+    // Monitoring timers (disabled by default)
     property Timer cpuTimer: Timer {
-        interval: 2000
-        running: true
+        interval: 30000
+        running: false   // Start manually when needed
         repeat: true
         onTriggered: {
             cpuProcess.running = false
@@ -68,8 +69,8 @@ QtObject {
     }
     
     property Timer ramTimer: Timer {
-        interval: 2000
-        running: true
+        interval: 30000
+        running: false   // Start manually when needed
         repeat: true
         onTriggered: {
             ramProcess.running = false
@@ -103,7 +104,7 @@ QtObject {
         pavucontrolProcess.running = true
     }
     
-    // Resource monitoring control
+    // Performance monitoring control
     function startMonitoring() {
         console.log("Starting system monitoring")
         cpuTimer.running = true
@@ -130,7 +131,7 @@ QtObject {
         ramProcess.running = true
     }
     
-    // Process state checks
+    // Process state queries
     function isShutdownRunning() { return shutdownProcess.running }
     function isRebootRunning() { return rebootProcess.running }
     function isLockRunning() { return lockProcess.running }
@@ -142,7 +143,7 @@ QtObject {
         pavucontrolProcess.running = false
     }
     
-    // Resource usage formatters
+    // Formatted output helpers
     function getCpuUsageFormatted() {
         return Math.round(cpuUsage) + "%"
     }
@@ -153,5 +154,23 @@ QtObject {
     
     function getRamUsageSimple() {
         return Math.round(ramUsage) + "%"
+    }
+    
+    // Component cleanup
+    Component.onDestruction: {
+        // Stop all timers
+        cpuTimer.running = false
+        ramTimer.running = false
+        
+        // Stop all monitoring processes
+        cpuProcess.running = false
+        ramProcess.running = false
+        
+        // Stop control processes if running
+        if (shutdownProcess.running) shutdownProcess.running = false
+        if (rebootProcess.running) rebootProcess.running = false
+        if (lockProcess.running) lockProcess.running = false
+        if (logoutProcess.running) logoutProcess.running = false
+        if (pavucontrolProcess.running) pavucontrolProcess.running = false
     }
 }

@@ -4,75 +4,66 @@ import Quickshell.Services.Notifications
 import Quickshell.Services.Pipewire
 import QtQuick
 
-import "root:/settings" as Settings
-import "Core" as Core
-import "root:/widgets/notification" as Notification
+import "root:/Data" as Data
+import "root:/Core" as Core
+import "root:/Services" as Services
+import "root:/Layout" as Layout
+import "root:/Widgets/Lockscreen"
 
-// Main shell component managing system-wide state and services
 ShellRoot {
     id: root
 
-    property QtObject shellInstance: Quickshell.shell
-    property QtObject notificationService
+    property var shellInstance: Quickshell.shell
+    property var notificationService
 
-    // Audio handling
-    property QtObject defaultAudioSink: Pipewire.defaultAudioSink
+    property var defaultAudioSink: Pipewire.defaultAudioSink
     property int volume: defaultAudioSink && defaultAudioSink.audio ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
-    // Notification system
     property alias notificationWindow: shellWindows.notificationWindow
-    property QtObject notificationServer: shellWindows.notificationService
+    property var notificationServer: shellWindows.notificationService
     ? shellWindows.notificationService.notificationServer
     : null
 
-    // Auto-cleanup notification history
+    // Notification history with auto-cleanup
     property ListModel notificationHistory: ListModel {
         Component.onDestruction: clear()
     }
-    property int maxHistoryItems: 30
+    property int maxHistoryItems: 25
     property int cleanupThreshold: maxHistoryItems + 5
 
-    // Weather service state
-    property string weatherLocation: Settings.Config.weatherLocation
+    property string weatherLocation: Data.Settings.weatherLocation
     property var weatherData: null
     property bool weatherLoading: false
     property alias weatherService: weatherService
 
-    // Core components
+    // Expose lockscreen for ProcessManager access
+    property alias lockscreen: lockscreen
+
     Core.ShellWindows {
         id: shellWindows
         shell: root
         notificationService: notificationService
     }
 
-    Notification.NotificationService {
+    Layout.Desktop {
+        id: desktop
+        shell: root
+    }
+
+    Services.NotificationService {
         id: notificationService
         shell: root
     }
 
-    Core.WeatherService {
+    Services.WeatherService {
         id: weatherService
         shell: root
     }
 
-    // Periodic updates for weather and notification cleanup
-    Timer {
-        id: periodicTimer
-        interval: 60000
-        running: true
-        repeat: true
-        onTriggered: {
-            if (Date.now() - weatherService.lastFetchTime >= weatherService.cacheTimeoutMs) {
-                weatherService.loadWeather()
-            }
-            
-            if (notificationHistory.count > maxHistoryItems) {
-                const removeCount = notificationHistory.count - maxHistoryItems
-                for (let i = 0; i < removeCount; i++) {
-                    notificationHistory.remove(0)
-                }
-            }
-        }
+    // Custom lockscreen component
+    Lockscreen {
+        id: lockscreen
+        shell: root
     }
 
     Component.onCompleted: {
@@ -84,22 +75,51 @@ ShellRoot {
     }
 
     function addToNotificationHistory(notification) {
-        const summary = notification.summary ? 
-            (notification.summary.length > 100 ? notification.summary.substring(0, 100) + "..." : notification.summary) : ""
-        const body = notification.body ? 
-            (notification.body.length > 500 ? notification.body.substring(0, 500) + "..." : notification.body) : ""
-            
         notificationHistory.insert(0, {
-            appName: notification.appName || "",
-            summary: summary,
-            body: body,
+            appName: notification.appName,
+            summary: notification.summary,
+            body: notification.body,
             timestamp: new Date(),
             icon: notification.appIcon ? String(notification.appIcon) : ""
         })
 
+        // Cleanup excess notifications immediately
         if (notificationHistory.count > cleanupThreshold) {
             const removeCount = notificationHistory.count - maxHistoryItems
             notificationHistory.remove(maxHistoryItems, removeCount)
+        }
+    }
+
+    // Cleanup timer (30 min)
+    Timer {
+        interval: 1800000
+        running: true
+        repeat: true
+        onTriggered: {
+            if (notificationHistory.count > maxHistoryItems) {
+                const removeCount = notificationHistory.count - maxHistoryItems
+                notificationHistory.remove(maxHistoryItems, removeCount)
+            }
+            
+            gc()
+        }
+    }
+    
+    // Memory cleanup timer (10 min)
+    Timer {
+        interval: 600000
+        running: true
+        repeat: true
+        onTriggered: {
+            // More aggressive cleanup threshold
+            if (notificationHistory.count > maxHistoryItems * 0.8) {
+                const removeCount = notificationHistory.count - Math.floor(maxHistoryItems * 0.7)
+                notificationHistory.remove(Math.floor(maxHistoryItems * 0.7), removeCount)
+            }
+            
+            // Double garbage collection for better memory release
+            gc()
+            Qt.callLater(gc)
         }
     }
 }

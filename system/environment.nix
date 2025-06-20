@@ -30,6 +30,7 @@
     libva-utils
     playerctl
     libayatana-appindicator
+    nh
   ];
 
   environment.variables = {
