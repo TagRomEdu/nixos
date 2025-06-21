@@ -12,7 +12,7 @@ Rectangle {
     color: Data.Colors.bgColor
     
     // Workspace indicator at top of bar
-    System.NiriWorkspaces {
+    System.HyprWorkspaces {
         id: workspaceIndicator
         anchors {
             top: parent.top

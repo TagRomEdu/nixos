@@ -12,7 +12,7 @@ import "root:/Widgets/Panel" as TopPanel
 import "root:/Widgets/Panel" as WidgetsBar
 import "root:/Widgets/ControlPanel" as ControlPanel
 
-// Multi-monitor shell window manager
+// Multi-monitor shell window manager with notifications and overlays
 Scope {
     id: shellWindows
 

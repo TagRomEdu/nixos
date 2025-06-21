@@ -372,6 +372,7 @@ Item {
         if (newEntries.length !== currentEntries.length) {
             updateModel(newEntries)
             return
+
         }
         
         // Compare content for changes
@@ -478,6 +479,21 @@ Item {
 
     function refreshClipboardHistory() {
         cliphistProcess.running = true
+    }
+
+    // Initialize clipboard history on component creation
+    Component.onCompleted: {
+        refreshClipboardHistory()
+    }
+
+    // Refresh when component becomes visible
+    onIsVisibleChanged: {
+        if (isVisible) {
+            refreshClipboardHistory()
+            refreshTimer.running = true
+        } else {
+            refreshTimer.running = false
+        }
     }
 
     // Copy handler

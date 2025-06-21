@@ -8,7 +8,7 @@ import Quickshell.Io
 import "root:/Data" as Data
 import "root:/Core" as Core
 
-// Custom lockscreen
+// Custom lockscreen with PAM authentication and beautiful UI
 PanelWindow {
     id: lockScreen
     

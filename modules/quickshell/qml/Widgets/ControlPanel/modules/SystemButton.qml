@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import "root:/Data" as Data
 
-// System button
+// System button with active state, hover animations, and smooth color transitions
 Rectangle {
     id: root
     required property var shell

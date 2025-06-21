@@ -155,7 +155,7 @@ Rectangle {
                 id: workspacePill
                 
                 // Dynamic sizing based on focus state
-                width: model.isFocused ? 18 : 16
+                width: 18  // Same width for both active and inactive
                 height: model.isFocused ? 36 : 22
                 radius: width / 2
                 scale: model.isFocused ? 1.0 : 0.9

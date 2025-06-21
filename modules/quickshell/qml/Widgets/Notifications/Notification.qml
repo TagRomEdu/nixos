@@ -328,4 +328,82 @@ Item {
             }
         }
     }
+
+    // Notification overflow indicator
+    Rectangle {
+        id: overflowIndicator
+        visible: notificationQueue.length > maxNotifications
+        width: 60
+        height: 24
+        radius: 12
+        color: Data.Colors.accentColor
+        border.width: 1
+        border.color: Qt.lighter(Data.Colors.accentColor, 1.2)
+        
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.bottomMargin: 16
+        anchors.rightMargin: 16
+        
+        opacity: 0.9
+        
+        Text {
+            anchors.centerIn: parent
+            text: "+" + (notificationQueue.length - maxNotifications)
+            color: Data.Colors.bgColor
+            font.pixelSize: 11
+            font.bold: true
+        }
+        
+        // Hover effect
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: overflowHoverAnimation.start()
+            onExited: overflowUnhoverAnimation.start()
+        }
+        
+        NumberAnimation { 
+            id: overflowHoverAnimation
+            target: overflowIndicator
+            property: "scale"
+            to: 1.05
+            duration: 150
+            easing.type: Easing.OutCubic
+        }
+        
+        NumberAnimation { 
+            id: overflowUnhoverAnimation
+            target: overflowIndicator
+            property: "scale"
+            to: 1.0
+            duration: 150
+            easing.type: Easing.OutCubic
+        }
+        
+        // Pulse animation for new notifications beyond max
+        SequentialAnimation {
+            id: pulseAnimation
+            running: visible
+            loops: Animation.Infinite
+            
+            NumberAnimation {
+                target: overflowIndicator
+                property: "opacity"
+                from: 0.9
+                to: 0.6
+                duration: 1500
+                easing.type: Easing.InOutSine
+            }
+            
+            NumberAnimation {
+                target: overflowIndicator
+                property: "opacity"
+                from: 0.6
+                to: 0.9
+                duration: 1500
+                easing.type: Easing.InOutSine
+            }
+        }
+    }
 }

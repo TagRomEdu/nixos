@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import "root:/Data" as Data
 
-// Weather display widget
+// Weather display widget with expandable forecast popup and WMO weather code mapping
 Rectangle {
     id: root
     required property var shell
@@ -134,7 +134,7 @@ Rectangle {
         }
     }
 
-                // Forecast popup
+    // Detailed forecast popup with current conditions and 3-day forecast
     Popup {
         id: forecastPopup
         y: parent.height + 28

@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import "root:/Data" as Data
 import "." as Modules
 
-// Dual-section control panel
+// Dual-section control panel with performance and system controls
 Row {
     id: root
     spacing: 16

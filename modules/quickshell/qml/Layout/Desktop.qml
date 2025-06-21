@@ -40,7 +40,7 @@ Scope {
             }
 
             // Workspace indicator aligned to left border
-            System.NiriWorkspaces {
+            System.HyprWorkspaces {
                 id: workspaceIndicator
                 anchors {
                     left: parent.left

@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.UPower
 
-// Power profile controls
+// Power profile controls with UPower integration and safe fallbacks
 Column {
     id: root
     required property var shell

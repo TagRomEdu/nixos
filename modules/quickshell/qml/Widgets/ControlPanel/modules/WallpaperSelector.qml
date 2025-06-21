@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 import "root:/Data" as Data
 
-// Wallpaper selector grid
+// Wallpaper selector grid with memory optimizations and viewport-based loading
 Item {
     id: root
 
