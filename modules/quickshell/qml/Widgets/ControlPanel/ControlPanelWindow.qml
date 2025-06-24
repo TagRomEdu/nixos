@@ -31,7 +31,7 @@ PanelWindow {
     margins.bottom: 0
     margins.left: (screen ? screen.width / 2 - 400 : 0)  // Centered
     margins.right: (screen ? screen.width / 2 - 400 : 0)
-    implicitWidth: 800  // Wide enough
+    implicitWidth: 640
     implicitHeight: isShown ? 400 : 8  // Expand/collapse animation
     
     Behavior on implicitHeight {
@@ -40,12 +40,12 @@ PanelWindow {
             easing.type: Easing.OutCubic
         }
     }
-    exclusiveZone: 0
+    exclusiveZone: (panelContent && panelContent.textInputFocused) ? -1 : 0
     color: "transparent"
     visible: true
     
     WlrLayershell.namespace: "quickshell-controlpanel"
-    WlrLayershell.layer: WlrLayershell.Overlay
+    WlrLayershell.keyboardFocus: (panelContent && panelContent.textInputFocused) ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand
     
     // Hover trigger area at screen top
     MouseArea {
@@ -113,10 +113,11 @@ PanelWindow {
         id: controlPanelLeftCorner
         position: "bottomright"
         size: 1.3
-        fillColor: Data.Colors.bgColor
+        fillColor: Data.ThemeManager.bgColor
         offsetX: -661
         offsetY: -313
         visible: isShown
+        z: 1  // Higher z-index to render above shadow effects
         
         // Disable implicit animations to prevent corner sliding
         Behavior on x { enabled: false }
@@ -127,10 +128,11 @@ PanelWindow {
         id: controlPanelRightCorner
         position: "bottomleft"
         size: 1.3
-        fillColor: Data.Colors.bgColor
+        fillColor: Data.ThemeManager.bgColor
         offsetX: 661
         offsetY: -313
         visible: isShown
+        z: 1  // Higher z-index to render above shadow effects
         
         Behavior on x { enabled: false }
         Behavior on y { enabled: false }
@@ -152,9 +154,18 @@ PanelWindow {
 
     function hide() {
         if (!isShown) return
-        // Only hide main tab
-        if (currentTab === 0 && !panelContent.isHovered) {
+        // Only hide if on main tab and nothing is being hovered
+        if (currentTab === 0 && !panelContent.isHovered && !triggerMouseArea.containsMouse) {
             isShown = false
+        }
+        // For non-main tabs, only hide if explicitly not hovered and no trigger hover
+        else if (currentTab !== 0 && !panelContent.isHovered && !triggerMouseArea.containsMouse) {
+            // Add delay for non-main tabs to prevent accidental hiding
+            Qt.callLater(function() {
+                if (!panelContent.isHovered && !triggerMouseArea.containsMouse) {
+                    isShown = false
+                }
+            })
         }
     }
 } 

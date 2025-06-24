@@ -15,8 +15,8 @@ Rectangle {
     signal mouseChanged(bool containsMouse)
     
     // Dynamic color: accent when recording/hovered, gray otherwise
-    color: isRecording ? Data.Colors.accentColor : 
-           (mouseArea.containsMouse ? Data.Colors.accentColor : Qt.darker(Data.Colors.bgColor, 1.15))
+    color: isRecording ? Data.ThemeManager.accentColor : 
+           (mouseArea.containsMouse ? Data.ThemeManager.accentColor : Qt.darker(Data.ThemeManager.bgColor, 1.15))
     
     property bool isHovered: mouseArea.containsMouse
     readonly property alias containsMouse: mouseArea.containsMouse
@@ -31,7 +31,7 @@ Rectangle {
             text: isRecording ? "stop_circle" : "radio_button_unchecked"
             font.family: "Material Symbols Outlined"
             font.pixelSize: 16
-            color: isRecording || mouseArea.containsMouse ? "#ffffff" : Data.Colors.fgColor
+            color: isRecording || mouseArea.containsMouse ? "#ffffff" : Data.ThemeManager.fgColor
             
             Layout.alignment: Qt.AlignVCenter
         }
@@ -39,9 +39,10 @@ Rectangle {
         // Recording state label
         Label {
             text: isRecording ? "Stop Recording" : "Start Recording"
+            font.family: "Roboto"
             font.pixelSize: 13
             font.weight: Font.Medium
-            color: isRecording || mouseArea.containsMouse ? "#ffffff" : Data.Colors.fgColor
+            color: isRecording || mouseArea.containsMouse ? "#ffffff" : Data.ThemeManager.fgColor
             
             Layout.alignment: Qt.AlignVCenter
         }

@@ -17,17 +17,17 @@ Rectangle {
     color: {
         if (isActive) {
             return mouseArea.containsMouse ? 
-                   Qt.lighter(Data.Colors.accentColor, 1.1) : 
-                   Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.3)
+                   Qt.lighter(Data.ThemeManager.accentColor, 1.1) : 
+                   Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.3)
         } else {
             return mouseArea.containsMouse ? 
-                   Qt.lighter(Data.Colors.accentColor, 1.2) : 
-                   Qt.lighter(Data.Colors.bgColor, 1.15)
+                   Qt.lighter(Data.ThemeManager.accentColor, 1.2) : 
+                   Qt.lighter(Data.ThemeManager.bgColor, 1.15)
         }
     }
     
     border.width: isActive ? 2 : 1
-    border.color: isActive ? Data.Colors.accentColor : Qt.lighter(Data.Colors.bgColor, 1.3)
+    border.color: isActive ? Data.ThemeManager.accentColor : Qt.lighter(Data.ThemeManager.bgColor, 1.3)
     
     signal clicked()
     signal mouseChanged(bool containsMouse)
@@ -67,9 +67,9 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             color: {
                 if (root.isActive) {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Data.ThemeManager.accentColor
                 } else {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Data.ThemeManager.accentColor
                 }
             }
             
@@ -83,12 +83,13 @@ Rectangle {
         
         Label {
             text: root.labelText
+            font.family: "Roboto"
             font.pixelSize: 8
             color: {
                 if (root.isActive) {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Data.ThemeManager.accentColor
                 } else {
-                    return root.isHovered ? "#ffffff" : Data.Colors.accentColor
+                    return root.isHovered ? "#ffffff" : Data.ThemeManager.accentColor
                 }
             }
             anchors.horizontalCenter: parent.horizontalCenter

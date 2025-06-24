@@ -6,7 +6,7 @@ import "root:/Data" as Data
 Rectangle {
     id: backgroundContainer
     anchors.fill: parent
-    color: Data.Colors.bgColor
+    color: Data.ThemeManager.bgColor
     
     required property bool isVisible
     
@@ -32,7 +32,7 @@ Rectangle {
     // Dark overlay
     Rectangle {
         anchors.fill: parent
-        color: Data.Colors.withOpacity(Data.Colors.bgColor, 0.8)
+        color: Data.ThemeManager.withOpacity(Data.ThemeManager.bgColor, 0.8)
     }
     
     // Blur effect overlay

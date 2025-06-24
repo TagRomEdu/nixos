@@ -3,17 +3,17 @@ import Quickshell
 import Quickshell.Services.Notifications
 import "root:/Data/" as Data
 
-// Notification service with filtering
+// Notification service with app filtering
 Item {
     id: service
     
     property var shell
     property alias notificationServer: notificationServer
     
-    property int maxHistorySize: 50
+    property int maxHistorySize: Data.Settings.historyLimit
     property int cleanupThreshold: maxHistorySize + 10
     
-    // Clean up old notifications every 30 minutes
+    // Periodic cleanup every 30 minutes
     Timer {
         interval: 1800000
         running: true
@@ -27,7 +27,7 @@ Item {
             shell.notificationHistory.remove(maxHistorySize, removeCount)
         }
         
-        // Remove invalid/corrupted entries
+        // Remove invalid entries
         if (shell.notificationHistory) {
             for (let i = shell.notificationHistory.count - 1; i >= 0; i--) {
                 const item = shell.notificationHistory.get(i)
@@ -47,7 +47,7 @@ Item {
         persistenceSupported: true
         
         onNotification: (notification) => {
-            // Filter out empty notifications
+            // Filter empty notifications
             if (!notification.appName && !notification.summary && !notification.body) {
                 if (typeof notification.dismiss === 'function') {
                     notification.dismiss()
@@ -55,15 +55,25 @@ Item {
                 return
             }
             
-            // Filter out ignored applications
-            if (Data.Settings.ignoredApps.includes(notification.appName)) {
+            // Filter ignored applications (case-insensitive)
+            var shouldIgnore = false
+            if (notification.appName && Data.Settings.ignoredApps && Data.Settings.ignoredApps.length > 0) {
+                for (var i = 0; i < Data.Settings.ignoredApps.length; i++) {
+                    if (Data.Settings.ignoredApps[i].toLowerCase() === notification.appName.toLowerCase()) {
+                        shouldIgnore = true
+                        break
+                    }
+                }
+            }
+            
+            if (shouldIgnore) {
                 if (typeof notification.dismiss === 'function') {
                     notification.dismiss()
                 }
                 return
             }
             
-            // Add to history and trigger cleanup if needed
+            // Add to history and cleanup if needed
             if (shell.notificationHistory) {
                 shell.addToNotificationHistory(notification, maxHistorySize)
                 

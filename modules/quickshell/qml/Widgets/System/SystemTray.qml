@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import "root:/Data" as Data
 
-// System tray with icon caching
+// System tray with optimized icon caching
 Row {
     property var bar
     property var shell
@@ -16,11 +16,11 @@ Row {
     property bool containsMouse: false
     property var systemTray: SystemTray
     
-    // Custom icon cache to reduce memory usage
+    // Custom icon cache for memory optimization
     property var iconCache: ({})
     property var iconCacheCount: ({})
     
-    // Aggressive cache cleanup to prevent memory leaks
+    // Cache cleanup to prevent memory leaks
     Timer {
         interval: 120000
         repeat: true
@@ -58,7 +58,6 @@ Row {
             onIsHoveredChanged: updateParentHoverState()
             Component.onCompleted: updateParentHoverState()
             
-            // Update parent hover state based on any child being hovered
             function updateParentHoverState() {
                 let anyHovered = false
                 for (let i = 0; i < parent.children.length; i++) {
@@ -132,7 +131,6 @@ Row {
                 }
             }
             
-            // Clean up cache entry
             Component.onDestruction: {
                 let icon = modelData?.icon || "";
                 if (icon) {
@@ -141,7 +139,6 @@ Row {
                 }
             }
             
-            // Handle tray item interactions
             MouseArea {
                 id: trayMouseArea
                 anchors.fill: parent

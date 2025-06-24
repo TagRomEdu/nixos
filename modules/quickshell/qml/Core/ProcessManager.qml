@@ -2,11 +2,11 @@ pragma Singleton
 import QtQuick
 import Quickshell.Io
 
-// Process and resource monitor
+// System process and resource monitoring
 QtObject {
     id: root
     
-    // Current system resource metrics
+    // System resource metrics
     property real cpuUsage: 0
     property real ramUsage: 0
     property real totalRam: 0
@@ -33,7 +33,7 @@ QtObject {
         command: ["pavucontrol"]
     }
     
-    // Performance monitoring processes with shell commands
+    // Resource monitoring processes
     property Process cpuProcess: Process {
         command: ["sh", "-c", "grep '^cpu ' /proc/stat | awk '{usage=($2+$3+$4)*100/($2+$3+$4+$5)} END {print usage}'"]
         stdout: SplitParser {
@@ -57,10 +57,10 @@ QtObject {
         }
     }
     
-    // Monitoring timers (disabled by default)
+    // Monitoring timers (start manually when needed)
     property Timer cpuTimer: Timer {
         interval: 30000
-        running: false   // Start manually when needed
+        running: false
         repeat: true
         onTriggered: {
             cpuProcess.running = false
@@ -70,7 +70,7 @@ QtObject {
     
     property Timer ramTimer: Timer {
         interval: 30000
-        running: false   // Start manually when needed
+        running: false
         repeat: true
         onTriggered: {
             ramProcess.running = false
@@ -156,13 +156,12 @@ QtObject {
         return Math.round(ramUsage) + "%"
     }
     
-    // Component cleanup
     Component.onDestruction: {
         // Stop all timers
         cpuTimer.running = false
         ramTimer.running = false
         
-        // Stop all monitoring processes
+        // Stop monitoring processes
         cpuProcess.running = false
         ramProcess.running = false
         

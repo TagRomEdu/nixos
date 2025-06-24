@@ -26,15 +26,16 @@ Item {
 
             Text {
                 text: "Notification History"
-                color: Data.Colors.accentColor
+                color: Data.ThemeManager.accentColor
                 font.pixelSize: 18
                 font.bold: true
-                font.family: "FiraCode Nerd Font"
+                font.family: "Roboto"
             }
 
             Text {
                 text: "(" + (shell.notificationHistory ? shell.notificationHistory.count : 0) + ")"
-                color: Data.Colors.fgColor
+                color: Data.ThemeManager.fgColor
+                font.family: "Roboto"
                 font.pixelSize: 12
                 opacity: 0.7
             }
@@ -46,15 +47,16 @@ Item {
                 width: clearText.implicitWidth + 16
                 height: 24
                 radius: 12
-                color: clearMouseArea.containsMouse ? Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : "transparent"
-                border.color: Data.Colors.accentColor
+                color: clearMouseArea.containsMouse ? Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.2) : "transparent"
+                border.color: Data.ThemeManager.accentColor
                 border.width: 1
 
                 Text {
                     id: clearText
                     anchors.centerIn: parent
                     text: "Clear All"
-                    color: Data.Colors.accentColor
+                    color: Data.ThemeManager.accentColor
+                    font.family: "Roboto"
                     font.pixelSize: 11
                 }
 
@@ -83,9 +85,9 @@ Item {
                     contentItem: Rectangle {
                         implicitWidth: 6
                         radius: width / 2
-                        color: parent.pressed ? Data.Colors.accentColor 
-                             : parent.hovered ? Qt.lighter(Data.Colors.accentColor, 1.2)
-                             : Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.7)
+                        color: parent.pressed ? Data.ThemeManager.accentColor 
+                             : parent.hovered ? Qt.lighter(Data.ThemeManager.accentColor, 1.2)
+                             : Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.7)
                     }
                 }
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -121,8 +123,8 @@ Item {
                         width: notificationListView.width
                         height: Math.max(80, contentLayout.implicitHeight + 24)
                         radius: 8
-                        color: mouseArea.containsMouse ? Qt.darker(Data.Colors.bgColor, 1.15) : Qt.darker(Data.Colors.bgColor, 1.1)
-                        border.color: Data.Colors.accentColor
+                        color: mouseArea.containsMouse ? Qt.darker(Data.ThemeManager.bgColor, 1.15) : Qt.darker(Data.ThemeManager.bgColor, 1.1)
+                        border.color: Data.ThemeManager.accentColor
                         border.width: 1
 
                         // View optimization - only render visible items
@@ -169,14 +171,16 @@ Item {
                                     Text {
                                         Layout.fillWidth: true
                                         text: model.appName || "Unknown"
-                                        color: Data.Colors.accentColor
+                                        color: Data.ThemeManager.accentColor
+                                        font.family: "Roboto"
                                         font.pixelSize: 13
                                         font.bold: true
                                     }
 
                                     Text {
                                         text: Qt.formatDateTime(model.timestamp, "hh:mm")
-                                        color: Data.Colors.fgColor
+                                        color: Data.ThemeManager.fgColor
+                                        font.family: "Roboto"
                                         font.pixelSize: 10
                                         opacity: 0.7
                                     }
@@ -187,7 +191,8 @@ Item {
                                     Layout.fillWidth: true
                                     visible: model.summary && model.summary.length > 0
                                     text: model.summary || ""
-                                    color: Data.Colors.fgColor
+                                    color: Data.ThemeManager.fgColor
+                                    font.family: "Roboto"
                                     font.pixelSize: 13
                                     font.bold: true
                                     wrapMode: Text.WordWrap
@@ -199,7 +204,8 @@ Item {
                                     Layout.fillWidth: true
                                     visible: model.body && model.body.length > 0
                                     text: model.body || ""
-                                    color: Data.Colors.fgColor
+                                    color: Data.ThemeManager.fgColor
+                                    font.family: "Roboto"
                                     font.pixelSize: 12
                                     opacity: 0.9
                                     wrapMode: Text.WordWrap
@@ -219,14 +225,15 @@ Item {
                             anchors.top: parent.top
                             anchors.margins: 8
                             color: deleteArea.containsMouse ? Qt.rgba(255, 0, 0, 0.2) : "transparent"
-                            border.color: deleteArea.containsMouse ? "#ff4444" : Data.Colors.fgColor
+                            border.color: deleteArea.containsMouse ? "#ff4444" : Data.ThemeManager.fgColor
                             border.width: 1
                             opacity: deleteArea.containsMouse ? 1 : 0.5
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "×"
-                                color: deleteArea.containsMouse ? "#ff4444" : Data.Colors.fgColor
+                                color: deleteArea.containsMouse ? "#ff4444" : Data.ThemeManager.fgColor
+                                font.family: "Roboto"
                                 font.pixelSize: 16
                             }
 
@@ -246,7 +253,8 @@ Item {
                 anchors.centerIn: parent
                 visible: !notificationListView.count
                 text: "No notifications"
-                color: Data.Colors.fgColor
+                color: Data.ThemeManager.fgColor
+                font.family: "Roboto"
                 font.pixelSize: 14
                 opacity: 0.7
             }

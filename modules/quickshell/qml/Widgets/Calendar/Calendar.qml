@@ -10,7 +10,7 @@ Rectangle {
     property var shell
 
     radius: 20
-    color: Qt.lighter(Data.Colors.bgColor, 1.2)
+    color: Qt.lighter(Data.ThemeManager.bgColor, 1.2)
 
     readonly property date currentDate: new Date()
     property int month: currentDate.getMonth()
@@ -35,14 +35,14 @@ Rectangle {
 
                 background: Rectangle {
                     radius: 15
-                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(Data.Colors.highlightBg, 1.1) : Data.Colors.highlightBg
+                    color: parent.down ? Qt.darker(Data.ThemeManager.accentColor, 1.2) :
+                           parent.hovered ? Qt.lighter(Data.ThemeManager.highlightBg, 1.1) : Data.ThemeManager.highlightBg
                 }
 
                 Text {
                     id: buttonLabel
                     anchors.centerIn: parent
-                    color: Data.Colors.fgColor
+                    color: Data.ThemeManager.fgColor
                     font.pixelSize: 16
                     font.bold: true
                 }
@@ -51,7 +51,7 @@ Rectangle {
             // Current month and year display
             Text {
                 text: Qt.locale("en_US").monthName(calendarRoot.month) + " " + calendarRoot.year
-                color: Data.Colors.accentColor
+                color: Data.ThemeManager.accentColor
                 font.bold: true
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
@@ -72,7 +72,7 @@ Rectangle {
                 model: ["M", "T", "W", "T", "F", "S", "S"]
                 delegate: Text {
                     text: modelData
-                    color: Data.Colors.fgColor
+                    color: Data.ThemeManager.fgColor
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -107,17 +107,17 @@ Rectangle {
                                                isCurrentMonth
 
                 // Dynamic styling: today = accent color, current month = normal, other months = dimmed
-                color: isToday ? Data.Colors.accentColor :
-                       isCurrentMonth ? Data.Colors.bgColor : Qt.darker(Data.Colors.bgColor, 1.4)
+                color: isToday ? Data.ThemeManager.accentColor :
+                       isCurrentMonth ? Data.ThemeManager.bgColor : Qt.darker(Data.ThemeManager.bgColor, 1.4)
 
                 Text {
                     text: model.day
                     anchors.centerIn: parent
-                    color: isToday ? Data.Colors.bgColor :
-                           isCurrentMonth ? Data.Colors.fgColor : Qt.darker(Data.Colors.fgColor, 1.5)
+                    color: isToday ? Data.ThemeManager.bgColor :
+                           isCurrentMonth ? Data.ThemeManager.fgColor : Qt.darker(Data.ThemeManager.fgColor, 1.5)
                     font.bold: isToday
                     font.pixelSize: 14
-                    font.family: "JetBrains Mono"
+                                            font.family: "Roboto"
                 }
             }
         }

@@ -52,11 +52,13 @@ Shape {
     x: _isLeft ? offsetX : (parent ? parent.width - width + offsetX : 0)
     y: _isTop ? offsetY : (parent ? parent.height - height + offsetY : 0)
     preferredRendererType: Shape.CurveRenderer
+    layer.enabled: true
+    layer.samples: 4
 
     ShapePath {
         strokeWidth: 0
         fillColor: root.fillColor
-        strokeColor: "transparent"
+        strokeColor: root.fillColor  // Use same color as fill to eliminate artifacts
 
         startX: root._startX
         startY: root._startY

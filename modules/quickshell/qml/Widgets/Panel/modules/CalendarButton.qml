@@ -7,7 +7,7 @@ Rectangle {
     id: calendarButton
     width: 40
     height: 80
-    color: Qt.darker(Data.Colors.bgColor, 1.15)
+    color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
     radius: 20
 
     property bool containsMouse: calendarMouseArea.containsMouse
@@ -40,7 +40,7 @@ Rectangle {
         text: "calendar_month"
         font.pixelSize: 24
         font.family: "Material Symbols Outlined"
-        color: calendarButton.containsMouse || calendarButton.calendarVisible ? Data.Colors.accentColor : Data.Colors.fgColor
+        color: calendarButton.containsMouse || calendarButton.calendarVisible ? Data.ThemeManager.accentColor : Data.ThemeManager.fgColor
     }
 
     function toggleCalendar() {

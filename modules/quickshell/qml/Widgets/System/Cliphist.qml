@@ -6,7 +6,7 @@ import Quickshell
 import Quickshell.Io
 import "root:/Data" as Data
 
-// Clipboard history manager
+// Clipboard history manager with cliphist integration
 Item {
     id: root
     required property var shell
@@ -50,7 +50,7 @@ Item {
                 text: "Clipboard History"
                 font.pixelSize: 16
                 font.weight: Font.Medium
-                color: Data.Colors.fgColor
+                color: Data.ThemeManager.fgColor
                 Layout.fillWidth: true
             }
             
@@ -61,14 +61,14 @@ Item {
                 implicitHeight: 25
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? Qt.darker(Data.Colors.accentColor, 1.2) :
-                           parent.hovered ? Qt.lighter(Data.Colors.accentColor, 1.1) : 
-                           Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.8)
+                    color: parent.down ? Qt.darker(Data.ThemeManager.accentColor, 1.2) :
+                           parent.hovered ? Qt.lighter(Data.ThemeManager.accentColor, 1.1) : 
+                           Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.8)
                 }
                 contentItem: Label {
                     text: parent.text
                     font.pixelSize: 11
-                    color: Data.Colors.fgColor
+                    color: Data.ThemeManager.fgColor
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -96,9 +96,9 @@ Item {
                     contentItem: Rectangle {
                         implicitWidth: 6
                         radius: width / 2
-                        color: parent.pressed ? Data.Colors.accentColor 
-                             : parent.hovered ? Qt.lighter(Data.Colors.accentColor, 1.2)
-                             : Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.7)
+                        color: parent.pressed ? Data.ThemeManager.accentColor 
+                             : parent.hovered ? Qt.lighter(Data.ThemeManager.accentColor, 1.2)
+                             : Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.7)
                     }
                 }
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -132,8 +132,8 @@ Item {
                         width: cliphistList.width
                         height: Math.max(50, contentText.contentHeight + 20)
                         radius: 8
-                        color: mouseArea.containsMouse ? Qt.darker(Data.Colors.bgColor, 1.15) : Qt.darker(Data.Colors.bgColor, 1.1)
-                        border.color: Data.Colors.accentColor
+                        color: mouseArea.containsMouse ? Qt.darker(Data.ThemeManager.bgColor, 1.15) : Qt.darker(Data.ThemeManager.bgColor, 1.1)
+                        border.color: Data.ThemeManager.accentColor
                         border.width: 1
                         
                         // View optimization - only render visible items
@@ -162,7 +162,7 @@ Item {
                                     text: model.type === "image" ? "[Image Data]" : 
                                           (model.content.length > 100 ? model.content.substring(0, 100) + "..." : model.content)
                                     font.pixelSize: 12
-                                    color: Data.Colors.fgColor
+                                    color: Data.ThemeManager.fgColor
                                     wrapMode: Text.WordWrap
                                     Layout.fillWidth: true
                                     Layout.fillHeight: true
@@ -176,7 +176,7 @@ Item {
                                     Label {
                                         text: model.type === "image" ? "Image" : (model.content.length + " chars")
                                         font.pixelSize: 10
-                                        color: Qt.darker(Data.Colors.fgColor, 1.5)
+                                        color: Qt.darker(Data.ThemeManager.fgColor, 1.5)
                                     }
                                 }
                             }
@@ -201,7 +201,7 @@ Item {
                         anchors.centerIn: parent
                         text: "No clipboard history\nCopy something to get started"
                         font.pixelSize: 14
-                        color: Qt.darker(Data.Colors.fgColor, 1.5)
+                        color: Qt.darker(Data.ThemeManager.fgColor, 1.5)
                         horizontalAlignment: Text.AlignHCenter
                         visible: cliphistList.count === 0
                         opacity: 0.7
@@ -226,7 +226,7 @@ Item {
 
     property var currentEntries: []
 
-    // Main cliphist process
+    // Main cliphist process for fetching clipboard history
     Process {
         id: cliphistProcess
         command: ["cliphist", "list"]
@@ -238,7 +238,7 @@ Item {
             if (running) {
                 tempEntries = []
             } else {
-                // Process completed, apply smart update
+                // Process completed, apply smart diff update
                 updateModelIfChanged(tempEntries)
             }
         }
@@ -254,7 +254,7 @@ Item {
                         return
                     }
                     
-                    // Parse cliphist output: ID + spaces + content
+                    // Parse cliphist output format: ID + spaces + content
                     const match = line.match(/^(\d+)\s+(.+)$/)
                     if (match) {
                         const id = match[1]
@@ -366,13 +366,23 @@ Item {
         }
     }
 
-    // Smart update
+    // Component initialization
+    Component.onCompleted: {
+        refreshClipboardHistory()
+    }
+
+    onIsVisibleChanged: {
+        if (isVisible && cliphistModel.count === 0) {
+            refreshClipboardHistory()
+        }
+    }
+
+    // Smart model update - only changes when content differs
     function updateModelIfChanged(newEntries) {
         // Quick length check
         if (newEntries.length !== currentEntries.length) {
             updateModel(newEntries)
             return
-
         }
         
         // Compare content for changes
@@ -391,7 +401,7 @@ Item {
         }
     }
     
-    // Efficient model update
+    // Efficient model update with scroll position preservation
     function updateModel(newEntries) {
         const scrollPos = cliphistList.contentY
         
@@ -481,29 +491,14 @@ Item {
         cliphistProcess.running = true
     }
 
-    // Initialize clipboard history on component creation
-    Component.onCompleted: {
-        refreshClipboardHistory()
-    }
-
-    // Refresh when component becomes visible
-    onIsVisibleChanged: {
-        if (isVisible) {
-            refreshClipboardHistory()
-            refreshTimer.running = true
-        } else {
-            refreshTimer.running = false
-        }
-    }
-
-    // Copy handler
+    // Copy handler - chooses appropriate method based on content type
     function copyToClipboard(entryIdOrText, contentType) {
         if (contentType === "image" || typeof entryIdOrText === "string" && entryIdOrText.match(/^\d+$/)) {
-            // Use cliphist decode
+            // Use cliphist decode for binary data and numbered entries
             copyHistoryProcess.entryId = entryIdOrText
             copyHistoryProcess.running = true
         } else {
-            // Use wl-copy
+            // Use wl-copy for plain text
             copyTextProcess.textToCopy = entryIdOrText
             copyTextProcess.running = true
         }

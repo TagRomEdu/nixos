@@ -115,7 +115,7 @@ Popup {
     }
 
     background: Rectangle {
-        color: Data.Colors.bgColor
+        color: Data.ThemeManager.bgColor
         topRightRadius: 20
     }
 }

@@ -8,8 +8,8 @@ Item {
     
     required property var shell
     property bool isRecording: false
-    property int currentTab: 0 // 0=main, 1=calendar, 2=clipboard, 3=notifications, 4=wallpapers
-    property var tabIcons: ["widgets", "calendar_month", "content_paste", "notifications", "wallpaper"]
+    property int currentTab: 0 // 0=main, 1=calendar, 2=clipboard, 3=notifications, 4=wallpapers, 5=music, 6=settings
+    property var tabIcons: ["widgets", "calendar_month", "content_paste", "notifications", "wallpaper", "music_note", "settings"]
     
     property bool isShown: false
     property var recordingProcess: null
@@ -114,9 +114,23 @@ Item {
     // Clean up processes on destruction
     Component.onDestruction: {
         if (recordingProcess) {
-            recordingProcess.running = false
+            try {
+                if (recordingProcess.running) {
+                    recordingProcess.terminate()
+                }
             recordingProcess.destroy()
+            } catch (e) {
+                console.warn("Error cleaning up recording process:", e)
+            }
             recordingProcess = null
+        }
+        
+        // Force kill any remaining gpu-screen-recorder processes
+        var forceCleanupCmd = 'import Quickshell.Io; Process { command: ["sh", "-c", "pkill -9 -f gpu-screen-recorder 2>/dev/null || true"]; running: true; onExited: function() { destroy() } }'
+        try {
+            Qt.createQmlObject(forceCleanupCmd, controlPanelContainer)
+        } catch (e) {
+            console.warn("Error in force cleanup:", e)
         }
     }
 }

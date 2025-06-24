@@ -24,7 +24,7 @@ Row {
         width: (parent.width - parent.spacing) / 2
         height: parent.height
         radius: 20
-        color: Qt.darker(Data.Colors.bgColor, 1.15)
+        color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
         visible: true
 
         // Add hover tracking for performance section
@@ -65,7 +65,7 @@ Row {
         width: (parent.width - parent.spacing) / 2
         height: parent.height
         radius: 20
-        color: Qt.darker(Data.Colors.bgColor, 1.15)
+        color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
         visible: true
 
         // Add hover tracking for system section

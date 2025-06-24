@@ -50,7 +50,7 @@ Item {
     // Background with bottom-only rounded corners
     Rectangle {
         anchors.fill: parent
-        color: Data.Colors.bgColor
+        color: Data.ThemeManager.bgColor
         topLeftRadius: 0
         topRightRadius: 0
         bottomLeftRadius: 20
@@ -118,9 +118,9 @@ Item {
                 height: tabColumn.height + 8
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
-                color: Qt.darker(Data.Colors.bgColor, 1.05)
+                color: Qt.darker(Data.ThemeManager.bgColor, 1.05)
                 radius: 18
-                border.color: Qt.darker(Data.Colors.bgColor, 1.2)
+                border.color: Qt.darker(Data.ThemeManager.bgColor, 1.2)
                 border.width: 1
             }
 
@@ -162,7 +162,7 @@ Item {
                         width: 32
                         height: 32
                         radius: 16
-                        color: currentTab === index ? Data.Colors.accentColor : Qt.darker(Data.Colors.bgColor, 1.15)
+                        color: currentTab === index ? Data.ThemeManager.accentColor : Qt.darker(Data.ThemeManager.bgColor, 1.15)
                         
                         property bool isHovered: tabMouseArea.containsMouse
                         
@@ -184,8 +184,8 @@ Item {
                             text: root.tabIcons[index]
                             font.family: "Material Symbols Outlined"
                             font.pixelSize: 16
-                            color: currentTab === index ? Data.Colors.bgColor : 
-                                   parent.isHovered ? Data.Colors.accentColor : Data.Colors.fgColor
+                            color: currentTab === index ? Data.ThemeManager.bgColor : 
+                                   parent.isHovered ? Data.ThemeManager.accentColor : Data.ThemeManager.fgColor
                         }
                     }
                 }
@@ -290,7 +290,7 @@ Item {
                         width: parent.width
                         height: 40
                         radius: 20
-                        color: Qt.darker(Data.Colors.bgColor, 1.15)
+                        color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
 
                         property bool isActive: false
 
@@ -343,7 +343,7 @@ Item {
 
                 Text {
                     text: "Calendar"
-                    color: Data.Colors.accentColor
+                    color: Data.ThemeManager.accentColor
                     font.pixelSize: 18
                     font.bold: true
                     font.family: "FiraCode Nerd Font"
@@ -352,7 +352,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height - parent.children[0].height - parent.spacing
-                    color: Qt.lighter(Data.Colors.bgColor, 1.2)
+                    color: Qt.lighter(Data.ThemeManager.bgColor, 1.2)
                     radius: 20
                     clip: true
 
@@ -383,10 +383,10 @@ Item {
 
                     Text {
                         text: "Clipboard History"
-                        color: Data.Colors.accentColor
+                        color: Data.ThemeManager.accentColor
                         font.pixelSize: 18
                         font.bold: true
-                        font.family: "FiraCode Nerd Font"
+                        font.family: "Roboto"
                     }
 
                     Item { Layout.fillWidth: true }
@@ -395,15 +395,16 @@ Item {
                         width: clearClipText.implicitWidth + 16
                         height: 24
                         radius: 12
-                        color: clearClipMouseArea.containsMouse ? Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : "transparent"
-                        border.color: Data.Colors.accentColor
+                        color: clearClipMouseArea.containsMouse ? Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.2) : "transparent"
+                        border.color: Data.ThemeManager.accentColor
                         border.width: 1
 
                         Text {
                             id: clearClipText
                             anchors.centerIn: parent
                             text: "Clear All"
-                            color: Data.Colors.accentColor
+                            color: Data.ThemeManager.accentColor
+                            font.family: "Roboto"
                             font.pixelSize: 11
                         }
 
@@ -428,7 +429,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height - parent.children[0].height - parent.spacing
-                    color: Qt.lighter(Data.Colors.bgColor, 1.2)
+                    color: Qt.lighter(Data.ThemeManager.bgColor, 1.2)
                     radius: 20
                     clip: true
 
@@ -437,6 +438,11 @@ Item {
                         anchors.margins: 20
                         active: visible && root.currentTab === 2
                         sourceComponent: active ? clipboardHistoryComponent : null
+                        onLoaded: {
+                            if (item && item.children[0]) {
+                                item.children[0].refreshClipboardHistory()
+                            }
+                        }
                     }
                 }
             }
@@ -454,15 +460,16 @@ Item {
 
                     Text {
                         text: "Notification History"
-                        color: Data.Colors.accentColor
+                        color: Data.ThemeManager.accentColor
                         font.pixelSize: 18
                         font.bold: true
-                        font.family: "FiraCode Nerd Font"
+                        font.family: "Roboto"
                     }
 
                     Text {
                         text: "(" + (root.shell.notificationHistory ? root.shell.notificationHistory.count : 0) + ")"
-                        color: Data.Colors.fgColor
+                        color: Data.ThemeManager.fgColor
+                        font.family: "Roboto"
                         font.pixelSize: 12
                         opacity: 0.7
                         Layout.alignment: Qt.AlignVCenter
@@ -474,15 +481,16 @@ Item {
                         width: clearNotifText.implicitWidth + 16
                         height: 24
                         radius: 12
-                        color: clearNotifMouseArea.containsMouse ? Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.2) : "transparent"
-                        border.color: Data.Colors.accentColor
+                        color: clearNotifMouseArea.containsMouse ? Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.2) : "transparent"
+                        border.color: Data.ThemeManager.accentColor
                         border.width: 1
 
                         Text {
                             id: clearNotifText
                             anchors.centerIn: parent
                             text: "Clear All"
-                            color: Data.Colors.accentColor
+                            color: Data.ThemeManager.accentColor
+                            font.family: "Roboto"
                             font.pixelSize: 11
                         }
 
@@ -498,7 +506,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height - parent.children[0].height - parent.spacing
-                    color: Qt.lighter(Data.Colors.bgColor, 1.2)
+                    color: Qt.lighter(Data.ThemeManager.bgColor, 1.2)
                     radius: 20
                     clip: true
 
@@ -520,16 +528,16 @@ Item {
 
                 Text {
                     text: "Wallpapers"
-                    color: Data.Colors.accentColor
+                    color: Data.ThemeManager.accentColor
                     font.pixelSize: 18
                     font.bold: true
-                    font.family: "FiraCode Nerd Font"
+                    font.family: "Roboto"
                 }
 
                 Rectangle {
                     width: parent.width
                     height: parent.height - parent.children[0].height - parent.spacing
-                    color: Qt.lighter(Data.Colors.bgColor, 1.2)
+                    color: Qt.lighter(Data.ThemeManager.bgColor, 1.2)
                     radius: 20
                     clip: true
 
@@ -680,7 +688,7 @@ Item {
         id: topLeftCorner
         position: "bottomright"
         size: 1.3
-        fillColor: Data.Colors.bgColor
+        fillColor: Data.ThemeManager.bgColor
         offsetX: 0
         offsetY: 0
     }
@@ -689,7 +697,7 @@ Item {
         id: topRightCorner
         position: "bottomleft"
         size: 1.3
-        fillColor: Data.Colors.bgColor
+        fillColor: Data.ThemeManager.bgColor
         offsetX: root.width
         offsetY: 0
     }

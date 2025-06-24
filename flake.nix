@@ -11,6 +11,8 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nixvim.url = "github:nix-community/nixvim";
 
+    matugen.url = "github:InioX/matugen";
+
     niri.url = "github:sodiboo/niri-flake";
 
     stylix = {

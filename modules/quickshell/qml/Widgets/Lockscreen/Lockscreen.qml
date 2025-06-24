@@ -8,7 +8,7 @@ import Quickshell.Io
 import "root:/Data" as Data
 import "root:/Core" as Core
 
-// Custom lockscreen with PAM authentication and beautiful UI
+// Custom lockscreen
 PanelWindow {
     id: lockScreen
     
@@ -131,11 +131,7 @@ PanelWindow {
             }
         }
         
-        // Time and date display component
-        TimeDisplay {
-            id: timeDisplay
-            isVisible: lockScreen.animateIn
-        }
+
         
         // Authentication area component
         AuthenticationArea {
@@ -159,6 +155,8 @@ PanelWindow {
             onRebootRequested: rebootProcess.running = true
             onShutdownRequested: shutdownProcess.running = true
         }
+        
+
     }
     
     // Authentication process using proper PAM authentication

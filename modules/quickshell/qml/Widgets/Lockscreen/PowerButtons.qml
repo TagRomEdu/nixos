@@ -30,8 +30,8 @@ Row {
         width: 45
         height: 45
         radius: 22
-        color: rebootMouseArea.containsMouse ? Data.Colors.withOpacity(Data.Colors.secondaryText, 0.3) : Data.Colors.withOpacity(Data.Colors.secondaryText, 0.2)
-        border.color: Data.Colors.withOpacity(Data.Colors.secondaryText, 0.6)
+        color: rebootMouseArea.containsMouse ? Data.ThemeManager.withOpacity(Data.ThemeManager.secondaryText, 0.3) : Data.ThemeManager.withOpacity(Data.ThemeManager.secondaryText, 0.2)
+        border.color: Data.ThemeManager.withOpacity(Data.ThemeManager.secondaryText, 0.6)
         border.width: 1
         
         Text {
@@ -39,7 +39,7 @@ Row {
             text: "restart_alt"
             font.family: "Material Symbols Outlined"
             font.pixelSize: 20
-            color: Data.Colors.secondaryText
+            color: Data.ThemeManager.secondaryText
         }
         
         MouseArea {
@@ -60,8 +60,8 @@ Row {
         width: 45
         height: 45
         radius: 22
-        color: shutdownMouseArea.containsMouse ? Data.Colors.withOpacity(Data.Colors.secondaryText, 0.3) : Data.Colors.withOpacity(Data.Colors.secondaryText, 0.2)
-        border.color: Data.Colors.withOpacity(Data.Colors.secondaryText, 0.6)
+        color: shutdownMouseArea.containsMouse ? Data.ThemeManager.withOpacity(Data.ThemeManager.secondaryText, 0.3) : Data.ThemeManager.withOpacity(Data.ThemeManager.secondaryText, 0.2)
+        border.color: Data.ThemeManager.withOpacity(Data.ThemeManager.secondaryText, 0.6)
         border.width: 1
         
         Text {
@@ -69,7 +69,7 @@ Row {
             text: "power_settings_new"
             font.family: "Material Symbols Outlined"
             font.pixelSize: 18
-            color: Data.Colors.secondaryText
+            color: Data.ThemeManager.secondaryText
         }
         
         MouseArea {

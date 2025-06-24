@@ -80,7 +80,7 @@ Item {
                     id: wallpaperItem
                     anchors.fill: parent
                     anchors.margins: 4
-                    color: Qt.darker(Data.Colors.bgColor, 1.2)
+                    color: Qt.darker(Data.ThemeManager.bgColor, 1.2)
                     radius: 20
 
                     Behavior on scale {
@@ -119,7 +119,7 @@ Item {
                         anchors.fill: parent
                         radius: parent.radius
                         color: "transparent"
-                        border.color: Data.Colors.accentColor
+                        border.color: Data.ThemeManager.accentColor
                         border.width: 2
                     }
 

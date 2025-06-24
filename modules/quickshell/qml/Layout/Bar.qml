@@ -4,15 +4,15 @@ import "root:/Data" as Data
 import "root:/Widgets/System" as System
 import "root:/Widgets/Calendar" as Calendar
 
-// Vertical sidebar
+// Vertical sidebar layout
 Rectangle {
     id: bar
     
     // Clean bar background
-    color: Data.Colors.bgColor
+    color: Data.ThemeManager.bgColor
     
-    // Workspace indicator at top of bar
-    System.HyprWorkspaces {
+    // Workspace indicator at top
+    System.NiriWorkspaces {
         id: workspaceIndicator
         anchors {
             top: parent.top
@@ -22,7 +22,7 @@ Rectangle {
         }
     }
 
-    // Clock widget at bottom of bar
+    // Clock at bottom
     Calendar.Clock {
         id: clockWidget
         anchors {

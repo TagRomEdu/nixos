@@ -5,7 +5,6 @@ import Quickshell.Services.Pipewire
 import QtQuick
 
 import "root:/Data" as Data
-import "root:/Core" as Core
 import "root:/Services" as Services
 import "root:/Layout" as Layout
 import "root:/Widgets/Lockscreen"
@@ -19,16 +18,14 @@ ShellRoot {
     property var defaultAudioSink: Pipewire.defaultAudioSink
     property int volume: defaultAudioSink && defaultAudioSink.audio ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
-    property alias notificationWindow: shellWindows.notificationWindow
-    property var notificationServer: shellWindows.notificationService
-    ? shellWindows.notificationService.notificationServer
-    : null
+    property var notificationWindow: null  // Set by Desktop.qml
+    property var notificationServer: notificationService ? notificationService.notificationServer : null
 
-    // Notification history with auto-cleanup
+    // Notification history management
     property ListModel notificationHistory: ListModel {
         Component.onDestruction: clear()
     }
-    property int maxHistoryItems: 25
+    property int maxHistoryItems: Data.Settings.historyLimit
     property int cleanupThreshold: maxHistoryItems + 5
 
     property string weatherLocation: Data.Settings.weatherLocation
@@ -36,18 +33,12 @@ ShellRoot {
     property bool weatherLoading: false
     property alias weatherService: weatherService
 
-    // Expose lockscreen for ProcessManager access
     property alias lockscreen: lockscreen
-
-    Core.ShellWindows {
-        id: shellWindows
-        shell: root
-        notificationService: notificationService
-    }
 
     Layout.Desktop {
         id: desktop
         shell: root
+        notificationService: notificationService
     }
 
     Services.NotificationService {
@@ -60,7 +51,11 @@ ShellRoot {
         shell: root
     }
 
-    // Custom lockscreen component
+    Services.MatugenService {
+        id: matugenService
+        shell: root
+    }
+
     Lockscreen {
         id: lockscreen
         shell: root
@@ -68,6 +63,13 @@ ShellRoot {
 
     Component.onCompleted: {
         weatherService.loadWeather()
+        
+        // Connect MatugenService to the Matugen theme
+        Data.ThemeManager.matugen.setMatugenService(matugenService)
+        console.log("MatugenService connected to Matugen theme")
+        
+        // Register service with MatugenManager for global access
+        Data.MatugenManager.setService(matugenService)
     }
 
     PwObjectTracker {
@@ -83,14 +85,14 @@ ShellRoot {
             icon: notification.appIcon ? String(notification.appIcon) : ""
         })
 
-        // Cleanup excess notifications immediately
+        // Immediate cleanup when threshold exceeded
         if (notificationHistory.count > cleanupThreshold) {
             const removeCount = notificationHistory.count - maxHistoryItems
             notificationHistory.remove(maxHistoryItems, removeCount)
         }
     }
 
-    // Cleanup timer (30 min)
+    // Periodic cleanup every 30 minutes
     Timer {
         interval: 1800000
         running: true
@@ -105,7 +107,7 @@ ShellRoot {
         }
     }
     
-    // Memory cleanup timer (10 min)
+    // Aggressive memory cleanup every 10 minutes
     Timer {
         interval: 600000
         running: true
@@ -117,7 +119,7 @@ ShellRoot {
                 notificationHistory.remove(Math.floor(maxHistoryItems * 0.7), removeCount)
             }
             
-            // Double garbage collection for better memory release
+            // Force garbage collection
             gc()
             Qt.callLater(gc)
         }

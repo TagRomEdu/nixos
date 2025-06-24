@@ -41,20 +41,20 @@ Column {
     // Current time
     Text {
         id: timeText
-        font.family: "JetBrains Mono"
+        font.family: "Roboto"
         font.pixelSize: 84
         font.weight: Font.ExtraLight
-        color: Data.Colors.brightText
+        color: Data.ThemeManager.brightText
         text: Qt.formatTime(new Date(), "hh:mm")
     }
     
     // Current date
     Text {
         id: dateText
-        font.family: "JetBrains Mono"
+        font.family: "Roboto"
         font.pixelSize: 28
         font.weight: Font.Light
-        color: Data.Colors.secondaryText
+        color: Data.ThemeManager.secondaryText
         text: Qt.formatDate(new Date(), "dddd, MMMM d, yyyy")
     }
     

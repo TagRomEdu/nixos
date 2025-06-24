@@ -5,7 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Io
 import "root:/Data" as Data
 
-// System version watermark
+// System version watermark display
 PanelWindow {
     id: systemVersion
 
@@ -32,7 +32,6 @@ PanelWindow {
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
     WlrLayershell.namespace: "quickshell-version"
 
-    // Delayed startup
     Timer {
         id: startupTimer
         interval: 1500
@@ -42,7 +41,6 @@ PanelWindow {
         }
     }
 
-    // Data structures for system information
     component Details: QtObject {
         property string version
         property string commit
@@ -67,7 +65,7 @@ PanelWindow {
         niriProcess.running = true;
     }
 
-    // Periodic refresh disabled to save memory - version info rarely changes
+    // Periodic refresh disabled - version info rarely changes
     Timer {
         running: false
         interval: 300000
@@ -80,7 +78,7 @@ PanelWindow {
         }
     }
 
-    // Parse OS information from /etc/os-release
+    // Parse OS info from /etc/os-release
     FileView {
         id: osFile
         path: "/etc/os-release"
@@ -107,7 +105,7 @@ PanelWindow {
         }
     }
 
-    // Get current NixOS generation number
+    // Get NixOS generation number
     Process {
         id: genProcess
         running: true
@@ -125,7 +123,7 @@ PanelWindow {
         }
     }
 
-    // Detect current desktop environment
+    // Detect desktop environment
     Process {
         id: wmProcess
         running: true
@@ -142,7 +140,7 @@ PanelWindow {
         }
     }
 
-    // Get Niri compositor version information
+    // Get Niri compositor version
     Process {
         id: niriProcess
         running: true
@@ -166,7 +164,7 @@ PanelWindow {
         }
     }
 
-    // Version display layout with macOS-inspired typography
+    // macOS-inspired typography layout
     ColumnLayout {
         id: systemInfoContent
         spacing: 6
@@ -175,14 +173,14 @@ PanelWindow {
             spacing: 16
             Layout.alignment: Qt.AlignRight
             
-            // Operating system information
+            // OS information
             ColumnLayout {
                 spacing: 2
                 Layout.alignment: Qt.AlignRight
                 
                 Text {
                     text: systemVersion.os.name
-                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"
+                    color: (Data.ThemeManager.currentTheme && Data.ThemeManager.currentTheme.type === "dark") ? "#40ffffff" : "#40000000"
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -204,7 +202,7 @@ PanelWindow {
                         }
                         return details.join(" ");
                     }
-                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"
+                    color: (Data.ThemeManager.currentTheme && Data.ThemeManager.currentTheme.type === "dark") ? "#30ffffff" : "#30000000"
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium
@@ -215,7 +213,7 @@ PanelWindow {
             
             Text {
                 text: "│"
-                color: Data.Colors.isDarkTheme ? "#20ffffff" : "#20000000"
+                color: (Data.ThemeManager.currentTheme && Data.ThemeManager.currentTheme.type === "dark") ? "#20ffffff" : "#20000000"
                 font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                 font.pointSize: 14
                 font.weight: Font.Light
@@ -229,7 +227,7 @@ PanelWindow {
                 
                 Text {
                     text: systemVersion.wm.name
-                    color: Data.Colors.isDarkTheme ? "#40ffffff" : "#40000000"
+                    color: (Data.ThemeManager.currentTheme && Data.ThemeManager.currentTheme.type === "dark") ? "#40ffffff" : "#40000000"
                     font.family: "SF Pro Display, -apple-system, system-ui, sans-serif"
                     font.pointSize: 16
                     font.weight: Font.DemiBold
@@ -248,7 +246,7 @@ PanelWindow {
                         }
                         return details.join(" ");
                     }
-                    color: Data.Colors.isDarkTheme ? "#30ffffff" : "#30000000"
+                    color: (Data.ThemeManager.currentTheme && Data.ThemeManager.currentTheme.type === "dark") ? "#30ffffff" : "#30000000"
                     font.family: "SF Mono, Consolas, Monaco, monospace"
                     font.pointSize: 10
                     font.weight: Font.Medium
@@ -259,7 +257,6 @@ PanelWindow {
         }
     }
     
-    // Clean up processes on destruction
     Component.onDestruction: {
         if (genProcess.running) genProcess.running = false
         if (wmProcess.running) wmProcess.running = false

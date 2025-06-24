@@ -6,7 +6,7 @@ import "root:/Data" as Data
 Rectangle {
     id: root
     required property var shell
-    color: Qt.darker(Data.Colors.bgColor, 1.15)
+    color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
     radius: 20
 
     property bool containsMouse: weatherMouseArea.containsMouse || (forecastPopup.visible && forecastPopup.containsMouse)
@@ -107,7 +107,7 @@ Rectangle {
                 }
                 font.pixelSize: 28
                 font.family: "Material Symbols Outlined"
-                color: Data.Colors.accentColor
+                color: Data.ThemeManager.accentColor
                 Layout.alignment: Qt.AlignHCenter
             }
 
@@ -117,7 +117,7 @@ Rectangle {
                     if (!shell.weatherData) return "No weather data"
                     return shell.weatherData.currentTemp
                 }
-                color: Data.Colors.fgColor
+                color: Data.ThemeManager.fgColor
                 font.pixelSize: 20
                 font.bold: true
                 Layout.alignment: Qt.AlignHCenter
@@ -133,10 +133,10 @@ Rectangle {
         height: 226
         padding: 12
         background: Rectangle {
-            color: Qt.darker(Data.Colors.bgColor, 1.15)
+            color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
             radius: 20
             border.width: 1
-            border.color: Qt.lighter(Data.Colors.bgColor, 1.3)
+            border.color: Qt.lighter(Data.ThemeManager.bgColor, 1.3)
         }
 
         property bool containsMouse: forecastMouseArea.containsMouse
@@ -174,7 +174,7 @@ Rectangle {
                     text: shell.weatherData ? root.getWeatherIcon(shell.weatherData.currentCondition) : ""
                     font.pixelSize: 48
                     font.family: "Material Symbols Outlined"
-                    color: Data.Colors.accentColor
+                    color: Data.ThemeManager.accentColor
                 }
 
                 ColumnLayout {
@@ -183,7 +183,7 @@ Rectangle {
 
                     Label {
                         text: shell.weatherData ? shell.weatherData.currentCondition : ""
-                        color: Data.Colors.fgColor
+                        color: Data.ThemeManager.fgColor
                         font.pixelSize: 14
                         font.bold: true
                         Layout.fillWidth: true
@@ -202,11 +202,11 @@ Rectangle {
                                 text: "thermostat"
                                 font.family: "Material Symbols Outlined"
                                 font.pixelSize: 12
-                                color: Data.Colors.accentColor
+                                color: Data.ThemeManager.accentColor
                             }
                             Label {
                                 text: shell.weatherData ? shell.weatherData.currentTemp : ""
-                                color: Data.Colors.fgColor
+                                color: Data.ThemeManager.fgColor
                                 font.pixelSize: 12
                             }
                         }
@@ -214,7 +214,7 @@ Rectangle {
                         Rectangle {
                             width: 1
                             height: 12
-                            color: Qt.lighter(Data.Colors.bgColor, 1.3)
+                            color: Qt.lighter(Data.ThemeManager.bgColor, 1.3)
                         }
 
                         RowLayout {
@@ -224,7 +224,7 @@ Rectangle {
                                 text: "air"
                                 font.family: "Material Symbols Outlined"
                                 font.pixelSize: 12
-                                color: Data.Colors.accentColor
+                                color: Data.ThemeManager.accentColor
                             }
                             Label {
                                 text: {
@@ -232,7 +232,7 @@ Rectangle {
                                     const windInfo = shell.weatherData.details.find(d => d.startsWith("Wind:"))
                                     return windInfo ? windInfo.split(": ")[1] : ""
                                 }
-                                color: Data.Colors.fgColor
+                                color: Data.ThemeManager.fgColor
                                 font.pixelSize: 12
                             }
                         }
@@ -240,7 +240,7 @@ Rectangle {
                         Rectangle {
                             width: 1
                             height: 12
-                            color: Qt.lighter(Data.Colors.bgColor, 1.3)
+                            color: Qt.lighter(Data.ThemeManager.bgColor, 1.3)
                         }
 
                         RowLayout {
@@ -250,7 +250,7 @@ Rectangle {
                                 text: "explore"
                                 font.family: "Material Symbols Outlined"
                                 font.pixelSize: 12
-                                color: Data.Colors.accentColor
+                                color: Data.ThemeManager.accentColor
                             }
                             Label {
                                 text: {
@@ -258,7 +258,7 @@ Rectangle {
                                     const dirInfo = shell.weatherData.details.find(d => d.startsWith("Direction:"))
                                     return dirInfo ? dirInfo.split(": ")[1] : ""
                                 }
-                                color: Data.Colors.fgColor
+                                color: Data.ThemeManager.fgColor
                                 font.pixelSize: 12
                             }
                         }
@@ -273,12 +273,12 @@ Rectangle {
             Rectangle {
                 height: 1
                 Layout.fillWidth: true
-                color: Qt.lighter(Data.Colors.bgColor, 1.3)
+                color: Qt.lighter(Data.ThemeManager.bgColor, 1.3)
             }
 
             Label {
                 text: "3-Day Forecast"
-                color: Data.Colors.accentColor
+                color: Data.ThemeManager.accentColor
                 font.pixelSize: 12
                 font.bold: true
             }
@@ -295,7 +295,7 @@ Rectangle {
 
                         Label {
                             text: modelData.dayName
-                            color: Data.Colors.fgColor
+                            color: Data.ThemeManager.fgColor
                             font.pixelSize: 10
                             font.bold: true
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -305,13 +305,13 @@ Rectangle {
                             text: root.getWeatherIcon(modelData.condition)
                             font.pixelSize: 16
                             font.family: "Material Symbols Outlined"
-                            color: Data.Colors.accentColor
+                            color: Data.ThemeManager.accentColor
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Label {
                             text: modelData.minTemp + "° - " + modelData.maxTemp + "°"
-                            color: Data.Colors.fgColor
+                            color: Data.ThemeManager.fgColor
                             font.pixelSize: 10
                             anchors.horizontalCenter: parent.horizontalCenter
                         }

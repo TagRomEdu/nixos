@@ -36,6 +36,8 @@ in
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
+
+    ../../modules/matugen/matugen.nix  # <- Add your matugen module here
   ];
 
   home.packages = allPackages;
@@ -54,4 +56,12 @@ in
   };
 
   programs.home-manager.enable = true;
+
+  # Minimal matugen enable and config:
+  programs.matugen = {
+    enable = true;
+    variant = "dark";
+    source_color = "#7f5af0";  # example hex color to generate theme from
+    wallpaper = "${pkgs.nixos-artwork.wallpapers.simple-blue}/share/backgrounds/nixos/nix-wallpaper-simple-blue.png";
+  };
 }

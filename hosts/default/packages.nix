@@ -51,7 +51,6 @@ with pkgs;
   gpu-screen-recorder
   mpv
   slop
-  code-cursor
   
   # Quickshell stuff
   qt6Packages.qt5compat

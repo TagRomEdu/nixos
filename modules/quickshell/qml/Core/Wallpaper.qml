@@ -3,7 +3,7 @@ import Quickshell
 import Quickshell.Wayland
 import "root:/Data" as Data
 
-// Wallpaper background layer rendered behind all other content
+// Wallpaper background layer
 PanelWindow {
     id: wallpaperWindow
     required property var screen
@@ -33,14 +33,14 @@ PanelWindow {
         source: Data.WallpaperManager.currentWallpaper
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
-        cache: false  // Disable Qt caching to reduce memory usage
+        cache: false  // Reduce memory usage
         visible: true
 
-        // Fallback background when wallpaper fails to load
+        // Fallback when wallpaper fails to load
         Rectangle {
             id: fallbackBackground
             anchors.fill: parent
-            color: Data.Colors.bgColor
+            color: Data.ThemeManager.bgColor
             visible: wallpaperImage.status !== Image.Ready || !wallpaperImage.source
         }
     }

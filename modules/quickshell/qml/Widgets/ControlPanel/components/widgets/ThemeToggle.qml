@@ -7,7 +7,7 @@ import "root:/Data" as Data
 Rectangle {
     id: root
     property var shell: null
-    color: Qt.darker(Data.Colors.bgColor, 1.15)
+    color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
     radius: 20
 
     property bool containsMouse: themeMouseArea.containsMouse
@@ -30,7 +30,7 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         onClicked: {
-            Data.Colors.toggleTheme()
+            Data.ThemeManager.toggleTheme()
         }
     }
 
@@ -40,6 +40,6 @@ Rectangle {
         text: "contrast"
         font.pixelSize: 24
         font.family: "Material Symbols Outlined"
-        color: containsMouse ? Data.Colors.accentColor : Data.Colors.fgColor
+        color: containsMouse ? Data.ThemeManager.accentColor : Data.ThemeManager.fgColor
     }
 } 

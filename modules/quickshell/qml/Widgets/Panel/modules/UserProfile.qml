@@ -21,17 +21,17 @@ Rectangle {
     color: {
         if (isActive) {
             return isHovered ?
-                   Qt.lighter(Data.Colors.accentColor, 1.1) :
-                   Qt.rgba(Data.Colors.accentColor.r, Data.Colors.accentColor.g, Data.Colors.accentColor.b, 0.3)
+                   Qt.lighter(Data.ThemeManager.accentColor, 1.1) :
+                   Qt.rgba(Data.ThemeManager.accentColor.r, Data.ThemeManager.accentColor.g, Data.ThemeManager.accentColor.b, 0.3)
         } else {
             return isHovered ?
-                   Qt.lighter(Data.Colors.accentColor, 1.2) :
-                   Qt.lighter(Data.Colors.bgColor, 1.15)
+                   Qt.lighter(Data.ThemeManager.accentColor, 1.2) :
+                   Qt.lighter(Data.ThemeManager.bgColor, 1.15)
         }
     }
 
     border.width: isActive ? 2 : 1
-    border.color: isActive ? Data.Colors.accentColor : Qt.lighter(Data.Colors.bgColor, 1.3)
+    border.color: isActive ? Data.ThemeManager.accentColor : Qt.lighter(Data.ThemeManager.bgColor, 1.3)
 
     Row {
         anchors.fill: parent
@@ -45,7 +45,7 @@ Rectangle {
             height: 52
             radius: 20
             clip: true
-            border.color: Data.Colors.accentColor
+            border.color: Data.ThemeManager.accentColor
             border.width: 3
             color: "transparent"
 
@@ -82,9 +82,10 @@ Rectangle {
             Text {
                 width: parent.width
                 text: root.userName === "" ? "Loading..." : root.userName
+                font.family: "Roboto"
                 font.pixelSize: 16
                 font.bold: true
-                color: isHovered || root.isActive ? "#ffffff" : Data.Colors.accentColor
+                color: isHovered || root.isActive ? Data.ThemeManager.bgColor : Data.ThemeManager.accentColor
                 elide: Text.ElideRight
                 maximumLineCount: 1
             }
@@ -92,9 +93,10 @@ Rectangle {
             Text {
                 width: parent.width
                 text: root.userInfo === "" ? "Loading uptime..." : root.userInfo
+                font.family: "Roboto"
                 font.pixelSize: 11
                 font.bold: true
-                color: isHovered || root.isActive ? "#cccccc" : Qt.lighter(Data.Colors.accentColor, 1.6)
+                color: isHovered || root.isActive ? "#cccccc" : Qt.lighter(Data.ThemeManager.accentColor, 1.6)
                 elide: Text.ElideRight
                 maximumLineCount: 1
             }

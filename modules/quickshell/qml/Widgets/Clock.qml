@@ -15,18 +15,18 @@ Item {
         width: clockText.implicitWidth + 24
         height: 32
         
-        color: Data.Colors.bgColor
+        color: Data.ThemeManager.bgColor
         
-        // Right-side radius for positioning
+        // Rounded corner for border integration
         topRightRadius: height / 2
 
         Text {
             id: clockText
             anchors.centerIn: parent
-            font.family: "JetBrains Mono"
+            font.family: "Roboto"
             font.pixelSize: 14
             font.bold: true
-            color: Data.Colors.accentColor
+            color: Data.ThemeManager.accentColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             text: Qt.formatTime(new Date(), "HH:mm")
@@ -41,21 +41,24 @@ Item {
         onTriggered: clockText.text = Qt.formatTime(new Date(), "HH:mm")
     }
 
-    // Border integration corners
+    // Border integration corner pieces
     Core.Corners {
         id: topLeftCorner
         position: "topleft"
         size: 1.3
-        fillColor: Data.Colors.bgColor
+        fillColor: Data.ThemeManager.bgColor
         offsetX: -39
         offsetY: -26
+        z: 0  // Same z-level as clock background
     }
-        Core.Corners {
+    
+    Core.Corners {
         id: topLeftCorner2
         position: "topleft"
         size: 1.3
-        fillColor: Data.Colors.bgColor
-        offsetX: 25
+        fillColor: Data.ThemeManager.bgColor
+        offsetX: 20
         offsetY: 6
+        z: 0  // Same z-level as clock background
     }
 }

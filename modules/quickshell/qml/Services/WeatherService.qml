@@ -1,18 +1,17 @@
 import QtQuick
 import "root:/Data" as Data
 
-// Weather service (Open-Meteo API)
+// Weather service using Open-Meteo API
 Item {
     id: service
     
     property var shell
     
-    // Weather settings
     property string city: Data.Settings.weatherLocation
-    property bool isAmerican: false
-    property int updateInterval: 3600  // Update every hour to reduce API calls
+    property bool isAmerican: Data.Settings.useFahrenheit
+    property int updateInterval: 3600  // 1 hour to reduce API calls
     property string weatherDescription: ""
-    property var weather: null  // Initialize as null instead of object
+    property var weather: null
 
     property Timer retryTimer: Timer {
         interval: 30000
@@ -27,6 +26,22 @@ Item {
         repeat: true
         triggeredOnStart: true
         onTriggered: getGeocoding()
+    }
+
+    // Watch for settings changes and refresh weather data
+    Connections {
+        target: Data.Settings
+        function onWeatherLocationChanged() {
+            console.log("Weather location changed to:", Data.Settings.weatherLocation)
+            retryTimer.stop()
+            getGeocoding()
+        }
+        
+        function onUseFahrenheitChanged() {
+            console.log("Temperature unit changed to:", Data.Settings.useFahrenheit ? "Fahrenheit" : "Celsius")
+            retryTimer.stop()
+            getGeocoding()
+        }
     }
 
     // WMO weather code descriptions (Open-Meteo standard)
@@ -68,16 +83,19 @@ Item {
     }
 
     function updateWeather() {
-        if (!weather || !weather.current) return;
+        if (!weather || !weather.current || !weather.current_units) {
+            console.warn("Weather data incomplete, skipping update");
+            return;
+        }
         
         const weatherCode = weather.current.weather_code;
-        const temp = getTemp(Math.round(weather.current.temperature_2m), weather.current_units.temperature_2m);
+        const temp = getTemp(Math.round(weather.current.temperature_2m || 0), weather.current_units.temperature_2m || "°C");
         
-        // Format 3-day forecast
+        // Build 3-day forecast
         const forecast = [];
         const today = new Date();
         
-        if (weather.daily) {
+        if (weather.daily && weather.daily.time && weather.daily.weather_code && weather.daily.temperature_2m_min && weather.daily.temperature_2m_max) {
             for (let i = 0; i < Math.min(3, weather.daily.time.length); i++) {
                 let dayName;
                 if (i === 0) {
@@ -102,7 +120,7 @@ Item {
             }
         }
         
-        // Update shell weather data in the format it expects
+        // Update shell weather data in expected format
         shell.weatherData = {
             location: city,
             currentTemp: temp,
@@ -126,7 +144,6 @@ Item {
             xhr.onreadystatechange = null;
             xhr.onerror = null;
             
-            // Remove from active list
             const index = activeXHRs.indexOf(xhr);
             if (index > -1) {
                 activeXHRs.splice(index, 1);
@@ -166,7 +183,10 @@ Item {
                         shell.weatherLoading = false;
                     }
                 } else if (xhr.status === 0) {
-                    console.warn("Geocoding request failed - no network connection or CORS issue");
+                    // Silent handling of network issues
+                    if (!retryTimer.running) {
+                        console.warn("Weather service: Network unavailable, will retry automatically");
+                    }
                     retryTimer.running = true;
                     shell.weatherLoading = false;
                 } else {
@@ -203,7 +223,10 @@ Item {
                         shell.weatherLoading = false;
                     }
                 } else if (xhr.status === 0) {
-                    console.warn("Weather request failed - no network connection");
+                    // Silent handling of network issues
+                    if (!retryTimer.running) {
+                        console.warn("Weather service: Network unavailable for weather data");
+                    }
                     retryTimer.running = true;
                     shell.weatherLoading = false;
                 } else {
@@ -223,7 +246,6 @@ Item {
         xhr.send();
     }
 
-    // Public function for shell to call
     function loadWeather() {
         getGeocoding();
     }
@@ -231,7 +253,7 @@ Item {
     Component.onCompleted: getGeocoding()
     
     Component.onDestruction: {
-        // Clean up all active XHR requests
+        // Cleanup all active XHR requests
         for (let i = 0; i < activeXHRs.length; i++) {
             if (activeXHRs[i]) {
                 activeXHRs[i].abort();

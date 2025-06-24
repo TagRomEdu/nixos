@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "root:/Data" as Data
-import "." as Modules
+import "." as Controls
 
-// Dual-section control panel with performance and system controls
+// Dual-section control panel
 Row {
     id: root
     spacing: 16
@@ -27,7 +27,7 @@ Row {
         width: (parent.width - parent.spacing) / 2
         height: parent.height
         radius: 20
-        color: Qt.darker(Data.Colors.bgColor, 1.15)
+        color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
         visible: true
 
         // Hover tracking with coordination between background and content
@@ -47,7 +47,7 @@ Row {
             }
         }
 
-        Modules.PerformanceControls {
+        Controls.PerformanceControls {
             id: performanceControls
             anchors.fill: parent
             anchors.margins: 12
@@ -69,7 +69,7 @@ Row {
         width: (parent.width - parent.spacing) / 2
         height: parent.height
         radius: 20
-        color: Qt.darker(Data.Colors.bgColor, 1.15)
+        color: Qt.darker(Data.ThemeManager.bgColor, 1.15)
         visible: true
 
         // Hover tracking with coordination between background and content
@@ -89,7 +89,7 @@ Row {
             }
         }
 
-        Modules.SystemControls {
+        Controls.SystemControls {
             id: systemControls
             anchors.fill: parent
             anchors.margins: 12
