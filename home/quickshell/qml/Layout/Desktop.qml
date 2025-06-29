@@ -66,8 +66,8 @@ Scope {
             }
 
             // Volume OSD at right border (primary screen only)
-            System.VolumeOSD {
-                id: volumeOsd
+            System.OSD {
+                id: osd
                 shell: desktop.shell
                 visible: modelData === Quickshell.primaryScreen
                 anchors {
