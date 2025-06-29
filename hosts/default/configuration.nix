@@ -9,6 +9,7 @@
     "${self}/system/programs/stylix.nix"
     "${self}/system/xdg.nix"
     "${self}/system/environment.nix"
+    "${self}/system/packages.nix"
     "${self}/system/filesystems.nix"
     inputs.home-manager.nixosModules.default
   ];

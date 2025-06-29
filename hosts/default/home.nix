@@ -14,30 +14,28 @@ in
   home.homeDirectory = "/home/lysec";
 
   imports = [
-    ../../modules/niri/default.nix
-    ../../modules/desktop/hyprland.nix
-    ../../modules/quickshell/quickshell.nix
-    ../../modules/desktop/hyprlock.nix
-    ../../modules/desktop/hypridle.nix
-    ../../modules/desktop/walker.nix
+    ../../home/niri/default.nix
+    ../../home/desktop/hyprland.nix
+    ../../home/quickshell/quickshell.nix
+    ../../home/desktop/hyprlock.nix
+    ../../home/desktop/hypridle.nix
+    ../../home/desktop/walker.nix
 
-    ../../modules/editors/vscode.nix
-    ../../modules/editors/nixvim.nix
+    ../../home/editors/vscode.nix
+    ../../home/editors/nixvim.nix
 
-    ../../modules/programs/ghostty.nix
-    ../../modules/programs/fastfetch.nix
-    ../../modules/programs/spicetify.nix
-    ../../modules/programs/obs.nix
-    ../../modules/programs/vesktop.nix
-    ../../modules/programs/firefox.nix
+    ../../home/programs/ghostty.nix
+    ../../home/programs/fastfetch.nix
+    ../../home/programs/spicetify.nix
+    ../../home/programs/obs.nix
+    ../../home/programs/vesktop.nix
+    ../../home/programs/firefox.nix
 
     ../../system/shell/zsh.nix
 
     inputs.hyprland.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
-
-    ../../modules/matugen/matugen.nix  # <- Add your matugen module here
   ];
 
   home.packages = allPackages;
@@ -56,12 +54,4 @@ in
   };
 
   programs.home-manager.enable = true;
-
-  # Minimal matugen enable and config:
-  programs.matugen = {
-    enable = true;
-    variant = "dark";
-    source_color = "#7f5af0";  # example hex color to generate theme from
-    wallpaper = "${pkgs.nixos-artwork.wallpapers.simple-blue}/share/backgrounds/nixos/nix-wallpaper-simple-blue.png";
-  };
 }
