@@ -13,6 +13,9 @@ in {
     "xf86audioraisevolume".action = volume-up;
     "xf86audiolowervolume".action = volume-down;
 
+    "control+super+xf86audioraisevolume".action = spawn "brightness" "up";
+    "control+super+xf86audiolowervolume".action = spawn "brightness" "down";
+
     "super+q".action = close-window;
     "super+b".action = spawn apps.browser;
     "super+Return".action = spawn apps.terminal;
@@ -22,15 +25,9 @@ in {
     "super+f".action = fullscreen-window;
     "super+t".action = toggle-window-floating;
 
-    "control+shift+1".action = spawn "${pkgs.bash}/bin/bash" [
-      "-c"
-      "${pkgs.grim}/bin/grim -g \"\$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.wl-clipboard}/bin/wl-copy"
-    ];
+    "control+shift+1".action = screenshot;
+    "control+shift+2".action = screenshot-window { write-to-disk = true; };
 
-    "control+shift+2".action = spawn "${pkgs.bash}/bin/bash" [
-      "-c"
-      "${pkgs.grim}/bin/grim - | ${pkgs.wl-clipboard}/bin/wl-copy --type image/png"
-    ];
 
     "super+Left".action = focus-column-left;
     "super+Right".action = focus-column-right;

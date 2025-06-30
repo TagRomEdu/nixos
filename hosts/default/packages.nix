@@ -12,6 +12,8 @@ with pkgs;
   prismlauncher
   heroic
   peazip
+  nautilus
+  file-roller
 
   # TUI
   btop

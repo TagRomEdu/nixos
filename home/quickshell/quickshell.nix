@@ -2,7 +2,7 @@
 
 let
   homeDir = config.home.homeDirectory;
-  quickshellDir = "${homeDir}/nixos/modules/quickshell/qml";
+  quickshellDir = "${homeDir}/nixos/home/quickshell/qml";
   quickshellTarget = "${homeDir}/.config/quickshell";
   faceIconSource = "${homeDir}/nixos/assets/profile.gif";
   faceIconTarget = "${homeDir}/.face.icon";

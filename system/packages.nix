@@ -17,6 +17,7 @@
     pywalfox-native
     arrpc
     swww
+    swaybg
     adwaita-icon-theme
     gnome-themes-extra
     nodePackages.prettier
@@ -31,5 +32,6 @@
     libayatana-appindicator
     nh
     base16-schemes
+    ddcutil
   ];
   }

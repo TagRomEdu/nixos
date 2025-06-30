@@ -23,6 +23,8 @@
     })
   ];
 
+  users.groups.i2c = {}; # ✅ Ensure group exists
+
   users.users.lysec = {
     isNormalUser = true;
     description = "lysec";
@@ -33,6 +35,7 @@
       "video"
       "input"
       "plugdev"
+      "i2c"
     ];
   };
 
@@ -66,7 +69,8 @@
     kernelParams = [
       "video=DP-1:2560x1440@360"
     ];
-    kernelModules = [ "v4l2loopback" ];
+    kernelModules = [ "v4l2loopback" "i2c-dev" ];
+    initrd.availableKernelModules = [ "i2c-dev" ]; # ✅ Load early in initrd
     extraModprobeConfig = ''
       options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
     '';
@@ -74,6 +78,8 @@
       v4l2loopback
     ];
   };
+
+  services.udev.packages = [ pkgs.rwedid ]; # ✅ Enable I2C udev rules
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -144,8 +150,6 @@
   console.keyMap = "de";
 
   xdg.portal.enable = true;
-
-  programs.thunar.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
