@@ -1,4 +1,7 @@
-[![Watch the demo](https://i.imgur.com/LcVA9sp.jpeg)](https://files.catbox.moe/3zeqvz.mp4)
+<a href="https://files.catbox.moe/3zeqvz.mp4" target="_blank" rel="noopener noreferrer">
+  <img src="https://i.imgur.com/LcVA9sp.jpeg" alt="Watch the demo" width="600"/>
+</a>
+
 Click on the image to see the demo.
 
 > ⚠️ **Important:** This repository includes my personal `hardware-configuration.nix`, which is specific to my hardware setup.  
