@@ -1,11 +1,8 @@
-![NixOS Configuration](https://i.imgur.com/LcVA9sp.jpeg)
+[![Watch the demo](https://i.imgur.com/LcVA9sp.jpeg)](https://files.catbox.moe/3zeqvz.mp4)
+Click on the image to see the demo.
 
 > ⚠️ **Important:** This repository includes my personal `hardware-configuration.nix`, which is specific to my hardware setup.  
 > You **must replace it** with one generated for your system using `nixos-generate-config` to avoid compatibility issues.
-
-# Showcase
-
-<video src="https://files.catbox.moe/3zeqvz.mp4" controls autoplay loop muted playsinline width="600"></video>
 
 # NixOS Configuration
 
