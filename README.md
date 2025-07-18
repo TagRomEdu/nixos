@@ -1,6 +1,5 @@
-<a href="https://files.catbox.moe/3zeqvz.mp4" target="_blank" rel="noopener noreferrer">
-  <img src="https://i.imgur.com/LcVA9sp.jpeg" alt="Watch the demo" width="600"/>
-</a>
+![NixOS Configuration](https://i.imgur.com/LcVA9sp.jpeg)
+[Video](https://files.catbox.moe/3zeqvz.mp4)
 
 Click on the image to see the demo.
 
