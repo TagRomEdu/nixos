@@ -10,6 +10,11 @@ in {
     volume-up = spawn pactl [ "set-sink-volume" "@DEFAULT_SINK@" "+5%" ];
     volume-down = spawn pactl [ "set-sink-volume" "@DEFAULT_SINK@" "-5%" ];
   in {
+
+    # Quickshell Keybinds Start
+    "super+Control+Return".action = spawn ["qs" "ipc" "call" "globalIPC" "toggleLauncher"];
+    # Quickshell Keybinds End
+
     "xf86audioraisevolume".action = volume-up;
     "xf86audiolowervolume".action = volume-down;
 
@@ -19,7 +24,7 @@ in {
     "super+q".action = close-window;
     "super+b".action = spawn apps.browser;
     "super+Return".action = spawn apps.terminal;
-    "super+Control+Return".action = spawn apps.editor;
+    #"super+Control+Return".action = spawn apps.appLauncher;
     "super+E".action = spawn apps.fileManager;
 
     "super+f".action = fullscreen-window;

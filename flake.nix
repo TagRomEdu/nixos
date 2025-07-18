@@ -5,7 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
-    hyprland.url = "github:hyprwm/Hyprland";
     nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
@@ -26,7 +25,7 @@
     };
 
     moonlight = {
-      url = "github:moonlight-mod/moonlight"; # Add `/develop` to the flake URL to use nightly.
+      url = "github:moonlight-mod/moonlight";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -18,11 +18,13 @@
 
       layout = {
 
+        background-color = "#00000000";
+
         focus-ring = {
           enable = true;
           width = 3;
           active = {
-            color = "#c488ec";
+            color = "#A8AEFF";
           };
           inactive = {
             color = "#505050";
@@ -81,7 +83,6 @@
         QT_QPA_PLATFORM = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
-        ELECTRON_ENABLE_HARDWARE_ACCELERATION = "1";
 
         XDG_SESSION_TYPE = "wayland";
         XDG_CURRENT_DESKTOP = "niri";

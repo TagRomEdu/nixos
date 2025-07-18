@@ -8,45 +8,47 @@
       {
         matches = [
           {
+            namespace = "^quickshell-wallpaper$";
+          }
+        ];
+        #place-within-backdrop = true;
+      }
+      {
+        matches = [
+          {
+            namespace = "^quickshell-overview$";
+          }
+        ];
+        place-within-backdrop = true;
+      }
+      {
+        matches = [
+          {
             namespace = "^swww-daemon$";
           }
         ];
         place-within-backdrop = true;
       }
     ];
+    
     window-rules = [
       {
         matches = [
           { app-id = "firefox"; }
         ];
         open-on-workspace = "browser";
-        geometry-corner-radius = {
-          top-left = 20.0;
-          top-right = 20.0;
-          bottom-left = 20.0;
-          bottom-right = 20.0;
-        };
-        clip-to-geometry = true;
       }
 
-      # Vesktop with rounded corners
+      # Vesktop
       {
         matches = [
           { app-id = "vesktop"; }
         ];
         open-on-workspace = "vesktop";
-        geometry-corner-radius = {
-          top-left = 20.0;
-          top-right = 20.0;
-          bottom-left = 20.0;
-          bottom-right = 20.0;
-        };
-        clip-to-geometry = true;
       }
 
-      # Default rule for all other windows with rounded corners
       {
-        matches = [{}]; # Matches all windows not matched by above rules
+        matches = [{}];
         geometry-corner-radius = {
           top-left = 20.0;
           top-right = 20.0;

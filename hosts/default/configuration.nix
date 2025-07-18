@@ -23,7 +23,7 @@
     })
   ];
 
-  users.groups.i2c = {}; # ✅ Ensure group exists
+  users.groups.i2c = {};
 
   users.users.lysec = {
     isNormalUser = true;
@@ -36,6 +36,7 @@
       "input"
       "plugdev"
       "i2c"
+      "bluetooth"
     ];
   };
 
@@ -70,7 +71,7 @@
       "video=DP-1:2560x1440@360"
     ];
     kernelModules = [ "v4l2loopback" "i2c-dev" ];
-    initrd.availableKernelModules = [ "i2c-dev" ]; # ✅ Load early in initrd
+    initrd.availableKernelModules = [ "i2c-dev" ];
     extraModprobeConfig = ''
       options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
     '';
@@ -79,7 +80,7 @@
     ];
   };
 
-  services.udev.packages = [ pkgs.rwedid ]; # ✅ Enable I2C udev rules
+  services.udev.packages = [ pkgs.rwedid ];
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -95,7 +96,18 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    wireless = {
+      enable = false;
+      userControlled.enable = false;
+    };
+
+    networkmanager = {
+      wifi.backend = "wpa_supplicant";
+      wifi.powersave = false;
+    };
   };
+
+  hardware.enableRedistributableFirmware = true;
 
   time.timeZone = "Europe/Berlin";
 
@@ -127,6 +139,8 @@
     };
 
     dbus.enable = true;
+    dbus.packages = with pkgs; [ bluez ];
+
     power-profiles-daemon.enable = true;
     printing.enable = true;
     gvfs.enable = true;
@@ -150,6 +164,12 @@
   console.keyMap = "de";
 
   xdg.portal.enable = true;
+
+  hardware.bluetooth.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    bluez
+  ];
 
   nixpkgs.config.allowUnfree = true;
 

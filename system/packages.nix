@@ -8,17 +8,13 @@
 {
   environment.systemPackages = with pkgs; [
     wget
-    unzip
     git
     pavucontrol
     pulseaudio
     waypaper
-    pywal16
-    pywalfox-native
     arrpc
     swww
     swaybg
-    adwaita-icon-theme
     gnome-themes-extra
     nodePackages.prettier
     xwayland
@@ -29,7 +25,6 @@
     libva
     libva-utils
     playerctl
-    libayatana-appindicator
     nh
     base16-schemes
     ddcutil
