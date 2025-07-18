@@ -1,11 +1,11 @@
-![NixOS Configuration](https://i.imgur.com/ORakUTD.png)
+![NixOS Configuration](https://i.imgur.com/LcVA9sp.jpeg)
 
 > ⚠️ **Important:** This repository includes my personal `hardware-configuration.nix`, which is specific to my hardware setup.  
 > You **must replace it** with one generated for your system using `nixos-generate-config` to avoid compatibility issues.
 
 # Showcase
 
-![Showcase Gif](https://i.imgur.com/alBK2pa.gif)
+<video src="https://files.catbox.moe/3zeqvz.mp4" controls autoplay loop muted playsinline width="600"></video>
 
 # NixOS Configuration
 
