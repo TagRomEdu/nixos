@@ -4,7 +4,7 @@
     enable = true;
 
     profiles = {
-      lysec = {
+      tre = {
         isDefault = true;
 
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -126,6 +126,6 @@
     };
   };
 
-  stylix.targets.firefox.profileNames = [ "lysec" ];
+  stylix.targets.firefox.profileNames = [ "tre" ];
   stylix.enableReleaseChecks = false;
 }

@@ -8,7 +8,7 @@
     { command = ["qs"]; }
     { command = ["vesktop"]; }
     { command = ["swww-daemon"]; }
-    #{ command = ["${pkgs.swaybg}/bin/swaybg" "-o" "DP-1" "-i" "/home/lysec/nixos/assets/wallpapers/clouds.png" "-m" "fill"]; }
-    #{ command = ["sh" "-c" "swww-daemon & swww img /home/lysec/nixos/wallpapers/cloud.png"]; }
+    #{ command = ["${pkgs.swaybg}/bin/swaybg" "-o" "DP-1" "-i" "/home/tre/nixos/assets/wallpapers/clouds.png" "-m" "fill"]; }
+    #{ command = ["sh" "-c" "swww-daemon & swww img /home/tre/nixos/wallpapers/cloud.png"]; }
   ];
 }

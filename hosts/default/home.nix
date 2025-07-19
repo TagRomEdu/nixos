@@ -10,8 +10,8 @@ let
   allPackages = import ./packages.nix { inherit pkgs; };
 in
 {
-  home.username = "lysec";
-  home.homeDirectory = "/home/lysec";
+  home.username = "tre";
+  home.homeDirectory = "/home/tre";
 
   imports = [
     ../../home/niri/default.nix

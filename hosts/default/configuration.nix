@@ -25,9 +25,9 @@
 
   users.groups.i2c = {};
 
-  users.users.lysec = {
+  users.users.tre = {
     isNormalUser = true;
-    description = "lysec";
+    description = "tre";
     shell = pkgs.zsh;
     extraGroups = [
       "networkmanager"
@@ -45,7 +45,7 @@
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "lysec" = import ./home.nix;
+      "tre" = import ./home.nix;
     };
   };
 
