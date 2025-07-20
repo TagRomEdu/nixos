@@ -63,22 +63,22 @@
     material-icons
   ];
 
-  boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    kernelPackages = pkgs.linuxPackages_cachyos;
+#  boot = {
+#    loader.systemd-boot.enable = true;
+#    loader.efi.canTouchEfiVariables = true;
+#    kernelPackages = pkgs.linuxPackages_cachyos;
 #    kernelParams = [
 #      "video=DP-1:2560x1440@360"
 #    ];
-    kernelModules = [ "v4l2loopback" "i2c-dev" ];
-    initrd.availableKernelModules = [ "i2c-dev" ];
-    extraModprobeConfig = ''
-      options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
-    '';
-    extraModulePackages = with config.boot.kernelPackages; [
-      v4l2loopback
-    ];
-  };
+#    kernelModules = [ "v4l2loopback" "i2c-dev" ];
+#    initrd.availableKernelModules = [ "i2c-dev" ];
+#    extraModprobeConfig = ''
+#      options v4l2loopback video_nr=0 card_label="DroidCam" exclusive_caps=1
+#    '';
+#    extraModulePackages = with config.boot.kernelPackages; [
+#      v4l2loopback
+#    ];
+#  };
 
   services.udev.packages = [ pkgs.rwedid ];
 
