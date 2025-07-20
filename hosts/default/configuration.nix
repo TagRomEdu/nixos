@@ -63,9 +63,9 @@
     material-icons
   ];
 
-#  boot = {
-#    loader.systemd-boot.enable = true;
-#    loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
 #    kernelPackages = pkgs.linuxPackages_cachyos;
 #    kernelParams = [
 #      "video=DP-1:2560x1440@360"
@@ -78,7 +78,7 @@
 #    extraModulePackages = with config.boot.kernelPackages; [
 #      v4l2loopback
 #    ];
-#  };
+  };
 
   services.udev.packages = [ pkgs.rwedid ];
 
