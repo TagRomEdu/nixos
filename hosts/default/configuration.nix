@@ -135,7 +135,7 @@
       xkb = {
         layout = "us,ru,de";
         variant = "";
-        options = "grp:toggle";
+        options = "grp:alt_shift_toggle";
       };
     };
 
