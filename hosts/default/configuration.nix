@@ -128,15 +128,15 @@
 
   programs.zsh.enable = true;
 
-#  services = {
-#    xserver = {
-#      enable = true;
-#      videoDrivers = [ "amdgpu" ];
-#      xkb = {
-#        layout = "de";
-#        variant = "";
-#      };
-#    };
+  services = {
+    xserver = {
+      enable = true;
+      videoDrivers = [ "amdgpu" ];
+      xkb = {
+        layout = "en,ru";
+        variant = "";
+      };
+    };
 
     dbus.enable = true;
     dbus.packages = with pkgs; [ bluez ];
