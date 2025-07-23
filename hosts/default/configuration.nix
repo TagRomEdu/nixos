@@ -135,8 +135,8 @@
       xkb = {
         layout = "us,ru";
         variant = "";
-        xkbOptions = "grp:capslock_toggle";
       };
+      xkbOptions = "grp:capslock_toggle";
     };
 
     dbus.enable = true;
