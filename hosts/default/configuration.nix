@@ -133,10 +133,10 @@
       enable = true;
       videoDrivers = [ "amdgpu" ];
       xkb = {
-        layout = "us,ru";
+        layout = "de,us,ru";
         variant = "";
       };
-      xkbOptions = "grp:capslock_toggle";
+      xkbOptions = "grp:toggle,caps:grp_toggle";
     };
 
     dbus.enable = true;
