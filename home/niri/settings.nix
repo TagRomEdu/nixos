@@ -42,10 +42,8 @@
       };
 
       input = {
-        keyboard = {
-          xkb.layouts = [ "us" "ru" ];
-          xkb.options = [ "grp:win_space_toggle" ];
-        };
+        keyboard.xkb.layouts = "us","ru";
+        keyboard.xkb.options = "grp:win_space_toggle";
         touchpad = {
           click-method = "button-areas";
           dwt = true;
