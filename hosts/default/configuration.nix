@@ -136,7 +136,7 @@
         layout = "de,us,ru";
         variant = "";
       };
-      xkbOptions = "grp:toggle,caps:grp_toggle";
+      xkbOptions = "grp:win_space_toggle";
     };
 
     dbus.enable = true;
