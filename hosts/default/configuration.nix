@@ -133,7 +133,7 @@
       enable = true;
       videoDrivers = [ "amdgpu" ];
       xkb = {
-        layout = "en,ru";
+        layout = "en";
         variant = "";
       };
     };
