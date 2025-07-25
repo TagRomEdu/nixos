@@ -108,7 +108,37 @@
     };
   };
 
-  services.strongswan.enable = true;
+  services.strongswan = {
+    enable = true;
+    charon = {
+      enable = true;
+      config = ''
+        charon {
+          plugins {
+            gcrypt {
+              integrity_test = no
+            }
+            random {
+              integrity_test = no
+            }
+            pem {
+              integrity_test = no
+            }
+          }
+        }
+      '';
+    };
+  };
+
+  environment.etc."strongswan.conf".text = ''
+    charon {
+      load_modular = yes
+      plugins {
+        include strongswan.d/charon/*.conf
+      }
+    }
+    include strongswan.d/*.conf
+  '';
 
   hardware.enableRedistributableFirmware = true;
 
