@@ -87,8 +87,6 @@
       device = "nodev";
       theme = /home/tre/nixos/hosts/default/grub/grub-themes/hollow-knight-grub-theme/hollow-grub/theme.txt;
       configurationName = "🌑 Hollow NixOS";
-      numberOfEntries = 5;
-      showAllEntries = false;
     };
 
     kernelPackages = pkgs.linuxPackages_cachyos;
