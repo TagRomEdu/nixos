@@ -108,6 +108,8 @@
     };
   };
 
+  services.strongswan.enable = true;
+
   hardware.enableRedistributableFirmware = true;
 
   time.timeZone = "Asia/Yekaterinburg";
