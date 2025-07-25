@@ -82,6 +82,12 @@ Scope {
                         anchors.right: barBackground.right
                         anchors.rightMargin: 18
                         spacing: 12
+                        
+                        Battery {
+			id: batteryWidget
+                        shell: rootScope.shell
+                        anchors.verticalCenter: parent.verticalCenter
+                        }
 
                         NotificationIcon {
                             anchors.verticalCenter: parent.verticalCenter

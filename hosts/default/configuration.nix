@@ -25,6 +25,7 @@
   
 security.sudo.extraConfig = ''
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/tee /sys/class/backlight/intel_backlight/brightness
+    tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/cat /sys/class/power_supply/BAT0/capacity
   '';
 
   users.groups.i2c = {};
