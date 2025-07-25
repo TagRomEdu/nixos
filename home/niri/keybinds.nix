@@ -21,7 +21,13 @@ in {
     "control+super+xf86audioraisevolume".action = spawn "brightness" "up";
     "control+super+xf86audiolowervolume".action = spawn "brightness" "down";
 
+    "control+super+TouchpadScrollUp".action = spawn "brightness" "up";
+    "control+super+TouchpadScrollDown".action = spawn "brightness" "down";
+    "control+super+TouchpadScrollLeft".action = spawn volume-down;
+    "control+super+TouchpadScrollRight".action = spawn volume-up;
+ 
     "super+q".action = close-window;
+
     "super+b".action = spawn apps.browser;
     "super+c".action = spawn "google-chrome-stable";
     "super+Return".action = spawn apps.terminal;
