@@ -84,8 +84,7 @@ Scope {
                         spacing: 12
                         
                         Battery {
-			id: batteryWidget
-                        shell: rootScope.shell
+			id: widgetsBattery
                         anchors.verticalCenter: parent.verticalCenter
                         }
 

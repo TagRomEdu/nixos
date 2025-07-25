@@ -18,6 +18,9 @@ with pkgs;
 
   # TUI
   btop
+  yazi
+  lazydocker
+  lazygit
 
   # Desktop
   nwg-look
@@ -46,7 +49,8 @@ with pkgs;
   gpu-screen-recorder
   mpv
   cava
-  
+  ripgrep
+
   # Quickshell stuff
   qt6Packages.qt5compat
   libsForQt5.qt5.qtgraphicaleffects

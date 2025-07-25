@@ -23,10 +23,16 @@
     })
   ];
   
-security.sudo.extraConfig = ''
+  security.sudo.extraConfig = ''
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/tee /sys/class/backlight/intel_backlight/brightness
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/cat /sys/class/power_supply/BAT0/capacity
   '';
+
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   users.groups.i2c = {};
 
@@ -42,6 +48,7 @@ security.sudo.extraConfig = ''
       "plugdev"
       "i2c"
       "bluetooth"
+      "docker"
     ];
   };
 
