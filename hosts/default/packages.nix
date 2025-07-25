@@ -14,6 +14,7 @@ with pkgs;
   file-roller
   obsidian
   telegram-desktop
+  tor-browser
 
   # TUI
   btop

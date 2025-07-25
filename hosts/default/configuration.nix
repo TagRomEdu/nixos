@@ -178,6 +178,10 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  hardware.opengl.extraPackages = with pkgs; [
+    nvidia-vaapi-driver
+  ];
+
   console.keyMap = "en";
 
   xdg.portal.enable = true;
