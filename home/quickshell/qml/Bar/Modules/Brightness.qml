@@ -5,6 +5,7 @@ import qs.Components
 
 Item {
     id: brightnessDisplay
+    property var shell
     property int brightness: -1
 
     width: pill.width
@@ -45,7 +46,16 @@ Item {
             hoverEnabled: true
             onEntered: brightnessTooltip.tooltipVisible = true
             onExited: brightnessTooltip.tooltipVisible = false
+            onWheel: (wheel) => {
+                if (!shell) return;
+                if (wheel.angleDelta.y > 0) {
+                    shell.updateBrightness("up");
+                } else if (wheel.angleDelta.y < 0) {
+                    shell.updateBrightness("down");
+                }
+            }  
         }
+
         StyledTooltip {
             id: brightnessTooltip
             text: "Brightness: " + brightness + "%"

@@ -84,8 +84,8 @@ Scope {
                         spacing: 12
                         
                         Battery {
-			id: widgetsBattery
-                        anchors.verticalCenter: parent.verticalCenter
+			                      id: widgetsBattery
+                            anchors.verticalCenter: parent.verticalCenter
                         }
 
                         NotificationIcon {
@@ -94,6 +94,7 @@ Scope {
 
                         Brightness {
                             id: widgetsBrightness
+                            shell: rootScope.shell
                             anchors.verticalCenter: parent.verticalCenter
                         }
 

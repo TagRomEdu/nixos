@@ -25,6 +25,8 @@ Item {
         console.log("Raw battery value:", batteryFile.text(), "Parsed:", val);       
         if (!isNaN(val) && val !== batteryDisplay.batteryLevel) {
             batteryDisplay.batteryLevel = val
+            pill.text = batteryLevel + "%"
+            pill.show()
             console.log("Battery updated to:", batteryDisplay.batteryLevel);
         }
     }
@@ -66,10 +68,9 @@ Item {
     }
 
     PillIndicator {
-        property int batteryLevel: batteryDisplay.batteryLevel
         id: pill
         icon: batteryIcon(batteryLevel, batteryStatusFile.text().trim() === "Charging")
-        text: batteryDisplay.batteryLevel >= 0 ? batteryLevel + "%" : ""
+        text: batteryLevel + "%"
         pillColor: Theme.surfaceVariant
         iconCircleColor: Theme.accentPrimary
         iconTextColor: Theme.backgroundPrimary

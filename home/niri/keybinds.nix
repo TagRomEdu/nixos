@@ -26,7 +26,11 @@ in {
     "super+c".action = spawn "google-chrome-stable";
     "super+Return".action = spawn apps.terminal;
     #"super+Control+Return".action = spawn apps.appLauncher;
-    "super+E".action = spawn apps.fileManager;
+    "super+e".action = spawn apps.fileManager;
+
+    "super+y".action = spawn "yazi";
+    "super+g".action = spawn "lazygit";
+    "super+d".action = spawn "lazydocker";
 
     "super+f".action = fullscreen-window;
     "super+t".action = toggle-window-floating;
@@ -47,5 +51,10 @@ in {
 
     "super+1".action = focus-workspace "browser";
     "super+2".action = focus-workspace "steam";
+
+    Mod+TouchpadScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+TouchpadScrollUp   cooldown-ms=150 { focus-workspace-up; }
+    Mod+TouchpadScrollRight                { focus-column-right; }
+    Mod+TouchpadScrollLeft                 { focus-column-left; }
   };
 }
