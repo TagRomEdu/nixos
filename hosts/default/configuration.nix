@@ -167,6 +167,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
+    open = false;
     prime = {
       sync.enable = true;
 
