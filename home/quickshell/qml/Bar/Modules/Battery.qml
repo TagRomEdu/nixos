@@ -20,6 +20,14 @@ Item {
         else return "battery_full"
     }
 
+    function updateBatteryLevel() {
+        const val = parseInt(batteryFile.text())
+        console.log("Raw battery value:", batteryFile.text(), "Parsed:", val);       
+        if (!isNaN(val) && val !== batteryDisplay.batteryLevel) {
+            batteryDisplay.batteryLevel = val
+            console.log("Battery updated to:", batteryDisplay.batteryLevel);
+        }
+    }
 
     FileView {
         id: batteryStatusFile
@@ -43,23 +51,16 @@ Item {
             updateBatteryLevel()
         }
 
-        function updateBatteryLevel() {
-            const val = parseInt(batteryFile.text())
-            console.log("Raw battery value:", batteryFile.text(), "Parsed:", val);       
-            if (!isNaN(val) && val !== batteryDisplay.batteryLevel) {
-                batteryDisplay.batteryLevel = val
-                console.log("Battery updated to:", batteryDisplay.batteryLevel);
-            }
-        }
     }
 
     Timer {
-        interval: 10000 // 10 секунд
+        interval: 1000 // 1 секунд
         running: true
         repeat: true
         triggeredOnStart: false
         onTriggered: {
             batteryFile.reload()
+            batteryStatusFile.reload()
             updateBatteryLevel()
         }
     }

@@ -23,6 +23,21 @@
     })
   ];
   
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      device = "nodev";
+      theme = /home/tre/nixos/hosts/default/grub/grub-themes/hollow-knight-grub-theme/hollow-grub/theme.txt;
+      configurationName = "🌑 Hollow NixOS";
+      numberOfEntries = 5;
+      showAllEntries = false;
+    };
+  };
+
+
   security.sudo.extraConfig = ''
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/tee /sys/class/backlight/intel_backlight/brightness
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/cat /sys/class/power_supply/BAT0/capacity
