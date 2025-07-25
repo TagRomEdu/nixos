@@ -42,6 +42,8 @@
         inputs.home-manager.nixosModules.default
         inputs.spicetify-nix.nixosModules.default
         chaotic.nixosModules.default
+        
+        "${nixpkgs}/nixos/modules/services/networking/strongswan.nix"
 
         ({pkgs, ...}: {
           environment.systemPackages = [
