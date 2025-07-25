@@ -28,9 +28,9 @@ in {
     #"super+Control+Return".action = spawn apps.appLauncher;
     "super+e".action = spawn apps.fileManager;
 
-    "super+y".action = spawn apps.terminal -e "yazi";
-    "super+g".action = spawn apps.terminal -e  "lazygit";
-    "super+d".action = spawn apps.terminal -e  "lazydocker";
+    "super+y".action = spawn [ "${apps.terminal}" "-e" "yazi" ];
+    "super+g".action = spawn [ "${apps.terminal}" "-e" "lazygit" ];
+    "super+d".action = spawn [ "${apps.terminal}" "-e" "lazydocker" ];
 
     "super+f".action = fullscreen-window;
     "super+t".action = toggle-window-floating;
