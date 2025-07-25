@@ -23,8 +23,8 @@ in {
 
     "control+super+TouchpadScrollUp".action = spawn "brightness" "up";
     "control+super+TouchpadScrollDown".action = spawn "brightness" "down";
-    "control+super+TouchpadScrollLeft".action = spawn volume-down;
-    "control+super+TouchpadScrollRight".action = spawn volume-up;
+    "control+super+TouchpadScrollLeft".action = volume-down;
+    "control+super+TouchpadScrollRight".action = volume-up;
  
     "super+q".action = close-window;
 
