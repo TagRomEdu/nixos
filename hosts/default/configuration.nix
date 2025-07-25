@@ -117,6 +117,24 @@
     }
     include strongswan.d/*.conf
   '';
+  
+  environment.etc."strongswan.d/charon/hash.conf".text = ''
+    hasher {
+      load = sha1 sha2 md5
+    }
+  '';
+
+  environment.etc."strongswan.d/charon/nonce.conf".text = ''
+    nonce {
+      load = random
+    }
+  '';
+
+  environment.etc."strongswan.d/charon/random.conf".text = ''
+    random {
+      load = random
+    }
+  '';
 
   hardware.enableRedistributableFirmware = true;
 
