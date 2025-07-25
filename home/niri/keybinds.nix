@@ -21,10 +21,10 @@ in {
     "control+super+xf86audioraisevolume".action = spawn "brightness" "up";
     "control+super+xf86audiolowervolume".action = spawn "brightness" "down";
 
-    "control+super+TouchpadScrollUp".action = spawn "brightness" "up";
-    "control+super+TouchpadScrollDown".action = spawn "brightness" "down";
-    "control+super+TouchpadScrollLeft".action = volume-down;
-    "control+super+TouchpadScrollRight".action = volume-up;
+    "control+super+TouchpadScrollUp".action = spawn "brightness" "down";
+    "control+super+TouchpadScrollDown".action = spawn "brightness" "up";
+    "control+super+TouchpadScrollLeft".action = volume-up;
+    "control+super+TouchpadScrollRight".action = volume-down;
  
     "super+q".action = close-window;
 
