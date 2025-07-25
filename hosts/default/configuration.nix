@@ -135,7 +135,7 @@
   services = {
     xserver = {
       enable = true;
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = [ "modesetting" "nvidia" ];
       xkb = {
         layout = "us,ru";
         variant = "";
@@ -163,6 +163,18 @@
       capSysAdmin = true;
       openFirewall = true;
     };
+  };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    prime = {
+      sync.enable = true;
+
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   console.keyMap = "en";

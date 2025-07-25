@@ -38,7 +38,7 @@ with pkgs;
   wl-clipboard
   pywalfox-native
   imagemagick
-  amdvlk
+#  amdvlk
   rar
   unzip
   droidcam
