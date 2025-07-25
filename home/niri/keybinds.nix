@@ -28,9 +28,9 @@ in {
     #"super+Control+Return".action = spawn apps.appLauncher;
     "super+e".action = spawn apps.fileManager;
 
-    "super+y".action = spawn "yazi";
-    "super+g".action = spawn "lazygit";
-    "super+d".action = spawn "lazydocker";
+    "super+y".action = spawn apps.terminal -e "yazi";
+    "super+g".action = spawn apps.terminal -e  "lazygit";
+    "super+d".action = spawn apps.terminal -e  "lazydocker";
 
     "super+f".action = fullscreen-window;
     "super+t".action = toggle-window-floating;
@@ -52,9 +52,24 @@ in {
     "super+1".action = focus-workspace "browser";
     "super+2".action = focus-workspace "steam";
 
-    "Mod+TouchpadScrollDown".action = focus-workspace-down;   
-    "Mod+TouchpadScrollUp".action = focus-workspace-up;
-    "Mod+TouchpadScrollRight".action = focus-column-right;
-    "Mod+TouchpadScrollLeft".action = focus-column-left;
+    "Mod+TouchpadScrollDown" = {
+      action = "focus-workspace-down";
+      cooldown-ms = 200; # задержка 200 мс между срабатываниями
+    };
+
+    "Mod+TouchpadScrollUp" = {
+      action = "focus-workspace-up";
+      cooldown-ms = 200;
+    };
+
+    "Mod+TouchpadScrollRight" = {
+      action = "focus-column-right";
+      cooldown-ms = 200;
+    };
+
+    "Mod+TouchpadScrollLeft" = {
+      action = "focus-column-left";
+      cooldown-ms = 200;
+    };
   };
 }
