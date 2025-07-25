@@ -108,20 +108,6 @@
     };
   };
 
-  services.strongswan = {
-    enable = true;
-  };
-
-  environment.etc."strongswan.conf".text = ''
-    charon {
-      load_modular = yes
-      plugins {
-        include strongswan.d/charon/*.conf
-      }
-    }
-    include strongswan.d/*.conf
-  '';
-
   hardware.enableRedistributableFirmware = true;
 
   time.timeZone = "Asia/Yekaterinburg";
