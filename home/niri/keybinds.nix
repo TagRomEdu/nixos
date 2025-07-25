@@ -53,22 +53,22 @@ in {
     "super+2".action = focus-workspace "steam";
 
     "Mod+TouchpadScrollDown" = {
-      action = "focus-workspace-down";
+      action = focus-workspace-down;
       cooldown-ms = 200; # задержка 200 мс между срабатываниями
     };
 
     "Mod+TouchpadScrollUp" = {
-      action = "focus-workspace-up";
+      action = focus-workspace-up;
       cooldown-ms = 200;
     };
 
     "Mod+TouchpadScrollRight" = {
-      action = "focus-column-right";
+      action = focus-column-right;
       cooldown-ms = 200;
     };
 
     "Mod+TouchpadScrollLeft" = {
-      action = "focus-column-left";
+      action = focus-column-left;
       cooldown-ms = 200;
     };
   };
