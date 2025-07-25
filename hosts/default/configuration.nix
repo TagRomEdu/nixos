@@ -102,6 +102,7 @@
     };
 
     networkmanager = {
+      plugins = with pkgs; [ networkmanager-l2tp ];
       wifi.backend = "wpa_supplicant";
       wifi.powersave = false;
     };
