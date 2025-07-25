@@ -45,6 +45,6 @@ in {
     "super+Shift+Up".action = move-column-to-workspace-up;
 
     "super+1".action = focus-workspace "browser";
-    "super+2".action = focus-workspace "vesktop";
+    "super+2".action = focus-workspace "steam";
   };
 }

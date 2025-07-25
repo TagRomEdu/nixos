@@ -35,16 +35,17 @@
       {
         matches = [
           { app-id = "firefox"; }
+          { app-id = "google-chrome"; }
         ];
         open-on-workspace = "browser";
       }
 
-      # Vesktop
+      # Steam
       {
         matches = [
-          { app-id = "vesktop"; }
+          { app-id = "steam"; }
         ];
-        open-on-workspace = "vesktop";
+        open-on-workspace = "steam";
       }
 
       {

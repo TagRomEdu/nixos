@@ -22,6 +22,10 @@
       };
     })
   ];
+  
+security.sudo.extraConfig = ''
+    tre ALL=(ALL) NOPASSWD: /bin/tee /sys/class/backlight/intel_backlight/brightness
+  '';
 
   users.groups.i2c = {};
 

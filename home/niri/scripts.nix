@@ -2,18 +2,18 @@
 
 let
   brightnessScript = pkgs.writeShellScriptBin "brightness" ''
-    BUS=10
     STEP=5
     MIN=0
-    MAX=100
+    BACKLIGHT_PATH="/sys/class/backlight/intel_backlight"
     OSD_FILE="/tmp/brightness_osd_level"
 
-    current=$(ddcutil --bus=$BUS getvcp 10 | grep -oP "current value\\s*=\\s*\\K[0-9]+")
+    current=$(cat "$BACKLIGHT_PATH/brightness")
+    max=$(cat "$BACKLIGHT_PATH/max_brightness")
     new=$current
 
     if [[ "$1" == "up" ]]; then
       new=$((current + STEP))
-      (( new > MAX )) && new=$MAX
+      (( new > max )) && new=$max
     elif [[ "$1" == "down" ]]; then
       new=$((current - STEP))
       (( new < MIN )) && new=$MIN
@@ -21,7 +21,7 @@ let
       exit 1
     fi
 
-    ddcutil --bus=$BUS setvcp 10 "$new"
+    echo "$new" | sudo tee "$BACKLIGHT_PATH/brightness" > /dev/null
     echo "$new" > "$OSD_FILE"
   '';
 in
