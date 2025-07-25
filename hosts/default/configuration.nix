@@ -109,6 +109,7 @@
   };
 
   services.strongswan.enable = true;
+  environment.etc."strongswan.conf".text = "";
 
   hardware.enableRedistributableFirmware = true;
 

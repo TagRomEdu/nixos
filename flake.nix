@@ -43,8 +43,6 @@
         inputs.spicetify-nix.nixosModules.default
         chaotic.nixosModules.default
         
-        "${nixpkgs}/nixos/modules/services/networking/strongswan.nix"
-
         ({pkgs, ...}: {
           environment.systemPackages = [
             (quickshell.packages.${pkgs.system}.default.override {
