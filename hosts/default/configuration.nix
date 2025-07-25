@@ -80,7 +80,7 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    grub = {
+    loader.grub = {
       enable = true;
       efiSupport = true;
       efiInstallAsRemovable = true;
