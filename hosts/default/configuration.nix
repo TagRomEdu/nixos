@@ -108,33 +108,7 @@
     };
   };
 
-  environment.etc."strongswan.conf".text = ''
-    charon {
-      load_modular = yes
-      plugins {
-        include strongswan.d/charon/*.conf
-      }
-    }
-    include strongswan.d/*.conf
-  '';
-  
-  environment.etc."strongswan.d/charon/hash.conf".text = ''
-    hasher {
-      load = sha1 sha2 md5
-    }
-  '';
-
-  environment.etc."strongswan.d/charon/nonce.conf".text = ''
-    nonce {
-      load = random
-    }
-  '';
-
-  environment.etc."strongswan.d/charon/random.conf".text = ''
-    random {
-      load = random
-    }
-  '';
+  services.strongswan.enable = true;
 
   hardware.enableRedistributableFirmware = true;
 
@@ -199,6 +173,8 @@
 
   environment.systemPackages = with pkgs; [
     bluez
+    strongswan
+    networkmanager-l2tp
   ];
 
   nixpkgs.config.allowUnfree = true;
