@@ -13,6 +13,7 @@ with pkgs;
   nautilus
   file-roller
   obsidian
+  telegram-desktop
 
   # TUI
   btop
