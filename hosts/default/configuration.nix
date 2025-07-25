@@ -134,9 +134,8 @@
       enable = true;
       videoDrivers = [ "amdgpu" ];
       xkb = {
-        layout = "us,ru,de";
+        layout = "us,ru";
         variant = "";
-        options = "grp:alt_shift_toggle";
       };
     };
 
