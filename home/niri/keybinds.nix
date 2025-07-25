@@ -23,7 +23,7 @@ in {
 
     "super+q".action = close-window;
     "super+b".action = spawn apps.browser;
-    "super+с".action = spawn "google-chrome-stable";
+    "super+c".action = spawn "google-chrome-stable";
     "super+Return".action = spawn apps.terminal;
     #"super+Control+Return".action = spawn apps.appLauncher;
     "super+E".action = spawn apps.fileManager;
