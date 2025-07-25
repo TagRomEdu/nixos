@@ -84,7 +84,7 @@
       enable = true;
       efiSupport = true;
       device = "nodev";
-      theme = lib.mkForce ./grub/grub-themes/hollow-knight-grub-theme/hollow-grub/theme.txt;
+      theme = lib.mkForce ./grub/grub-themes/hollow-knight-grub-theme/hollow-grub;
       configurationName = "🌑 Hollow NixOS";
     };
 
