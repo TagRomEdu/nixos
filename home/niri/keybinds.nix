@@ -52,9 +52,9 @@ in {
     "super+1".action = focus-workspace "browser";
     "super+2".action = focus-workspace "steam";
 
-    Mod+TouchpadScrollDown cooldown-ms=150 { focus-workspace-down; }
-    Mod+TouchpadScrollUp   cooldown-ms=150 { focus-workspace-up; }
-    Mod+TouchpadScrollRight                { focus-column-right; }
-    Mod+TouchpadScrollLeft                 { focus-column-left; }
+    "Mod+TouchpadScrollDown" cooldown-ms=150 { focus-workspace-down; }
+    "Mod+TouchpadScrollUp"   cooldown-ms=150 { focus-workspace-up; }
+    "Mod+TouchpadScrollRight"                { focus-column-right; }
+    "Mod+TouchpadScrollLeft"                 { focus-column-left; }
   };
 }
