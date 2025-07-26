@@ -48,8 +48,8 @@ in {
     # Move/Resize floating windows
     "super+Alt+Left".action = resize-window-left;
     "super+Alt+Right".action = resize-window-right;
-    "super+Alt+Up".action = resize-window-up;
-    "super+Alt+Down".action = resize-window-down;
+    #"super+Alt+Up".action = resize-window-up;
+    #"super+Alt+Down".action = resize-window-down;
 
     "super+Ctrl+Left".action = move-window-left;
     "super+Ctrl+Right".action = move-window-right;
