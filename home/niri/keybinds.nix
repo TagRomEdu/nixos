@@ -15,7 +15,7 @@ in {
     "super+Control+Return".action = spawn ["qs" "ipc" "call" "globalIPC" "toggleLauncher"];
     # Quickshell Keybinds End
 
-    "super+v".action = spawn [ "wl-paste" "--primary" ];
+    "super+v".action = spawn [ "bash" "-c" "wtype '$(wl-paste --primary)'" ];
 
 
     "xf86audioraisevolume".action = volume-up;
