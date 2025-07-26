@@ -339,7 +339,7 @@ PanelWithOverlay {
                 videoPath += "/";
             }
             var outputPath = videoPath + filename;
-            var command = "gpu-screen-recorder -w portal -f 60 -a default_output -o " + outputPath;
+            var command = "gpu-screen-recorder -w portal -f 60 -encoder cpu -a default_output -o " + outputPath;
             Quickshell.execDetached(["sh", "-c", command]);
             isRecording = true;
             quickAccessWidget.isRecording = true;

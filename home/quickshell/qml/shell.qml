@@ -20,7 +20,7 @@ Scope {
     function updateBrightness(direction) {
         if (direction !== "up" && direction !== "down") return;
         console.log("Calling brightness script with direction: " + direction)
-        Quickshell.exec("brightness", [direction]);
+        Quickshell.execDetached(["brightness", direction]);
     }
 
     function updateVolume(vol) {

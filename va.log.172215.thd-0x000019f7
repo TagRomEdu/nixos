@@ -1,0 +1,6 @@
+[3783.483521][ctx       none]==========va_TraceInitialize
+[3783.483525][ctx       none]==========	VA-API vendor string: VA-API NVDEC driver [direct backend]
+[3783.483526][ctx       none]=========vaInitialize ret = VA_STATUS_SUCCESS, success (no error) 
+[3783.483565][ctx       none]=========vaQueryConfigProfiles ret = VA_STATUS_SUCCESS, success (no error) 
+[3783.509426][ctx       none]==========va_TraceTerminate
+[3783.509456][ctx       none]=========vaTerminate ret = VA_STATUS_SUCCESS, success (no error) 
