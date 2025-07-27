@@ -9,7 +9,7 @@ with pkgs;
   protonplus
   lutris
   prismlauncher
-  heroic
+#  heroic
   nautilus
   file-roller
   obsidian
