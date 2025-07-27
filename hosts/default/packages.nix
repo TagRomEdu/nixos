@@ -50,7 +50,6 @@ with pkgs;
   mpv
   cava
   ripgrep
-  wtype
 
   # Quickshell stuff
   qt6Packages.qt5compat
