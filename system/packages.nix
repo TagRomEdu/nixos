@@ -19,7 +19,7 @@
     nodePackages.prettier
     xwayland
     spicetify-cli
-    alvr
+    #alvr
     ffmpeg
     mesa
     libva

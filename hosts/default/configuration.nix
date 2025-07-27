@@ -41,7 +41,8 @@
   users.users.tre = {
     isNormalUser = true;
     description = "tre";
-    shell = pkgs.zsh;
+    #shell = pkgs.zsh;
+    shell = pkgs.nushell;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -153,6 +154,7 @@
   };
 
   programs.zsh.enable = true;
+  programs.nushell.enable = true;
 
   services = {
     xserver = {

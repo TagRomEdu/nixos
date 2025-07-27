@@ -83,12 +83,12 @@ Scope {
                         anchors.rightMargin: 18
                         spacing: 12
                         
-                        Battery {
-			                      id: widgetsBattery
+                        NotificationIcon {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        NotificationIcon {
+                        Battery {
+			                      id: widgetsBattery
                             anchors.verticalCenter: parent.verticalCenter
                         }
 

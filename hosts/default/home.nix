@@ -29,6 +29,7 @@ in
     ../../home/programs/google-chrome.nix
 
     ../../system/shell/zsh.nix
+    ../../system/shell/nushell.nix
 
     inputs.spicetify-nix.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
