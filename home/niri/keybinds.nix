@@ -51,10 +51,10 @@ in {
     #"super+Alt+Up".action = resize-window-up;
     #"super+Alt+Down".action = resize-window-down;
 
-    "super+Ctrl+Left".action = move-window-left;
-    "super+Ctrl+Right".action = move-window-right;
-    "super+Ctrl+Up".action = move-window-up;
-    "super+Ctrl+Down".action = move-window-down;
+    #"super+Ctrl+Left".action = move-window-left;
+    #"super+Ctrl+Right".action = move-window-right;
+    #"super+Ctrl+Up".action = move-window-up;
+    #"super+Ctrl+Down".action = move-window-down;
 
     "control+shift+1".action = screenshot;
     "control+shift+2".action = screenshot-window { write-to-disk = true; };
@@ -72,25 +72,5 @@ in {
 
     "super+1".action = focus-workspace "browser";
     "super+2".action = focus-workspace "steam";
-
-    "Mod+TouchpadScrollDown" = {
-      action = focus-workspace-down;
-      cooldown-ms = 200; # задержка 200 мс между срабатываниями
-    };
-
-    "Mod+TouchpadScrollUp" = {
-      action = focus-workspace-up;
-      cooldown-ms = 200;
-    };
-
-    "Mod+TouchpadScrollRight" = {
-      action = focus-column-right;
-      cooldown-ms = 200;
-    };
-
-    "Mod+TouchpadScrollLeft" = {
-      action = focus-column-left;
-      cooldown-ms = 200;
-    };
   };
 }
