@@ -40,7 +40,7 @@ WlSessionLock {
             weatherError = err;
         });
     }
-
+    
     function materialSymbolForCode(code) {
         if (code === 0)
             return "sunny";

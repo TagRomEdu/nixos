@@ -24,6 +24,11 @@
   ];
   
 
+  security.pki.certificateFiles = [
+    ./certs/russian_trusted_root_ca_pem.crt
+    ./certs/russian_trusted_sub_ca_pem.crt
+  ];
+
 
   security.sudo.extraConfig = ''
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/tee /sys/class/backlight/intel_backlight/brightness
@@ -131,6 +136,8 @@
     };
   };
 
+  services.openssh.enable = true;
+  
   services.strongswan.enable = true;
   environment.etc."strongswan.conf".text = "";
 

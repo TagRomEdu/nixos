@@ -13,6 +13,7 @@ in {
 
     # Quickshell Keybinds Start
     "super+Control+Return".action = spawn ["qs" "ipc" "call" "globalIPC" "toggleLauncher"];
+    "super+Control+l".action = spawn ["qs" "ipc" "call" "globalIPC" "toggleLock"];
     # Quickshell Keybinds End
 
     "xf86audioraisevolume".action = volume-up;
@@ -31,7 +32,6 @@ in {
     "super+b".action = spawn apps.browser;
     "super+c".action = spawn "google-chrome-stable";
     "super+Return".action = spawn apps.terminal;
-    #"super+Control+Return".action = spawn apps.appLauncher;
     "super+e".action = spawn apps.fileManager;
 
     "super+y".action = spawn [ "${apps.terminal}" "-e" "yazi" ];
