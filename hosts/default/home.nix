@@ -57,9 +57,22 @@ in
   programs.starship = { enable = true;
       settings = {
         add_newline = true;
+        username = {
+          show_always = true;
+          style_user = "bold yellow";
+        };
+        hostname = {
+          style = "bold dimmed blue";
+          ssh_only = false;
+        };
+        time = {
+          disabled = false;
+          time_format = "%Y-%m-%d %H:%M";
+          style = "bold blue";
+        };
         character = { 
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[➜](bold red)";
         };
       };
   };
