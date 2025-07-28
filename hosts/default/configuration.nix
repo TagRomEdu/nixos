@@ -29,6 +29,9 @@
     ./certs/russian_trusted_sub_ca_pem.crt
   ];
 
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
 
   security.sudo.extraConfig = ''
     tre ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/tee /sys/class/backlight/intel_backlight/brightness
