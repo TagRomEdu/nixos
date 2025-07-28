@@ -8,13 +8,14 @@ with pkgs;
   # Applications
   protonplus
   lutris
-  prismlauncher
+#  prismlauncher
 #  heroic
   nautilus
   file-roller
   obsidian
   telegram-desktop
   tor-browser
+  vial
 
   # TUI
   btop
