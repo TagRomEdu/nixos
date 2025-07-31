@@ -15,6 +15,7 @@ with pkgs;
   obsidian
   telegram-desktop
   tor-browser
+  qbittorrent
   vial
 
   # TUI

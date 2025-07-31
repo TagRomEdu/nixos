@@ -6,8 +6,13 @@
     package = pkgs.niri;
     settings = {
       workspaces = {
+        "prime" = {};
+        "cli" = {};
+
         "browser" = {};
-        "vesktop" = {};
+        "steam" = {};
+
+        "other" = {};
       };
 
       prefer-no-csd = true;

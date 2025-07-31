@@ -49,6 +49,27 @@
       }
 
       {
+        matches = [
+          { app-id = "terminal"; }
+        ];
+        open-on-workspace = "cli";
+      }
+
+      {
+        matches = [
+          { app-id = "yazi"; }
+        ];
+        open-on-workspace = "prime";
+      }
+
+      {
+        matches = [
+          { app-id = "vial"; }
+        ];
+        open-on-workspace = "other";
+      }
+
+      {
         matches = [{}];
         geometry-corner-radius = {
           top-left = 20.0;
