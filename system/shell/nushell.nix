@@ -30,7 +30,7 @@
        } 
        '';
     shellAliases = {
-      sshx = "TERM=xterm ssh";
+      sshx = "env TERM=xterm ssh";
     };
   };  
 }
