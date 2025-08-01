@@ -73,6 +73,7 @@
           };
           scale = 1.0;
           position = { x = 0; y = 0; };
+          focus-at-startup;
         };
         
         "eDP-1" = {

@@ -32,42 +32,42 @@
     ];
     
     window-rules = [
-      {
-        matches = [
-          { app-id = "firefox"; }
-          { app-id = "google-chrome"; }
-        ];
-        open-on-workspace = "browser";
-      }
-
-      # Steam
-      {
-        matches = [
-          { app-id = "steam"; }
-        ];
-        open-on-workspace = "steam";
-      }
-
-      {
-        matches = [
-          { app-id = "terminal"; }
-        ];
-        open-on-workspace = "cli";
-      }
-
-      {
-        matches = [
-          { app-id = "yazi"; }
-        ];
-        open-on-workspace = "prime";
-      }
-
-      {
-        matches = [
-          { app-id = "vial"; }
-        ];
-        open-on-workspace = "other";
-      }
+#      {
+#        matches = [
+#          { app-id = "firefox"; }
+#          { app-id = "google-chrome"; }
+#        ];
+#        open-on-workspace = "browser";
+#      }
+#
+#      # Steam
+#      {
+#        matches = [
+#          { app-id = "steam"; }
+#        ];
+#        open-on-workspace = "steam";
+#      }
+#
+#      {
+#        matches = [
+#          { app-id = "terminal"; }
+#        ];
+#        open-on-workspace = "cli";
+#      }
+#
+#      {
+#        matches = [
+#          { app-id = "yazi"; }
+#        ];
+#        open-on-workspace = "prime";
+#      }
+#
+#      {
+#        matches = [
+#          { app-id = "vial"; }
+#        ];
+#        open-on-workspace = "other";
+#      }
 
       {
         matches = [{}];

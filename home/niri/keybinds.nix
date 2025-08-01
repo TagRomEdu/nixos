@@ -67,7 +67,12 @@ in {
     "super+Shift+Down".action = move-column-to-workspace-down;
     "super+Shift+Up".action = move-column-to-workspace-up;
 
-    "super+1".action = focus-workspace "browser";
-    "super+2".action = focus-workspace "steam";
+    "super+1".action = focus-workspace "prime";
+    "super+2".action = focus-workspace "cli";
+    "super+3".action = focus-workspace "browser";
+    "super+4".action = focus-workspace "steam";
+    "super+5".action = focus-workspace "other";
+
+    "super+control+1".action = focus-output HDMI-A-1;
   };
 }
