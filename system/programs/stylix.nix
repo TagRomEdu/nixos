@@ -2,6 +2,7 @@
 {
   stylix.enable = true;
   stylix.autoEnable = true;
+  stylix.targets.yazi.enable = true;
   stylix.base16Scheme = toString (builtins.path {
     path = ../../assets/themes/base-16/oled-lavender.yaml;
   });
