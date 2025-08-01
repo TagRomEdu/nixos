@@ -67,12 +67,12 @@ in {
     "super+Shift+Down".action = move-column-to-workspace-down;
     "super+Shift+Up".action = move-column-to-workspace-up;
 
-    "super+0".action = focus-workspace 0;
     "super+1".action = focus-workspace 1;
     "super+2".action = focus-workspace 2;
     "super+3".action = focus-workspace 3;
     "super+4".action = focus-workspace 4;
 
     "super+control+1".action = focus-monitor-up;
+    "super+control+2".action = focus-monitor-down;
   };
 }

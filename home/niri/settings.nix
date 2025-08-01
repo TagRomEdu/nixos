@@ -10,8 +10,6 @@
         "cli" = {};
 
         "browser" = {};
-        "steam" = {};
-
         "other" = {};
       };
 
