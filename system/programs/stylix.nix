@@ -5,7 +5,8 @@
   #stylix.base16Scheme = toString (builtins.path {
   #  path = ../../assets/themes/base-16/oled-lavender.yaml;
   #});
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-light.yaml";
+  #stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-light.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-dark.yaml";
 
   stylix.enableReleaseChecks = false;
 }
