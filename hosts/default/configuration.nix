@@ -67,6 +67,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
+    backupFileExtension = "backup";
     users = {
       "tre" = import ./home.nix;
     };
@@ -230,7 +231,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  home-manager.backupFileExtension = "backup";
+  #home-manager.backupFileExtension = "backup";
 
   system.stateVersion = "25.05";
 
