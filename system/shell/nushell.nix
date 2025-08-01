@@ -29,5 +29,8 @@
         }
        } 
        '';
-   };  
+    shellAliases = {
+      sshx = "TERM=xterm ssh";
+    };
+  };  
 }
