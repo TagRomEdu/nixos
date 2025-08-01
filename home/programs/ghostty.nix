@@ -10,7 +10,7 @@
 
       window-decoration = false;
 
-      background-opacity = 0.75;
+      #background-opacity = 0.75;
 
       # Disables ligatures
       font-feature = [
