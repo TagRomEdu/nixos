@@ -6,10 +6,6 @@
 #    path = ../../assets/themes/base-16/oled-lavender.yaml;
 #  });
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/oxocarbon.yaml";
-  stylix.opacity = {
-    window = 0.85;          # прозрачность активного окна
-#    inactiveWindow = 0.6;   # прозрачность неактивного окна
-  };
 
   stylix.enableReleaseChecks = false;
 }
