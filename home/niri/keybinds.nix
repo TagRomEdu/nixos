@@ -73,6 +73,6 @@ in {
     "super+3".action = focus-workspace 3;
     "super+4".action = focus-workspace 4;
 
-    "super+control+1".action = focus-monitor 1;
+    "super+control+1".action = focus-monitor-up;
   };
 }
