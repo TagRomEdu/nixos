@@ -20,7 +20,6 @@ with pkgs;
 
   # TUI
   btop
-  yazi
   lazydocker
   lazygit
 
