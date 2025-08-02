@@ -17,6 +17,8 @@ with pkgs;
   tor-browser
   qbittorrent
   vial
+  remmina
+  libreoffice
 
   # TUI
   btop
@@ -51,6 +53,7 @@ with pkgs;
   mpv
   cava
   ripgrep
+  openvpn
   
 
   # Quickshell stuff
