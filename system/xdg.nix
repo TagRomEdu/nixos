@@ -8,7 +8,7 @@
         default = ["gnome" "gtk"];
         "org.freedesktop.impl.portal.ScreenCast" = "gnome";
         "org.freedesktop.impl.portal.Screenshot" = "gnome";
-        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+        "org.freedesktop.impl.portal.RemoteDesktop" = "wlr";
       };
     };
     xdgOpenUsePortal = true;
@@ -19,6 +19,7 @@
 
       # Niri
       xdg-desktop-portal-gnome
+      xdg-desktop-portal-wlr
     ];
   };
 }
