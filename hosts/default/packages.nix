@@ -51,6 +51,7 @@ with pkgs;
   mpv
   cava
   ripgrep
+  rustdesk
 
   # Quickshell stuff
   qt6Packages.qt5compat
