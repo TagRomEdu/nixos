@@ -51,7 +51,7 @@ with pkgs;
   mpv
   cava
   ripgrep
-  remmina
+  wayvnc
 
   # Quickshell stuff
   qt6Packages.qt5compat
