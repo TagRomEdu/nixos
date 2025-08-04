@@ -19,6 +19,7 @@ with pkgs;
   vial
   remmina
   libreoffice
+  dbeaver
 
   # TUI
   btop
