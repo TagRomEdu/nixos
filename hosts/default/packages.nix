@@ -20,6 +20,7 @@ with pkgs;
   remmina
   libreoffice
   dbeaver-bin
+  anydesk
 
   # TUI
   btop
