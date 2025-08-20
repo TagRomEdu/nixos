@@ -33,6 +33,7 @@ with pkgs;
 
   # Development
   rustup
+  uv
   gcc
   gh
   nixfmt-rfc-style
