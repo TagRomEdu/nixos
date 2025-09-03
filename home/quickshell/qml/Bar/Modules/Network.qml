@@ -27,6 +27,7 @@ Item {
 
         let newStatus = "down"
         let iface = ""
+        let current_ip = ""
 
         if (isIfaceActive(ethState)) {
             newStatus = "ethernet"
@@ -43,13 +44,12 @@ Item {
         activeIface = iface
 
         if (status !== "down") {
-            updateIP(activeIface)
+          updateIP(activeIface)
         } else {
             ipAddr = ""
         }
 
         pill.show()
-        networkTooltip.text = "Network: " + status + " (" + ipAddr + ")"
     }
 
     FileView {
@@ -116,7 +116,7 @@ Item {
         }
         StyledTooltip {
             id: networkTooltip
-            text: "Network: " + status + " (" + ipAddr + ")"
+            text: ipAddr !== "" ? "IP: " + ipAddr + "\nInterface: " + activeIface : status
             tooltipVisible: false
             targetItem: pill
             delay: 200
