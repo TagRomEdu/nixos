@@ -111,6 +111,11 @@ Scope {
                             bar: panel
                             trayMenu: externalTrayMenu
                         }
+                        
+                        Network {
+                            id: widgetsNetwork
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
 
                         CustomTrayMenu {
                             id: externalTrayMenu
