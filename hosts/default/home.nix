@@ -22,6 +22,7 @@ in
 
     ../../home/programs/ghostty.nix
     ../../home/programs/yazi.nix
+    ../../home/programs/zellij.nix
     ../../home/programs/fastfetch.nix
     ../../home/programs/spicetify.nix
     ../../home/programs/obs.nix
