@@ -65,9 +65,9 @@
       outputs = {
         "HDMI-A-1" = {
           mode = {
-            width = 1920;
+            width = 2560;
             height = 1080;
-            refresh = 60.0;
+            refresh = 75.0;
           };
           scale = 1.0;
           position = { x = 0; y = 0; };
