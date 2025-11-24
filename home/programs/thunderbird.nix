@@ -42,6 +42,6 @@
     };
   };
 
-  stylix.targets.thunderbird.profileNames = [ "tre" ];
-  stylix.enableReleaseChecks = false;
+#  stylix.targets.thunderbird.profileNames = [ "tre" ];
+#  stylix.enableReleaseChecks = false;
 }
