@@ -29,6 +29,7 @@ in
     ../../home/programs/vesktop/default.nix
     ../../home/programs/firefox.nix
     ../../home/programs/google-chrome.nix
+    ../../home/programs/thunderbird.nix
 
     ../../system/shell/zsh.nix
     ../../system/shell/nushell.nix
