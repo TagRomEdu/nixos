@@ -15,10 +15,6 @@
           # Автозагрузка изображений отключена
           "mailnews.message_display.disable_remote_image" = true;
 
-          # Настройка интерфейса и тем
-          "mail.theme.color" = "#c792ea";
-          "mail.folderpane.show" = true;
-
           # Поддержка Unified Inbox
           "mailnews.ui.threadpane.use_correspondents" = true;
 
