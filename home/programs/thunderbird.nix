@@ -8,10 +8,6 @@
       tre = {
         isDefault = true;
 
-        extensions.packages = with pkgs.nur.repos.rycee.thunderbird-addons; [
-          ublock-origin
-          lightning      # календарь
-          enigmail       # шифрование почты
         ];
 
         settings = {
@@ -41,7 +37,4 @@
       };
     };
   };
-
-#  stylix.targets.thunderbird.profileNames = [ "tre" ];
-#  stylix.enableReleaseChecks = false;
 }
