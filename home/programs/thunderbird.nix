@@ -8,8 +8,6 @@
       tre = {
         isDefault = true;
 
-        ];
-
         settings = {
           # Включить отображение последних писем при старте
           "mail.start_page.override" = "about:blank";
