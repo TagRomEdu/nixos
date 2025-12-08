@@ -21,6 +21,7 @@ with pkgs;
   libreoffice
   dbeaver-bin
   anydesk
+  rustdesk
 
   # TUI
   btop
