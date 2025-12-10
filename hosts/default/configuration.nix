@@ -28,6 +28,7 @@
     ./certs/russian_trusted_root_ca_pem.crt
     ./certs/russian_trusted_sub_ca_pem.crt
     ./certs/geography-root-ca.crt
+    ./certs/acme-geography-root-ca.crt
   ];
 
   services.udev.extraRules = ''
