@@ -215,6 +215,12 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  hardware.opengl = {
+  enable = true;
+  driSupport = true;
+  driSupport32Bit = true;
+  };
+
   hardware.opengl.extraPackages = with pkgs; [
     nvidia-vaapi-driver
   ];
