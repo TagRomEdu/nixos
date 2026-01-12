@@ -146,6 +146,10 @@
   
   services.strongswan.enable = true;
   environment.etc."strongswan.conf".text = "";
+  
+  environment.variables = {
+    LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
+  };
 
   hardware.enableRedistributableFirmware = true;
 
