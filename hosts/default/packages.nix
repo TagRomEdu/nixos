@@ -59,8 +59,6 @@ with pkgs;
   cava
   ripgrep
   openvpn
-  mesa
-  libglvnd
   
 
   # Quickshell stuff
