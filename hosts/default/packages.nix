@@ -31,6 +31,7 @@ with pkgs;
   # Desktop
   nwg-look
   walker
+  nextcloud-talk-desktop
 
   # Development
   rustup
