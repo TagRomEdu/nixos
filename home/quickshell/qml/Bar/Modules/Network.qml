@@ -9,6 +9,9 @@ Item {
     property string status: "down"
     property string ipAddr: ""
     property string activeIface: ""
+    
+    property string ethIface: "enp2s0"
+    property string wifiIface: "wlp3s0"
 
     width: pill.width
     height: pill.height
@@ -31,10 +34,10 @@ Item {
 
         if (isIfaceActive(ethState)) {
             newStatus = "ethernet"
-            iface = "enp0s20f0u8u1"
+            iface = ethIface
         } else if (isIfaceActive(wifiState)) {
             newStatus = "wifi"
-            iface = "wlp3s0"
+            iface = wifiIface
         }
 
         // Если статус или интерфейс не поменялись, ничего не делаем
@@ -54,7 +57,7 @@ Item {
 
     FileView {
         id: wifiOperstate
-        path: "/sys/class/net/wlp3s0/operstate"
+        path: "/sys/class/net/" + wifiIface + "/operstate"
         watchChanges: true
         blockLoading: true
         onLoaded: updateStatus()
@@ -63,7 +66,7 @@ Item {
 
     FileView {
         id: ethOperstate
-        path: "/sys/class/net/enp0s20f0u8u1/operstate"
+        path: "/sys/class/net/" + ethIface + "/operstate"
         watchChanges: true
         blockLoading: true
         onLoaded: updateStatus()
