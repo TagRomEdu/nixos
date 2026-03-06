@@ -79,4 +79,22 @@ in
         };
       };
   };
+
+  systemd.user.services."bluetooth-batteries" = {
+    description = "Update Bluetooth devices battery info";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash /home/tre/nixos/home/scripts/bluetooth_batteries.sh";
+    };
+  };
+
+  systemd.user.timers."bluetooth-batteries" = {
+    description = "Run Bluetooth battery update every 5 seconds";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5s";
+      OnUnitActiveSec = "5s";
+      Unit = "bluetooth-batteries.service";
+    };
+  };
 }

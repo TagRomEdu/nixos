@@ -104,6 +104,12 @@ Scope {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
+                        BluetoothDevices {
+                            id: widgetsBluetoothDevices
+                            shell: rootScope.shell
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                                          
                         SystemTray {
                             id: systemTrayModule
                             shell: rootScope.shell
