@@ -35,7 +35,7 @@
     description = "Update Bluetooth devices battery info";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash /home/tre/nixos/home/scripts/bluetooth_batteries.sh";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'dbus-run-session /home/tre/nixos/home/scripts/bluetooth_batteries.sh'";
     };
   };
 
