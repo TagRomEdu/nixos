@@ -31,28 +31,6 @@
     ./certs/acme-geography-root-ca.crt
   ];
 
-  systemd.user.services."bluetooth-batteries" = {
-    description = "Update Bluetooth devices battery info";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash /home/tre/nixos/home/scripts/bluetooth_batteries.sh";
-      Environment = ''
-        XDG_RUNTIME_DIR=/run/user/$UID
-        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus
-      '';
-    };
-  };
-
-  systemd.user.timers."bluetooth-batteries" = {
-    description = "Run Bluetooth battery update every 5 seconds";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5s";
-      OnUnitActiveSec = "5s";
-      Unit = "bluetooth-batteries.service";
-    };
-  };  
-
   services.udev.extraRules = ''
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
