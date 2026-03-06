@@ -80,7 +80,7 @@ in
       };
   };
 
-  systemd.user.services."bluetooth-batteries" = {
+  programs.systemd.user.services."bluetooth-batteries" = {
     description = "Update Bluetooth devices battery info";
     serviceConfig = {
       Type = "oneshot";
@@ -88,7 +88,7 @@ in
     };
   };
 
-  systemd.user.timers."bluetooth-batteries" = {
+  programs.systemd.user.timers."bluetooth-batteries" = {
     description = "Run Bluetooth battery update every 5 seconds";
     wantedBy = [ "timers.target" ];
     timerConfig = {
