@@ -36,8 +36,10 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.bash}/bin/bash /home/tre/nixos/home/scripts/bluetooth_batteries.sh";
-      Environment = "XDG_RUNTIME_DIR=/run/user/${config.users.users.tre.uid}";
-      Environment = "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${config.users.users.tre.uid}/bus";
+      Environment = ''
+        XDG_RUNTIME_DIR=/run/user/${config.users.users.tre.uid}
+        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${config.users.users.tre.uid}/bus
+      '';
     };
   };
 
