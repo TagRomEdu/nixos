@@ -189,7 +189,13 @@
     avahi.nssmdns4 = true;
 
     power-profiles-daemon.enable = true;
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
+    };
     gvfs.enable = true;
     tumbler.enable = true;
 
