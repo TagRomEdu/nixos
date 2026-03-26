@@ -186,7 +186,7 @@
     dbus.enable = true;
     dbus.packages = with pkgs; [ bluez ];
     
-    services.avahi.nssmdns4 = true;
+    avahi.nssmdns4 = true;
 
     power-profiles-daemon.enable = true;
     printing.enable = true;
