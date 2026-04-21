@@ -9,6 +9,13 @@
   programs.nushell = {
     enable = true;
     extraConfig = ''
+       def log [...args] {
+         let msg = ($args | str join " ")
+         let ts = (date now | format date "%H:%M")
+         let date = (date now | format date "%Y-%m-%d")
+         let line = $"($ts) ($msg)\n"
+         $line | save --append $"($env.HOME)/nixos/log-($date).md"
+       }
        let carapace_completer = {|spans|
        carapace $spans.0 nushell ...$spans | from json
        }
